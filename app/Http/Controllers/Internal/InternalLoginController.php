@@ -40,7 +40,7 @@ class InternalLoginController extends Controller
                 ];
             }
         }catch (\Exception $ex){
-            Log::error("Inernal login error", [
+            Log::error("Internal login error", [
                 'request' => $request->json()->all(),
                 'message' => $ex->getMessage()
             ]);
