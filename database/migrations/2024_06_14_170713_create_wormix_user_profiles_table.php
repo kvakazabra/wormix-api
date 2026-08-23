@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Query\Expression;
 
 return new class extends Migration
 {
@@ -20,8 +21,8 @@ return new class extends Migration
             $table->integer('rating')->unsigned()->default(0)->comment('user rating');
             $table->integer('reaction_rate')->unsigned()->default(0)->comment('user reaction rate');
 
-            $table->json('reagents')->default("[]")->comment('user reagents');
-            $table->json('recipes')->default("[]")->comment('user craft weapons');
+            $table->json('reagents')->default(new Expression("('[]')"))->comment('user reagents');
+            $table->json('recipes')->default(new Expression("('[]')"))->comment('user craft weapons');
 
             $table->timestamps();
         });
