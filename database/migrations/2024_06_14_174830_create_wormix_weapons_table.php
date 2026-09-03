@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('wormix_weapons', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned()->primary();
-            $table->foreignId('ref_id')->nullable()->constrained('wormix_weapons')->cascadeOnDelete();
+            $table->bigInteger('ref_id')->nullable();
 
             $table->string('name')->nullable();
 
@@ -32,6 +32,13 @@ return new class extends Migration
             $table->integer('required_rating')->unsigned()->default(0);
 
             $table->timestamps();
+        });
+
+        Schema::table('wormix_weapons', function (Blueprint $table) {
+            $table->foreign('ref_id')
+                  ->references('id')
+                  ->on('wormix_weapons')
+                  ->cascadeOnDelete();
         });
     }
 
