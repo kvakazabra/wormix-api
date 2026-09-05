@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('real_price')->default(0);
 
             $table->integer('required_level')->default(0);
+            $table->boolean('playable')->default(false);
 
             $table->timestamps();
         });
