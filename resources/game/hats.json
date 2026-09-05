@@ -563,7 +563,8 @@
     "speed": 6,
     "poisonDamage": 20,
     "fireDamage": 20,
-    "leech": 10
+    "leech": 10,
+    "requiredScenario": 106
   },
   {
     "id": 1075,
@@ -576,7 +577,8 @@
     "shockDamage": 10,
     "shockReduction": 20,
     "immobilityReduction": 1,
-    "slowProtection": true
+    "slowProtection": true,
+    "requiredScenario": 104
   },
   {
     "id": 1035,
@@ -1197,7 +1199,8 @@
     "requiredLevel": 1,
     "attack": 6,
     "hp": 15,
-    "dodge": 5
+    "dodge": 5,
+    "requiredScenario": 10
   },
   {
     "id": 1095,
@@ -1489,7 +1492,8 @@
     "speed": 6,
     "shockDamage": 10,
     "slowProtection": 1,
-    "penetration": 20
+    "penetration": 20,
+    "requiredScenario": 109
   },
   {
     "id": 1122,
