@@ -34,11 +34,11 @@ class InitGameData extends Command
 
     private array $messages = [];
 
-    private function parseNames():void
+    private function parseNames() : void
     {
         $this->info('Parsing strings from items.xml');
         $items_messages_path = resource_path('game/items.xml');
-        if(!File::exists($items_messages_path))
+        if (!File::exists($items_messages_path))
         {
             $this->warn("Can't find items.xml in resources");
             return;
@@ -46,81 +46,99 @@ class InitGameData extends Command
 
         $messages_array = simplexml_load_file($items_messages_path);
         $messages_object = [];
-        foreach($messages_array->children() as $message)
+        foreach ($messages_array->children() as $message)
         {
             $messages_object[(string)$message['name']] = (string)$message['value'];
         }
         $this->messages = $messages_object;
     }
 
-    private function parseWeapons():void
+    private function parseWeapons() : void
     {
         $this->info('Parsing from weapons.json');
         $weapons_path = resource_path('game/weapons.json');
-        if(!File::exists($weapons_path)){
+        if (!File::exists($weapons_path))
+        {
             $this->error("Can't find weapons.json in resources");
             return;
         }
+
+        $count = 0;
         $weapons_array = json_decode(file_get_contents($weapons_path), true);
-        foreach($weapons_array as $weapon){
-            if(array_key_exists('name', $weapon)) {
-                DB::beginTransaction();
-                try{
+        foreach ($weapons_array as $weapon)
+        {
+            if (array_key_exists('name', $weapon))
+            {
+                try
+                {
+                    DB::beginTransaction();
                     Weapon::insert(
                         [
                             'id' => $weapon['id'],
-                            'name' => @$this->messages[$weapon['name']] ?? $weapon['name'],
-                            'hide_in_shop' => array_key_exists('hideInShop', $weapon),
+                            'name' => $this->messages[$weapon['name']] ?? $weapon['name'],
+                            'hide_in_shop' => $weapon['hide_in_shop'] ?? false,
                             'is_starter' => in_array((int)$weapon['id'], config('wormix.starter.weapons')),
-                            'price' => @$weapon['price'] ?? 0,
-                            'real_price' => @$weapon['realprice'] ?? 0,
-                            'required_friends' => @$weapon['requiredFriends'] ?? 0,
-                            'required_level' => @$weapon['requiredLevel'] ?? 0,
-                            'infinity' => array_key_exists('infinite', $weapon)
+                            'price' => $weapon['price'] ?? 0,
+                            'real_price' => $weapon['realprice'] ?? 0,
+                            'required_friends' => $weapon['requiredFriends'] ?? 0,
+                            'required_level' => $weapon['requiredLevel'] ?? 0,
+                            'infinity' => $weapon['infinity'] ?? 0,
                         ]
                     );
                     DB::commit();
-                    $this->info($weapon['name']." saved!");
+                    $count++;
                 }
-                catch (\Exception $ex){
+                catch (\Exception $ex)
+                {
                     $this->error("Error in {$weapon['id']}: {$ex->getMessage()}");
                     DB::rollBack();
                 }
-
-            }elseif(array_key_exists('refId', $weapon)){
-                try{
+            }
+            else if (array_key_exists('refId', $weapon))
+            {
+                try
+                {
                     DB::beginTransaction();
                     Weapon::insert(
                         [
                             'id' => $weapon['id'],
                             'ref_id' =>  $weapon['refId'],
-                            'hide_in_shop' => @$weapon['hideInShop'] ?? true,
+                            'hide_in_shop' => $weapon['hideInShop'] ?? true,
                             'price' => $weapon['price'],
-                            'required_friends' => @$weapon['requiredFriends'] ?? 0,
-                            'required_level' => @$weapon['requiredLevel'] ?? 0,
+                            'required_friends' => $weapon['requiredFriends'] ?? 0,
+                            'required_level' => $weapon['requiredLevel'] ?? 0,
                         ]
                     );
-                    $this->info('Ref '.$weapon['refId']." saved!");
                     DB::commit();
-                }catch (Exception $ex){
+                    $count++;
+                }
+                catch (Exception $ex)
+                {
                     $this->error("Error in {$weapon['id']}: {$ex->getMessage()}");
                     DB::rollBack();
                 }
             }
         }
+
+        $this->info("{$count} weapons parsed");
     }
 
-    private function parseHats():void
+    private function parseHats() : void
     {
         $this->info('Parsing hats from hats.json');
         $hats_path = resource_path('game/hats.json');
-        if(!File::exists($hats_path)){
+        if (!File::exists($hats_path))
+        {
             $this->error("Can't find hats.json in resources");
             return;
         }
+
+        $count = 0;
         $hats_array = json_decode(file_get_contents($hats_path), true);
-        foreach($hats_array as $hat){
-            try{
+        foreach ($hats_array as $hat)
+        {
+            try
+            {
                 DB::beginTransaction();
                 Equipment::insert(
                     [
@@ -138,27 +156,31 @@ class InitGameData extends Command
                     ]
                 );
                 DB::commit();
-                $this->info("Hat ".$hat['name']." saved!");
+                $count++;
             }
-            catch (\Exception $ex){
+            catch (\Exception $ex)
+            {
                 DB::rollBack();
                 $this->error("Error in {$hat['id']}: {$ex->getMessage()}");
             }
         }
+
+        $this->info("{$count} hats parsed");
     }
 
     private function parseArtifacts() : void
     {
         $this->info('Parsing gifts from artifacts.json');
         $art_path = resource_path('game/artifacts.json');
-        if(!File::exists($art_path))
+        if (!File::exists($art_path))
         {
             $this->error("Can't find artifacts.json in resources");
             return;
         }
 
+        $count = 0;
         $artifacts_array = json_decode(file_get_contents($art_path), true);
-        foreach($artifacts_array as $artifact)
+        foreach ($artifacts_array as $artifact)
         {
             try
             {
@@ -166,8 +188,8 @@ class InitGameData extends Command
                 Item::insert(
                     [
                         'id' => $artifact['id'],
-                        'name' => @$this->messages[$artifact['name']] ?? $artifact['name'],
-                        'hide_in_shop' => array_key_exists('hideInShop', $artifact),
+                        'name' => $this->messages[$artifact['name']] ?? $artifact['name'],
+                        'hide_in_shop' => $artifact['hideInShop'] ?? false,
                         'price' => $artifact['price'] ?? 0,
                         'real_price' => $artifact['realprice'] ?? 0,
                         'duration' => $artifact['duration'] ?? 0,
@@ -177,7 +199,7 @@ class InitGameData extends Command
                     ]
                 );
                 DB::commit();
-                $this->info($artifact['name']." saved!");
+                $count++;
             }
             catch (\Exception $ex)
             {
@@ -185,19 +207,26 @@ class InitGameData extends Command
                 DB::rollBack();
             }
         }
+
+        $this->info("{$count} artifacts parsed");
     }
 
-    private function parseGifts():void
+    private function parseGifts() : void
     {
         $this->info('Parsing gifts from gifts.json');
         $gifts_path = resource_path('game/gifts.json');
-        if(!File::exists($gifts_path)){
+        if (!File::exists($gifts_path))
+        {
             $this->error("Can't find gifts.json in resources");
             return;
         }
+
+        $count = 0;
         $gifts_array = json_decode(file_get_contents($gifts_path), true);
-        foreach ($gifts_array as $gift) {
-            try{
+        foreach ($gifts_array as $gift)
+        {
+            try
+            {
                 DB::beginTransaction();
                 DailyBonus::insert([
                     'login_sequence' => $gift['sequence'],
@@ -206,29 +235,34 @@ class InitGameData extends Command
                     'random_gift' => $gift['random']
                 ]);
                 DB::commit();
-                $this->info('Gift added for sequence '.$gift['sequence']);
-            }catch (\Exception $ex){
+                $count++;
+            }
+            catch (\Exception $ex)
+            {
                 DB::rollBack();
                 $this->error("Error in {$gift['sequence']}: {$ex->getMessage()}");
             }
         }
+
+        $this->info("{$count} gifts parsed");
     }
 
-    private function parseRaces():void
+    private function parseRaces() : void
     {
         $this->info('Parsing races from races.json');
-
         $races_path = resource_path('game/races.json');
-
-        if(!File::exists($races_path)){
+        if (!File::exists($races_path))
+        {
             $this->error("Can't find races.json in resources");
             return;
         }
 
+        $count = 0;
         $races_array = json_decode(file_get_contents($races_path), true);
-
-        foreach($races_array as $race){
-            try{
+        foreach ($races_array as $race)
+        {
+            try
+            {
                 DB::beginTransaction();
                 Race::insert([
                     'race_id' => $race['raceId'],
@@ -238,32 +272,39 @@ class InitGameData extends Command
                     'real_price' => $race['realPrice'],
 
                     'required_level' => $race['requiredLevel'],
-                    'playable' => is_bool($race['playable']) && $race['playable'],
+                    'playable' => $race['playable'] ?? false,
                 ]);
-                $this->info('Saved new race '.$race['configName']);
                 DB::commit();
-            }catch (Exception $ex){
+                $count++;
+            }
+            catch (Exception $ex)
+            {
                 DB::rollBack();
                 $this->error("Error in {$race['raceId']}: {$ex->getMessage()}");
             }
         }
+
+        $this->info("{$count} races parsed");
     }
 
-    private function addStartItems():void
+    private function addStartItems() : void
     {
         $this->info('Parsing startings weapons from weapons_start.json');
-
         $start_weapons_path = resource_path('game/weapons_start.json');
-
-        if(!File::exists($start_weapons_path)){
+        if (!File::exists($start_weapons_path))
+        {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
+
         $start_items = json_decode(file_get_contents($start_weapons_path), true);
-        if($start_items == null){
+        if ($start_items == null)
+        {
             $this->error("Can't parse weapons_start.json");
         }
-        try{
+
+        try
+        {
             DB::beginTransaction();
             $update_count = Weapon::query()
                 ->whereIn('id', $start_items)
@@ -272,26 +313,30 @@ class InitGameData extends Command
                 ]);
             DB::commit();
             $this->info("Set [{$update_count}] items ".json_encode($start_items)." as starter");
-        }catch (Exception $exception){
+        }
+        catch (Exception $exception)
+        {
             DB::rollBack();
             $this->error("Error {$exception->getMessage()}");
         }
     }
 
-    private function parseLevelAwards():void
+    private function parseLevelAwards() : void
     {
         $this->info('Parsing levels awards from level_awards.json');
-
         $levels_path = resource_path('game/level_awards.json');
-
-        if(!File::exists($levels_path)){
+        if (!File::exists($levels_path))
+        {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
 
+        $count = 0;
         $levels = json_decode(file_get_contents($levels_path), true);
-        foreach($levels as $level){
-            try{
+        foreach ($levels as $level)
+        {
+            try
+            {
                 DB::beginTransaction();
                 Level::insert([
                     'required_experience' => $level['required_experience'],
@@ -299,53 +344,69 @@ class InitGameData extends Command
                     'awards' => json_encode($level['reward_weapons']),
                 ]);
                 DB::commit();
-                $this->info("Added new level {$level['level']}");
-            }catch (\Exception $ex){
+                $count++;
+            }
+            catch (\Exception $ex)
+            {
                 DB::rollBack();
                 $this->error("Error in {$level['level']}: {$ex->getMessage()}");
             }
         }
+
+        $this->info("{$count} levels parsed");
     }
 
-    private function parseMissions():void
+    private function parseMissions() : void
     {
         $this->info('Parsing missions awards from missions_awards.json');
-
         $missions_path = resource_path('game/missions_awards.json');
-        if(!File::exists($missions_path)){
+        if (!File::exists($missions_path))
+        {
             $this->error("Can't find missions_awards.json in resources");
             return;
         }
 
+        $count = 0;
         $missions = json_decode(file_get_contents($missions_path), true);
-        DB::beginTransaction();
-        try{
-            foreach($missions as $mission){
+        try
+        {
+            DB::beginTransaction();
+            foreach ($missions as $mission)
+            {
                 $m = new Mission();
                 $m->mission_id = $mission['id'];
                 $m->awards = $mission['awards'];
                 $m->required_level = $mission['required_level'];
                 $m->save();
+                $count++;
             }
             DB::commit();
-        }catch (Exception $exception){
+        }
+        catch (Exception $exception)
+        {
             $this->error("Error while adding missions: {$exception->getMessage()}");
             DB::rollBack();
         }
+
+        $this->info("{$count} missions parsed");
     }
 
-    private function parseCraft():void
+    private function parseCraft() : void
     {
         $this->info('Parsing craft recipes from recipes.json');
         $recipes_path = resource_path('game/recipes.json');
-        if(!File::exists($recipes_path)){
+        if (!File::exists($recipes_path))
+        {
             $this->error("Can't find recipes.json in resources");
             return;
         }
 
+        $count = 0;
         $recipes = json_decode(file_get_contents($recipes_path), true);
-        foreach($recipes as $recipe) {
-            try{
+        foreach ($recipes as $recipe)
+        {
+            try
+            {
                 DB::beginTransaction();
                 $craft = new Craft();
                 $craft->id = $recipe['id'];
@@ -357,28 +418,34 @@ class InitGameData extends Command
                 $craft->required_level = $recipe['requiredLevel'];
                 $craft->save();
                 DB::commit();
-                $this->info("Added recipe {$recipe['description']}");
-            }catch (Exception $exception){
+                $count++;
+            }
+            catch (Exception $exception)
+            {
                 DB::rollBack();
                 $this->error("Error in {$recipe['description']}: {$exception->getMessage()}");
             }
         }
+
+        $this->info("{$count} recipes parsed");
     }
 
-    private function parseReagents():void
+    private function parseReagents() : void
     {
         $this->info('Parsing reagents config from reagents.json');
-
         $reagents_path = resource_path('game/reagents.json');
-
-        if(!File::exists($reagents_path)){
+        if (!File::exists($reagents_path))
+        {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
 
+        $count = 0;
         $reagents = json_decode(file_get_contents($reagents_path), true);
-        foreach($reagents as $reagent){
-            try{
+        foreach ($reagents as $reagent)
+        {
+            try
+            {
                 DB::beginTransaction();
                 Reagent::insert([
                     'reagent_id' => $reagent['id'],
@@ -386,12 +453,16 @@ class InitGameData extends Command
                     'reagent_price' => $reagent['price'],
                 ]);
                 DB::commit();
-                $this->info("Added new reagent {$reagent['id']}");
-            }catch (\Exception $ex){
+                $count++;
+            }
+            catch (\Exception $ex)
+            {
                 DB::rollBack();
                 $this->error("Error in reagent {$reagent['id']}: {$ex->getMessage()}");
             }
         }
+
+        $this->info("{$count} reagents parsed");
     }
 
     /**
@@ -402,8 +473,11 @@ class InitGameData extends Command
         $this->parseNames();
 
         $this->parseWeapons();
+
         $this->parseHats();
+
         $this->parseArtifacts();
+
         $this->addStartItems();
 
         $this->parseGifts();
