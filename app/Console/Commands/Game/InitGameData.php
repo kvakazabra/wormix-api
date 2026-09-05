@@ -216,6 +216,7 @@ class InitGameData extends Command
                     'real_price' => $race['realPrice'],
 
                     'required_level' => $race['requiredLevel'],
+                    'playable' => is_bool(@$race['playable']) && @$race['playable'],
                 ]);
                 $this->info('Saved new race ' . $race['configName']);
                 DB::commit();

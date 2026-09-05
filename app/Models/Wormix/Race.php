@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int real_price
  *
  * @property int required_level
+ * @property bool playable
  */
 class Race extends Model
 {
@@ -27,6 +28,7 @@ class Race extends Model
         'price',
 
         'real_price',
-        'required_level'
+        'required_level',
+        'playable'
     ];
 }

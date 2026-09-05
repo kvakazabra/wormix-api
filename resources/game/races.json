@@ -1,44 +1,106 @@
 [
     {
-        "raceId": 0,
-        "configName": "worm",
-        "requiredLevel": 1,
-        "price": 300,
-        "realPrice": 3
-    },
-    {
         "raceId": 2,
         "configName": "boxer",
         "requiredLevel": 1,
-        "price": 300,
-        "realPrice": 3
-    },
-    {
-        "raceId": 3,
-        "configName": "daemon",
-        "requiredLevel": 8,
         "price": 1000,
-        "realPrice": 10
-    },
-    {
-        "raceId": 4,
-        "configName": "rabbit",
-        "requiredLevel": 12,
-        "price": 1600,
-        "realPrice": 16
+        "realPrice": 10,
+        "playable": true
     },
     {
         "raceId": 5,
         "configName": "zombie",
+        "requiredLevel": 8,
+        "price": 1800,
+        "realPrice": 18,
+        "playable": true
+    },
+    {
+        "raceId": 4,
+        "configName": "rabbit",
+        "requiredLevel": 8,
+        "price": 2000,
+        "realPrice": 20,
+        "playable": true
+    },
+    {
+        "raceId": 3,
+        "configName": "demon",
         "requiredLevel": 10,
-        "price": 1200,
-        "realPrice": 12
+        "price": 3200,
+        "realPrice": 32,
+        "playable": true
     },
     {
         "raceId": 6,
         "configName": "cat",
+        "requiredLevel": 12,
+        "price": 3600,
+        "realPrice": 36,
+        "playable": true
+    },
+    {
+        "raceId": 7,
+        "configName": "dragon",
         "requiredLevel": 14,
-        "price": 2500,
-        "realPrice": 25
+        "price": 4000,
+        "realPrice": 40,
+        "playable": true
+    },
+    {
+        "raceId": 8,
+        "configName": "robot",
+        "requiredLevel": 16,
+        "price": 4400,
+        "realPrice": 44,
+        "playable": true
+    },
+    {
+        "raceId": 9,
+        "configName": "rhino",
+        "requiredLevel": 18,
+        "price": 4800,
+        "realPrice": 48,
+        "playable": true
+    },
+    {
+        "raceId": 0,
+        "configName": "boar",
+        "requiredLevel": 18,
+        "price": 4600,
+        "realPrice": 46,
+        "playable": true
+    },
+    {
+        "raceId": 10,
+        "configName": "alien",
+        "requiredLevel": 30,
+        "price": 999999,
+        "realPrice": 9999,
+        "playable": true
+    },
+    {
+        "raceId": 11,
+        "configName": "crab",
+        "requiredLevel": 1,
+        "price": 300,
+        "realPrice": 3,
+        "playable": false
+    },
+    {
+        "raceId": 12,
+        "configName": "donut",
+        "requiredLevel": 1,
+        "price": 1200,
+        "realPrice": 12,
+        "playable": false
+    },
+    {
+        "raceId": 13,
+        "configName": "snail",
+        "requiredLevel": 1,
+        "price": 3400,
+        "realPrice": 34,
+        "playable": false
     }
 ]
