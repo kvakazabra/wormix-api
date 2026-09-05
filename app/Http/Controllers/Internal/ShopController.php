@@ -199,6 +199,10 @@ class ShopController extends Controller
         $user_worm = WormData::query()->where('owner_id', $request->json('internal_user_id'))->get()->first();
         $user_profile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->get()->first();
         $race = Race::query()->where('race_id', $request->json('RaceId'))->get()->first();
+        if(!$race->playable)
+        {
+            return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
+        }
 
         if ($user_worm->race === $request->json('RaceId'))
         {
