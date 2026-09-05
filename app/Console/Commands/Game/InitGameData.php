@@ -9,7 +9,6 @@ use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\Item;
 use App\Models\Wormix\Equipment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -185,7 +184,7 @@ class InitGameData extends Command
             try
             {
                 DB::beginTransaction();
-                Item::insert(
+                Equipment::insert(
                     [
                         'id' => $artifact['id'],
                         'name' => $this->messages[$artifact['name']] ?? $artifact['name'],
