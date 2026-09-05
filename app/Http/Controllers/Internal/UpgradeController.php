@@ -7,7 +7,7 @@ use App\Http\Requests\Internal\Craft\DowngradeWeaponRequest;
 use App\Http\Requests\Internal\Craft\UpgradeWeaponRequest;
 use App\Http\Resources\Internal\Craft\DowngradeWeaponResult;
 use App\Http\Resources\Internal\Craft\UpgradeWeaponResult;
-use App\Models\Wormix\Craft;
+use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
@@ -20,16 +20,16 @@ class UpgradeController extends Controller
     public const UPGRADE_BASE = 300;
 
     private function isUpgradeAvailable(
-        Craft $craft,
+        Upgrade     $upgrade,
         UserProfile $userProfile,
-        WormData $wormData,
-        int $recipeId) : bool
+        WormData    $wormData,
+        int         $recipeId) : bool
     {
         // Requires owning the base weapon
-        if ($craft->prev_upgrade_id < self::UPGRADE_BASE &&
+        if ($upgrade->prev_upgrade_id < self::UPGRADE_BASE &&
             UserItem::query()
                 ->where('owner_id', $wormData->owner_id)
-                ->where('item_id', $craft->prev_upgrade_id)
+                ->where('item_id', $upgrade->prev_upgrade_id)
                 ->where('count', -1)
                 ->count() === 0)
         {
@@ -37,35 +37,35 @@ class UpgradeController extends Controller
         }
 
         // Requires the previous item to be upgraded
-        if ($craft->prev_upgrade_id > self::UPGRADE_BASE &&
-            !in_array($craft->prev_upgrade?->id, $userProfile->recipes))
+        if ($upgrade->prev_upgrade_id > self::UPGRADE_BASE &&
+            !in_array($upgrade->prev_upgrade?->id, $userProfile->recipes))
         {
             return false;
         }
 
         // Already upgraded
-        if (in_array($craft->id, $userProfile->recipes))
+        if (in_array($upgrade->id, $userProfile->recipes))
         {
             return false;
         }
 
-        if ($wormData->level < $craft->required_level)
+        if ($wormData->level < $upgrade->required_level)
         {
             return false;
         }
 
-        if ($craft->prev_upgrade === null)
+        if ($upgrade->prev_upgrade === null)
         {
             return true;
         }
 
         // A competing recipe for the same upgrade is already upgraded
-        $competingCraft = Craft::query()
-            ->where('upgrade_id', $craft->prev_upgrade->id)
+        $competingUpgrade = Upgrade::query()
+            ->where('upgrade_id', $upgrade->prev_upgrade?->id)
             ->where('id', '!=', $recipeId)
             ->first();
-        if ($competingCraft !== null &&
-            in_array($competingCraft->id, $userProfile->recipes))
+        if ($competingUpgrade !== null &&
+            in_array($competingUpgrade->id, $userProfile->recipes))
         {
             return false;
         }
@@ -75,7 +75,7 @@ class UpgradeController extends Controller
 
     public function upgradeWeapon(UpgradeWeaponRequest $request)
     {
-        $craft = Craft::query()
+        $upgrade = Upgrade::query()
             ->where('id', $request->json('RecipeId'))
             ->first();
 
@@ -88,7 +88,7 @@ class UpgradeController extends Controller
             ->first();
 
         if (!$this->isUpgradeAvailable(
-            $craft,
+            $upgrade,
             $userProfile,
             $wormData,
             $request->json('RecipeId')))
@@ -104,12 +104,12 @@ class UpgradeController extends Controller
 
         $reagentsToCraft = Reagent::query()
             ->select('reagent_id', 'reagent_price')
-            ->whereIn('reagent_id', array_map(function ($x) {return $x[0];}, $craft->reagents))
+            ->whereIn('reagent_id', array_map(function ($x) {return $x[0];}, $upgrade->reagents))
             ->get()
             ->pluck('reagent_price', 'reagent_id')
             ->toArray();
 
-        $maxReagentId = max(array_map(function ($x) {return $x[0];}, $craft->reagents));
+        $maxReagentId = max(array_map(function ($x) {return $x[0];}, $upgrade->reagents));
 
         $changedReagents = $userProfile->reagents;
         if (count($changedReagents) < $maxReagentId + 1)
@@ -125,7 +125,7 @@ class UpgradeController extends Controller
 //        Log::debug("PREPARED REAGENT DATA",
 //            [
 //                'reagents' => $reagentsToCraft,
-//                'craft_reagents' => $craft->reagents,
+//                'craft_reagents' => $upgrade->reagents,
 //                'max_id' => $maxReagentId,
 //                'user_reagents' => $changedReagents
 //            ]
@@ -133,7 +133,7 @@ class UpgradeController extends Controller
 
         $sum = 0;
 
-        foreach ($craft->reagents as $reagent)
+        foreach ($upgrade->reagents as $reagent)
         {
             $sum += max(0, ($reagent[1] - $changedReagents[$reagent[0]]) * $reagentsToCraft[(string)$reagent[0]]);
             $changedReagents[$reagent[0]] = max(0, $changedReagents[$reagent[0]] - $reagent[1]);
@@ -148,7 +148,8 @@ class UpgradeController extends Controller
         if ($userProfile->real_money < $sum)
         {
             return [
-                'data' => new UpgradeWeaponResult(Collection::empty(), UpgradeWeaponResult::NotEnoughMoney, $request->json('RecipeId'))
+                'data' => new UpgradeWeaponResult(Collection::empty(),
+                    UpgradeWeaponResult::NotEnoughMoney, $request->json('RecipeId'))
             ];
         }
 
@@ -158,13 +159,14 @@ class UpgradeController extends Controller
         $userProfile->save();
 
         return [
-            'data' => new UpgradeWeaponResult(Collection::empty(), UpgradeWeaponResult::Success, $request->json('RecipeId'))
+            'data' => new UpgradeWeaponResult(Collection::empty(),
+                UpgradeWeaponResult::Success, $request->json('RecipeId'))
         ];
     }
 
     public function downgradeWeapon(DowngradeWeaponRequest $request)
     {
-        $craft = Craft::query()
+        $upgrade = Upgrade::query()
             ->where('id', $request->json('RecipeId'))
             ->first();
 
@@ -176,15 +178,16 @@ class UpgradeController extends Controller
         $reagents = $userProfile->reagents;
 
         //Add cross craft checks
-        if (!in_array($craft->id, $recipes) ||
+        if (!in_array($upgrade->id, $recipes) ||
             $userProfile->real_money < config('wormix.game.buy.downgrade'))
         {
             return [
-                'data' => new DowngradeWeaponResult(Collection::empty(), DowngradeWeaponResult::Error, $request->json('RecipeId'))
+                'data' => new DowngradeWeaponResult(Collection::empty(),
+                    DowngradeWeaponResult::Error, $request->json('RecipeId'))
             ];
         }
 
-        foreach ($craft->reagents as $reagent)
+        foreach ($upgrade->reagents as $reagent)
         {
             $reagents[$reagent[0]] += (int)($reagent[1] * 0.8);
         }
@@ -198,7 +201,8 @@ class UpgradeController extends Controller
         $userProfile->save();
 
         return [
-            'data' => new DowngradeWeaponResult(Collection::empty(), DowngradeWeaponResult::Success, $request->json('RecipeId'))
+            'data' => new DowngradeWeaponResult(Collection::empty(),
+                DowngradeWeaponResult::Success, $request->json('RecipeId'))
         ];
     }
 }

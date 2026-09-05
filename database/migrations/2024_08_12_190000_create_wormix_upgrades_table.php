@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wormix_craft', function (Blueprint $table) {
+        Schema::create('wormix_upgrades', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->bigInteger('upgrade_id')->unsigned()->unique('upgrade_idx');
             $table->bigInteger('prev_upgrade_id')->unsigned()->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wormix_craft');
+        Schema::dropIfExists('wormix_upgrades');
     }
 };

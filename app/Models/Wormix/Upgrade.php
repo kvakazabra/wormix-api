@@ -16,11 +16,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int required_level
  * @property array reagents
  *
- * @property Craft prev_upgrade
+ * @property Upgrade prev_upgrade
  */
-class Craft extends Model
+class Upgrade extends Model
 {
-    protected $table = 'wormix_craft';
+    protected $table = 'wormix_upgrades';
 
     protected $casts = [
         'reagents' => 'array'
@@ -28,6 +28,6 @@ class Craft extends Model
 
     public function prev_upgrade() : BelongsTo
     {
-        return $this->belongsTo(Craft::class, 'prev_upgrade_id', 'upgrade_id');
+        return $this->belongsTo(Upgrade::class, 'prev_upgrade_id', 'upgrade_id');
     }
 }
