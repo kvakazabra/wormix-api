@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Game;
 
-use App\Models\Wormix\Craft;
+use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\DailyBonus;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\Mission;
@@ -407,7 +407,7 @@ class InitGameData extends Command
             try
             {
                 DB::beginTransaction();
-                $craft = new Craft();
+                $craft = new Upgrade();
                 $craft->id = $recipe['id'];
                 $craft->description = $recipe['description'];
                 $craft->upgrade_id = $recipe['upgradeId'];

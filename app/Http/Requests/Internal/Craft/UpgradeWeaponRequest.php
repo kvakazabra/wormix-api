@@ -22,7 +22,7 @@ class UpgradeWeaponRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'RecipeId' => 'required|integer|exists:wormix_craft,id',
+            'RecipeId' => 'required|integer|exists:wormix_upgrades,id',
             'internal_user_id' => 'required|integer|exists:users,id'
         ];
     }
