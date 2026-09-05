@@ -20,15 +20,9 @@ class Race extends Model
 {
     protected $table = 'wormix_races';
 
-    protected $fillable = [
-        'race_id',
+    protected $guarded = ['id'];
 
-        'race_name',
-
-        'price',
-
-        'real_price',
-        'required_level',
-        'playable'
+    protected $casts = [
+        'playable' => 'boolean',
     ];
 }

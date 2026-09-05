@@ -19,20 +19,15 @@ class CraftedEquipment extends Model
 {
     protected $table = 'wormix_crafted_equipment';
 
-    protected $fillable = [
-        'family_id',
-        'name',
+    protected $primaryKey = 'family_id';
 
-        'hide_in_shop',
-        'hide_in_craft',
-        'duration',
-
-        'craft_cost',
-        'remake_cost'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'craft_cost' => 'json',
-        'remake_cost' => 'json'
+        'remake_cost' => 'json',
+
+        'hide_in_shop' => 'boolean',
+        'hide_in_craft' => 'boolean'
     ];
 }
