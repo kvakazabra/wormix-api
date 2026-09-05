@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Game;
 
+use App\Models\Wormix\CraftedEquipment;
 use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\DailyBonus;
 use App\Models\Wormix\Level;
@@ -35,7 +36,7 @@ class InitGameData extends Command
 
     private function parseNames() : void
     {
-        $this->info('Parsing strings from items.xml');
+        $this->info('Parsing items.xml');
         $items_messages_path = resource_path('game/items.xml');
         if (!File::exists($items_messages_path))
         {
@@ -54,7 +55,7 @@ class InitGameData extends Command
 
     private function parseWeapons() : void
     {
-        $this->info('Parsing from weapons.json');
+        $this->info('Parsing weapons.json');
         $weapons_path = resource_path('game/weapons.json');
         if (!File::exists($weapons_path))
         {
@@ -124,7 +125,7 @@ class InitGameData extends Command
 
     private function parseHats() : void
     {
-        $this->info('Parsing hats from hats.json');
+        $this->info('Parsing hats.json');
         $hats_path = resource_path('game/hats.json');
         if (!File::exists($hats_path))
         {
@@ -169,7 +170,7 @@ class InitGameData extends Command
 
     private function parseArtifacts() : void
     {
-        $this->info('Parsing gifts from artifacts.json');
+        $this->info('Parsing artifacts.json');
         $art_path = resource_path('game/artifacts.json');
         if (!File::exists($art_path))
         {
@@ -210,9 +211,48 @@ class InitGameData extends Command
         $this->info("{$count} artifacts parsed");
     }
 
+    private function parseCraftedEquipment() : void
+    {
+        $this->info('Parsing crafted equipment from crafts.json');
+        $crafts_path = resource_path('game/crafts.json');
+        if (!File::exists($crafts_path))
+        {
+            $this->error("Can't find crafts.json in resources");
+            return;
+        }
+
+        $count = 0;
+        $crafted_equipment_array = json_decode(file_get_contents($crafts_path), true);
+        foreach ($crafted_equipment_array as $crafted_equipment)
+        {
+            try
+            {
+                DB::beginTransaction();
+                CraftedEquipment::insert([
+                    'family_id' => $crafted_equipment['familyId'],
+                    'name' => $this->messages[$crafted_equipment['name']] ?? $crafted_equipment['name'],
+                    'hide_in_shop' => $crafted_equipment['hideInShop'] ?? true,
+                    'hide_in_craft' => $crafted_equipment['hideInCraft'] ?? false,
+                    'duration' => $crafted_equipment['duration'] ?? 0,
+                    'craft_cost' => json_encode($crafted_equipment['craftCost']),
+                    'remake_cost' => json_encode($crafted_equipment['remakeCost']),
+                ]);
+                DB::commit();
+                $count++;
+            }
+            catch (\Exception $ex)
+            {
+                $this->error("Error in {$crafted_equipment['familyId']}: {$ex->getMessage()}");
+                DB::rollBack();
+            }
+        }
+
+        $this->info("{$count} crafted equipment parsed");
+    }
+
     private function parseGifts() : void
     {
-        $this->info('Parsing gifts from gifts.json');
+        $this->info('Parsing gifts.json');
         $gifts_path = resource_path('game/gifts.json');
         if (!File::exists($gifts_path))
         {
@@ -248,7 +288,7 @@ class InitGameData extends Command
 
     private function parseRaces() : void
     {
-        $this->info('Parsing races from races.json');
+        $this->info('Parsing races.json');
         $races_path = resource_path('game/races.json');
         if (!File::exists($races_path))
         {
@@ -288,7 +328,7 @@ class InitGameData extends Command
 
     private function addStartItems() : void
     {
-        $this->info('Parsing startings weapons from weapons_start.json');
+        $this->info('Parsing weapons_start.json');
         $start_weapons_path = resource_path('game/weapons_start.json');
         if (!File::exists($start_weapons_path))
         {
@@ -322,7 +362,7 @@ class InitGameData extends Command
 
     private function parseLevelAwards() : void
     {
-        $this->info('Parsing levels awards from level_awards.json');
+        $this->info('Parsing level_awards.json');
         $levels_path = resource_path('game/level_awards.json');
         if (!File::exists($levels_path))
         {
@@ -357,7 +397,7 @@ class InitGameData extends Command
 
     private function parseMissions() : void
     {
-        $this->info('Parsing missions awards from missions_awards.json');
+        $this->info('Parsing missions_awards.json');
         $missions_path = resource_path('game/missions_awards.json');
         if (!File::exists($missions_path))
         {
@@ -390,9 +430,9 @@ class InitGameData extends Command
         $this->info("{$count} missions parsed");
     }
 
-    private function parseCraft() : void
+    private function parseUpgrades() : void
     {
-        $this->info('Parsing craft recipes from recipes.json');
+        $this->info('Parsing recipes.json');
         $recipes_path = resource_path('game/recipes.json');
         if (!File::exists($recipes_path))
         {
@@ -431,7 +471,7 @@ class InitGameData extends Command
 
     private function parseReagents() : void
     {
-        $this->info('Parsing reagents config from reagents.json');
+        $this->info('Parsing reagents.json');
         $reagents_path = resource_path('game/reagents.json');
         if (!File::exists($reagents_path))
         {
@@ -448,7 +488,7 @@ class InitGameData extends Command
                 DB::beginTransaction();
                 Reagent::insert([
                     'reagent_id' => $reagent['id'],
-                    'name' => $reagent['name'],
+                    'name' => $this->messages[$reagent['name']] ?? $reagent['name'],
                     'reagent_price' => $reagent['price'],
                 ]);
                 DB::commit();
@@ -477,6 +517,8 @@ class InitGameData extends Command
 
         $this->parseArtifacts();
 
+        $this->parseCraftedEquipment();
+
         $this->addStartItems();
 
         $this->parseGifts();
@@ -489,7 +531,7 @@ class InitGameData extends Command
 
         $this->parseMissions();
 
-        $this->parseCraft();
+        $this->parseUpgrades();
 
         $this->info('SETUP IS COMPLETED');
     }
