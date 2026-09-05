@@ -18,7 +18,7 @@
         10
       ]
     ],
-    "requiredLevel": 8,
+    "requiredLevel": 10,
     "level": 1
   },
   {
@@ -40,7 +40,7 @@
         10
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -59,10 +59,10 @@
       ],
       [
         41,
-        10
+        12
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -81,7 +81,7 @@
       ],
       [
         20,
-        15
+        12
       ]
     ],
     "requiredLevel": 8,
@@ -143,7 +143,7 @@
       ],
       [
         6,
-        20
+        18
       ],
       [
         22,
@@ -172,7 +172,7 @@
         10
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -194,7 +194,7 @@
         15
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -227,11 +227,11 @@
     "reagents": [
       [
         2,
-        45
+        40
       ],
       [
         23,
-        15
+        12
       ],
       [
         40,
@@ -275,11 +275,11 @@
       ],
       [
         24,
-        20
+        18
       ],
       [
         43,
-        15
+        10
       ]
     ],
     "requiredLevel": 12,
@@ -293,18 +293,18 @@
     "reagents": [
       [
         2,
-        20
-      ],
-      [
-        10,
         25
       ],
       [
+        10,
+        20
+      ],
+      [
         23,
-        15
+        10
       ]
     ],
-    "requiredLevel": 8,
+    "requiredLevel": 10,
     "level": 1
   },
   {
@@ -326,7 +326,7 @@
         12
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -348,7 +348,7 @@
         10
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -370,7 +370,7 @@
         15
       ]
     ],
-    "requiredLevel": 8,
+    "requiredLevel": 11,
     "level": 1
   },
   {
@@ -392,7 +392,7 @@
         15
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -411,10 +411,10 @@
       ],
       [
         42,
-        15
+        12
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 15,
     "level": 2
   },
   {
@@ -575,7 +575,7 @@
     "reagents": [
       [
         2,
-        18
+        25
       ],
       [
         9,
@@ -597,15 +597,15 @@
     "reagents": [
       [
         10,
-        20
+        25
       ],
       [
         22,
-        18
+        20
       ],
       [
         44,
-        10
+        12
       ]
     ],
     "requiredLevel": 18,
@@ -623,11 +623,11 @@
       ],
       [
         21,
-        15
+        20
       ],
       [
         42,
-        10
+        12
       ]
     ],
     "requiredLevel": 18,
@@ -707,11 +707,11 @@
     "reagents": [
       [
         3,
-        15
+        25
       ],
       [
         6,
-        15
+        20
       ],
       [
         26,
@@ -762,7 +762,7 @@
         8
       ]
     ],
-    "requiredLevel": 12,
+    "requiredLevel": 16,
     "level": 1
   },
   {
@@ -808,5 +808,2007 @@
     ],
     "requiredLevel": 12,
     "level": 1
+  },
+  {
+    "id": 38,
+    "description": "DYNAMITE.DISTINCT.U1A",
+    "prevUpgradeId": 19,
+    "upgradeId": 338,
+    "reagents": [
+      [
+        3,
+        15
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        23,
+        12
+      ]
+    ],
+    "requiredLevel": 8,
+    "level": 1
+  },
+  {
+    "id": 39,
+    "description": "DYNAMITE.DISTINCT.U1B",
+    "prevUpgradeId": 19,
+    "upgradeId": 339,
+    "reagents": [
+      [
+        4,
+        20
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        21,
+        15
+      ]
+    ],
+    "requiredLevel": 8,
+    "level": 1
+  },
+  {
+    "id": 40,
+    "description": "CANNON.DISTINCT.U1",
+    "prevUpgradeId": 46,
+    "upgradeId": 340,
+    "reagents": [
+      [
+        6,
+        20
+      ],
+      [
+        22,
+        12
+      ],
+      [
+        40,
+        8
+      ]
+    ],
+    "requiredLevel": 16,
+    "level": 1
+  },
+  {
+    "id": 41,
+    "description": "CANNON.DISTINCT.U2",
+    "prevUpgradeId": 340,
+    "upgradeId": 341,
+    "reagents": [
+      [
+        20,
+        15
+      ],
+      [
+        43,
+        12
+      ],
+      [
+        44,
+        5
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 42,
+    "description": "SHOCKER.DISTINCT.U1",
+    "prevUpgradeId": 33,
+    "upgradeId": 342,
+    "reagents": [
+      [
+        0,
+        15
+      ],
+      [
+        10,
+        10
+      ],
+      [
+        26,
+        12
+      ]
+    ],
+    "requiredLevel": 8,
+    "level": 1
+  },
+  {
+    "id": 43,
+    "description": "CARPET_BAZOOKA.DISTINCT.U1",
+    "prevUpgradeId": 44,
+    "upgradeId": 343,
+    "reagents": [
+      [
+        2,
+        15
+      ],
+      [
+        9,
+        15
+      ],
+      [
+        20,
+        12
+      ]
+    ],
+    "requiredLevel": 8,
+    "level": 1
+  },
+  {
+    "id": 44,
+    "description": "CARPET_BAZOOKA.DISTINCT.U2A",
+    "prevUpgradeId": 343,
+    "upgradeId": 344,
+    "reagents": [
+      [
+        0,
+        20
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        42,
+        10
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 2
+  },
+  {
+    "id": 45,
+    "description": "CARPET_BAZOOKA.DISTINCT.U2B",
+    "prevUpgradeId": 343,
+    "upgradeId": 345,
+    "reagents": [
+      [
+        4,
+        20
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        41,
+        10
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 2
+  },
+  {
+    "id": 46,
+    "description": "GIRDER.DISTINCT.U1",
+    "prevUpgradeId": 53,
+    "upgradeId": 346,
+    "reagents": [
+      [
+        1,
+        20
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        44,
+        5
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 1
+  },
+  {
+    "id": 47,
+    "description": "SHEEP.DISTINCT.U1A",
+    "prevUpgradeId": 40,
+    "upgradeId": 347,
+    "reagents": [
+      [
+        1,
+        15
+      ],
+      [
+        26,
+        15
+      ],
+      [
+        41,
+        8
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 1
+  },
+  {
+    "id": 48,
+    "description": "SHEEP.DISTINCT.U1B",
+    "prevUpgradeId": 40,
+    "upgradeId": 348,
+    "reagents": [
+      [
+        6,
+        20
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        40,
+        12
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 1
+  },
+  {
+    "id": 49,
+    "description": "EMERGENCY_TELEPORT.DISTINCT.U1",
+    "prevUpgradeId": 71,
+    "upgradeId": 349,
+    "reagents": [
+      [
+        9,
+        10
+      ],
+      [
+        21,
+        8
+      ],
+      [
+        22,
+        8
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 50,
+    "description": "EMERGENCY_TELEPORT.DISTINCT.U2",
+    "prevUpgradeId": 349,
+    "upgradeId": 350,
+    "reagents": [
+      [
+        4,
+        10
+      ],
+      [
+        26,
+        15
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 51,
+    "description": "BOOMERANG.DISTINCT.U1",
+    "prevUpgradeId": 69,
+    "upgradeId": 351,
+    "reagents": [
+      [
+        2,
+        20
+      ],
+      [
+        24,
+        8
+      ],
+      [
+        26,
+        8
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 1
+  },
+  {
+    "id": 52,
+    "description": "BOOMERANG.DISTINCT.U2",
+    "prevUpgradeId": 351,
+    "upgradeId": 352,
+    "reagents": [
+      [
+        20,
+        10
+      ],
+      [
+        22,
+        30
+      ],
+      [
+        24,
+        15
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 53,
+    "description": "TELE_THROWER.DISTINCT.U1",
+    "prevUpgradeId": 34,
+    "upgradeId": 353,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        41,
+        8
+      ],
+      [
+        42,
+        12
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 54,
+    "description": "ANTIFREEZE.DISTINCT.U1",
+    "prevUpgradeId": 66,
+    "upgradeId": 354,
+    "reagents": [
+      [
+        0,
+        12
+      ],
+      [
+        9,
+        12
+      ],
+      [
+        23,
+        12
+      ]
+    ],
+    "requiredLevel": 13,
+    "level": 1
+  },
+  {
+    "id": 55,
+    "description": "ANTIFREEZE.DISTINCT.U2A",
+    "prevUpgradeId": 354,
+    "upgradeId": 355,
+    "reagents": [
+      [
+        10,
+        15
+      ],
+      [
+        23,
+        12
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 56,
+    "description": "ANTIFREEZE.DISTINCT.U2B",
+    "prevUpgradeId": 354,
+    "upgradeId": 356,
+    "reagents": [
+      [
+        3,
+        15
+      ],
+      [
+        21,
+        12
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 57,
+    "description": "PNEUMATIC_DRILL.DISTINCT.U1",
+    "prevUpgradeId": 16,
+    "upgradeId": 357,
+    "reagents": [
+      [
+        1,
+        2
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        6,
+        6
+      ]
+    ],
+    "requiredLevel": 4,
+    "level": 1
+  },
+  {
+    "id": 58,
+    "description": "PARASITE.DISTINCT.U1",
+    "prevUpgradeId": 83,
+    "upgradeId": 358,
+    "reagents": [
+      [
+        22,
+        18
+      ],
+      [
+        40,
+        6
+      ],
+      [
+        42,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 59,
+    "description": "RIFLE.DISTINCT.U2",
+    "prevUpgradeId": 324,
+    "upgradeId": 359,
+    "reagents": [
+      [
+        4,
+        20
+      ],
+      [
+        23,
+        10
+      ],
+      [
+        26,
+        10
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 2
+  },
+  {
+    "id": 60,
+    "description": "SNIPER_RIFLE.DISTINCT.U2A",
+    "prevUpgradeId": 313,
+    "upgradeId": 360,
+    "reagents": [
+      [
+        23,
+        15
+      ],
+      [
+        24,
+        20
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 61,
+    "description": "SNIPER_RIFLE.DISTINCT.U2B",
+    "prevUpgradeId": 313,
+    "upgradeId": 361,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        21,
+        18
+      ],
+      [
+        43,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 62,
+    "description": "AIR_STRIKE.DISTINCT.U1",
+    "prevUpgradeId": 27,
+    "upgradeId": 362,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        43,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 63,
+    "description": "NEGATOR.DISTINCT.U1",
+    "prevUpgradeId": 82,
+    "upgradeId": 363,
+    "reagents": [
+      [
+        9,
+        20
+      ],
+      [
+        26,
+        18
+      ],
+      [
+        44,
+        8
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 64,
+    "description": "NEGATOR.DISTINCT.U2A",
+    "prevUpgradeId": 363,
+    "upgradeId": 364,
+    "reagents": [
+      [
+        3,
+        25
+      ],
+      [
+        22,
+        25
+      ],
+      [
+        42,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 65,
+    "description": "NEGATOR.DISTINCT.U2B",
+    "prevUpgradeId": 363,
+    "upgradeId": 365,
+    "reagents": [
+      [
+        24,
+        20
+      ],
+      [
+        26,
+        18
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 66,
+    "description": "THUNDERBOLT.DISTINCT.U1",
+    "prevUpgradeId": 74,
+    "upgradeId": 366,
+    "reagents": [
+      [
+        21,
+        20
+      ],
+      [
+        40,
+        18
+      ],
+      [
+        41,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 67,
+    "description": "GAS_GRENADE.DISTINCT.U1",
+    "prevUpgradeId": 81,
+    "upgradeId": 367,
+    "reagents": [
+      [
+        2,
+        25
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 68,
+    "description": "SHOCKER.DISTINCT.U2",
+    "prevUpgradeId": 342,
+    "upgradeId": 368,
+    "reagents": [
+      [
+        4,
+        20
+      ],
+      [
+        9,
+        20
+      ],
+      [
+        41,
+        8
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 2
+  },
+  {
+    "id": 69,
+    "description": "BUNKER_BUSTER.DISTINCT.U1",
+    "prevUpgradeId": 58,
+    "upgradeId": 369,
+    "reagents": [
+      [
+        1,
+        20
+      ],
+      [
+        24,
+        20
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 70,
+    "description": "METEOR.DISTINCT.U1",
+    "prevUpgradeId": 28,
+    "upgradeId": 370,
+    "reagents": [
+      [
+        3,
+        20
+      ],
+      [
+        20,
+        25
+      ],
+      [
+        23,
+        25
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 71,
+    "description": "TELEPORT.DISTINCT.U1A",
+    "prevUpgradeId": 26,
+    "upgradeId": 371,
+    "reagents": [
+      [
+        0,
+        15
+      ],
+      [
+        10,
+        15
+      ],
+      [
+        21,
+        10
+      ]
+    ],
+    "requiredLevel": 8,
+    "level": 1
+  },
+  {
+    "id": 72,
+    "description": "MOLOTOV.DISTINCT.U1",
+    "prevUpgradeId": 37,
+    "upgradeId": 372,
+    "reagents": [
+      [
+        6,
+        30
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        42,
+        8
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 73,
+    "description": "AK_47.DISTINCT.U1",
+    "prevUpgradeId": 52,
+    "upgradeId": 373,
+    "reagents": [
+      [
+        2,
+        30
+      ],
+      [
+        10,
+        30
+      ],
+      [
+        24,
+        12
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 74,
+    "description": "CARPET_STRIKE.DISTINCT.U1",
+    "prevUpgradeId": 36,
+    "upgradeId": 374,
+    "reagents": [
+      [
+        3,
+        40
+      ],
+      [
+        22,
+        20
+      ],
+      [
+        42,
+        15
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 1
+  },
+  {
+    "id": 75,
+    "description": "LASER_GUN.DISTINCT.U1",
+    "prevUpgradeId": 94,
+    "upgradeId": 375,
+    "reagents": [
+      [
+        0,
+        35
+      ],
+      [
+        21,
+        15
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 22,
+    "level": 1
+  },
+  {
+    "id": 76,
+    "description": "LASER_GUN.DISTINCT.U2A",
+    "prevUpgradeId": 375,
+    "upgradeId": 376,
+    "reagents": [
+      [
+        9,
+        35
+      ],
+      [
+        26,
+        20
+      ],
+      [
+        40,
+        15
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 77,
+    "description": "LASER_GUN.DISTINCT.U2B",
+    "prevUpgradeId": 375,
+    "upgradeId": 377,
+    "reagents": [
+      [
+        4,
+        45
+      ],
+      [
+        41,
+        15
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 78,
+    "description": "NAPALM_STRIKE.DISTINCT.U1",
+    "prevUpgradeId": 43,
+    "upgradeId": 378,
+    "reagents": [
+      [
+        6,
+        25
+      ],
+      [
+        26,
+        18
+      ],
+      [
+        41,
+        8
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 79,
+    "description": "ROPE.DISTINCT.U1",
+    "prevUpgradeId": 49,
+    "upgradeId": 379,
+    "reagents": [
+      [
+        1,
+        25
+      ],
+      [
+        10,
+        10
+      ],
+      [
+        24,
+        15
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 80,
+    "description": "GRAVITY_GUN.DISTINCT.U1",
+    "prevUpgradeId": 73,
+    "upgradeId": 380,
+    "reagents": [
+      [
+        0,
+        20
+      ],
+      [
+        1,
+        25
+      ],
+      [
+        21,
+        10
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 1
+  },
+  {
+    "id": 81,
+    "description": "UFO.DISTINCT.U1",
+    "prevUpgradeId": 65,
+    "upgradeId": 381,
+    "reagents": [
+      [
+        0,
+        20
+      ],
+      [
+        1,
+        20
+      ],
+      [
+        20,
+        20
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 82,
+    "description": "UFO.DISTINCT.U2",
+    "prevUpgradeId": 381,
+    "upgradeId": 382,
+    "reagents": [
+      [
+        22,
+        25
+      ],
+      [
+        24,
+        20
+      ],
+      [
+        42,
+        15
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 83,
+    "description": "SUPER_SHEEP.DISTINCT.U1",
+    "prevUpgradeId": 41,
+    "upgradeId": 383,
+    "reagents": [
+      [
+        6,
+        25
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        41,
+        5
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 84,
+    "description": "SUPER_SHEEP.DISTINCT.U2",
+    "prevUpgradeId": 383,
+    "upgradeId": 384,
+    "reagents": [
+      [
+        10,
+        35
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 85,
+    "description": "AK_47.DISTINCT.U2",
+    "prevUpgradeId": 373,
+    "upgradeId": 385,
+    "reagents": [
+      [
+        2,
+        40
+      ],
+      [
+        26,
+        20
+      ],
+      [
+        44,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 86,
+    "description": "PNEUMATIC_DRILL.DISTINCT.U2",
+    "prevUpgradeId": 357,
+    "upgradeId": 386,
+    "reagents": [
+      [
+        1,
+        20
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        26,
+        10
+      ]
+    ],
+    "requiredLevel": 12,
+    "level": 2
+  },
+  {
+    "id": 87,
+    "description": "BARRIER.DISTINCT.U2",
+    "prevUpgradeId": 335,
+    "upgradeId": 387,
+    "reagents": [
+      [
+        20,
+        15
+      ],
+      [
+        21,
+        15
+      ],
+      [
+        42,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 88,
+    "description": "BUNKER_BUSTER.DISTINCT.U2",
+    "prevUpgradeId": 369,
+    "upgradeId": 388,
+    "reagents": [
+      [
+        3,
+        25
+      ],
+      [
+        22,
+        20
+      ],
+      [
+        44,
+        12
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 89,
+    "description": "HOLY_GRENADE.DISTINCT.U2",
+    "prevUpgradeId": 336,
+    "upgradeId": 389,
+    "reagents": [
+      [
+        9,
+        30
+      ],
+      [
+        23,
+        20
+      ],
+      [
+        41,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 90,
+    "description": "GRAVITY_GUN.DISTINCT.U2",
+    "prevUpgradeId": 380,
+    "upgradeId": 390,
+    "reagents": [
+      [
+        22,
+        20
+      ],
+      [
+        26,
+        20
+      ],
+      [
+        41,
+        10
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 91,
+    "description": "FREEZER.DISTINCT.U1",
+    "prevUpgradeId": 54,
+    "upgradeId": 391,
+    "reagents": [
+      [
+        4,
+        25
+      ],
+      [
+        20,
+        15
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 92,
+    "description": "PUSHING_MINE.DISTINCT.U1",
+    "prevUpgradeId": 109,
+    "upgradeId": 392,
+    "reagents": [
+      [
+        0,
+        30
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        41,
+        8
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 1
+  },
+  {
+    "id": 93,
+    "description": "SLEDGEHAMMER.DISTINCT.U1",
+    "prevUpgradeId": 47,
+    "upgradeId": 393,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        40,
+        8
+      ],
+      [
+        44,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 94,
+    "description": "BAT.DISTINCT.U1",
+    "prevUpgradeId": 51,
+    "upgradeId": 394,
+    "reagents": [
+      [
+        2,
+        30
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        44,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 95,
+    "description": "WATERMELON.DISTINCT.U1",
+    "prevUpgradeId": 24,
+    "upgradeId": 395,
+    "reagents": [
+      [
+        1,
+        30
+      ],
+      [
+        10,
+        30
+      ],
+      [
+        42,
+        12
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 96,
+    "description": "EMERGENCY_TELEPORT.DISTINCT.U3",
+    "prevUpgradeId": 350,
+    "upgradeId": 396,
+    "reagents": [
+      [
+        20,
+        15
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 3
+  },
+  {
+    "id": 97,
+    "description": "GIRDER.DISTINCT.U2",
+    "prevUpgradeId": 346,
+    "upgradeId": 397,
+    "reagents": [
+      [
+        4,
+        25
+      ],
+      [
+        26,
+        15
+      ],
+      [
+        44,
+        5
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 98,
+    "description": "ROPE.DISTINCT.U2",
+    "prevUpgradeId": 379,
+    "upgradeId": 398,
+    "reagents": [
+      [
+        2,
+        20
+      ],
+      [
+        9,
+        20
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 99,
+    "description": "SLEDGEHAMMER.DISTINCT.U1B",
+    "prevUpgradeId": 47,
+    "upgradeId": 399,
+    "reagents": [
+      [
+        2,
+        25
+      ],
+      [
+        22,
+        25
+      ],
+      [
+        24,
+        25
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 1
+  },
+  {
+    "id": 100,
+    "description": "SUPER_SHEEP.DISTINCT.U2B",
+    "prevUpgradeId": 383,
+    "upgradeId": 400,
+    "reagents": [
+      [
+        6,
+        10
+      ],
+      [
+        23,
+        25
+      ],
+      [
+        43,
+        15
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 101,
+    "description": "SNOWFLAKE_STRIKE.DISTINCT.U1",
+    "prevUpgradeId": 105,
+    "upgradeId": 401,
+    "reagents": [
+      [
+        20,
+        15
+      ],
+      [
+        21,
+        15
+      ],
+      [
+        41,
+        15
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 102,
+    "description": "SNOWFLAKE_STRIKE.DISTINCT.U2A",
+    "prevUpgradeId": 401,
+    "upgradeId": 402,
+    "reagents": [
+      [
+        3,
+        40
+      ],
+      [
+        6,
+        40
+      ],
+      [
+        23,
+        30
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 103,
+    "description": "SNOWFLAKE_STRIKE.DISTINCT.U2B",
+    "prevUpgradeId": 401,
+    "upgradeId": 403,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        40,
+        12
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 104,
+    "description": "TELEPORT_ANCHOR.DISTINCT.U1",
+    "prevUpgradeId": 116,
+    "upgradeId": 404,
+    "reagents": [
+      [
+        9,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        42,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 1
+  },
+  {
+    "id": 105,
+    "description": "TELEPORT_ANCHOR.DISTINCT.U2",
+    "prevUpgradeId": 404,
+    "upgradeId": 405,
+    "reagents": [
+      [
+        1,
+        20
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        42,
+        10
+      ]
+    ],
+    "requiredLevel": 27,
+    "level": 2
+  },
+  {
+    "id": 106,
+    "description": "GIRDER_GUN.DISTINCT.U1",
+    "prevUpgradeId": 117,
+    "upgradeId": 406,
+    "reagents": [
+      [
+        2,
+        15
+      ],
+      [
+        22,
+        15
+      ],
+      [
+        26,
+        15
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 107,
+    "description": "FIRE_THROWER.DISTINCT.U1",
+    "prevUpgradeId": 30,
+    "upgradeId": 407,
+    "reagents": [
+      [
+        6,
+        20
+      ],
+      [
+        23,
+        15
+      ],
+      [
+        43,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 108,
+    "description": "DRILL.DISTINCT.U1",
+    "prevUpgradeId": 12,
+    "upgradeId": 408,
+    "reagents": [
+      [
+        1,
+        10
+      ],
+      [
+        26,
+        15
+      ],
+      [
+        44,
+        5
+      ]
+    ],
+    "requiredLevel": 10,
+    "level": 1
+  },
+  {
+    "id": 109,
+    "description": "DRILL.DISTINCT.U2",
+    "prevUpgradeId": 408,
+    "upgradeId": 409,
+    "reagents": [
+      [
+        4,
+        15
+      ],
+      [
+        26,
+        15
+      ],
+      [
+        43,
+        8
+      ]
+    ],
+    "requiredLevel": 18,
+    "level": 2
+  },
+  {
+    "id": 110,
+    "description": "PARASITE.DISTINCT.U2",
+    "prevUpgradeId": 358,
+    "upgradeId": 410,
+    "reagents": [
+      [
+        0,
+        30
+      ],
+      [
+        9,
+        30
+      ],
+      [
+        41,
+        12
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 111,
+    "description": "BOULDER.DISTINCT.U1",
+    "prevUpgradeId": 95,
+    "upgradeId": 411,
+    "reagents": [
+      [
+        3,
+        30
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 112,
+    "description": "TELEPORT.DISTINCT.U1B",
+    "prevUpgradeId": 26,
+    "upgradeId": 412,
+    "reagents": [
+      [
+        0,
+        15
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        40,
+        8
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 113,
+    "description": "GUARDING_BOT.DISTINCT.U1A",
+    "prevUpgradeId": 60,
+    "upgradeId": 413,
+    "reagents": [
+      [
+        4,
+        20
+      ],
+      [
+        24,
+        20
+      ],
+      [
+        42,
+        12
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 114,
+    "description": "AIR_BLOCKER.DISTINCT.U1",
+    "prevUpgradeId": 107,
+    "upgradeId": 414,
+    "reagents": [
+      [
+        1,
+        30
+      ],
+      [
+        22,
+        20
+      ],
+      [
+        43,
+        12
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 1
+  },
+  {
+    "id": 115,
+    "description": "GUARDING_BOT.DISTINCT.U1B",
+    "prevUpgradeId": 60,
+    "upgradeId": 415,
+    "reagents": [
+      [
+        2,
+        20
+      ],
+      [
+        10,
+        30
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 116,
+    "description": "BOULDER.DISTINCT.U2",
+    "prevUpgradeId": 411,
+    "upgradeId": 416,
+    "reagents": [
+      [
+        3,
+        20
+      ],
+      [
+        24,
+        20
+      ],
+      [
+        43,
+        8
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 117,
+    "description": "FREEZER.DISTINCT.U2A",
+    "prevUpgradeId": 391,
+    "upgradeId": 417,
+    "reagents": [
+      [
+        20,
+        15
+      ],
+      [
+        26,
+        20
+      ],
+      [
+        44,
+        12
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 118,
+    "description": "FREEZER.DISTINCT.U1B",
+    "prevUpgradeId": 54,
+    "upgradeId": 418,
+    "reagents": [
+      [
+        9,
+        25
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        40,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 119,
+    "description": "FREEZER.DISTINCT.U2B",
+    "prevUpgradeId": 418,
+    "upgradeId": 419,
+    "reagents": [
+      [
+        20,
+        20
+      ],
+      [
+        22,
+        15
+      ],
+      [
+        43,
+        12
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 120,
+    "description": "GAS_GRENADE.DISTINCT.U1B",
+    "prevUpgradeId": 81,
+    "upgradeId": 420,
+    "reagents": [
+      [
+        6,
+        30
+      ],
+      [
+        21,
+        15
+      ],
+      [
+        41,
+        10
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 121,
+    "description": "SPIDER.DISTINCT.U1B",
+    "prevUpgradeId": 48,
+    "upgradeId": 421,
+    "reagents": [
+      [
+        0,
+        25
+      ],
+      [
+        4,
+        25
+      ],
+      [
+        42,
+        5
+      ]
+    ],
+    "requiredLevel": 15,
+    "level": 1
+  },
+  {
+    "id": 122,
+    "description": "HOLY_GRENADE.DISTINCT.U2B",
+    "prevUpgradeId": 336,
+    "upgradeId": 422,
+    "reagents": [
+      [
+        23,
+        20
+      ],
+      [
+        24,
+        15
+      ],
+      [
+        26,
+        15
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 123,
+    "description": "AIR_BLOCKER.DISTINCT.U1B",
+    "prevUpgradeId": 107,
+    "upgradeId": 423,
+    "reagents": [
+      [
+        10,
+        30
+      ],
+      [
+        22,
+        20
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 1
+  },
+  {
+    "id": 124,
+    "description": "SOUL_GUN.DISTINCT.U1",
+    "prevUpgradeId": 86,
+    "upgradeId": 424,
+    "reagents": [
+      [
+        9,
+        10
+      ],
+      [
+        23,
+        10
+      ],
+      [
+        43,
+        15
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 1
+  },
+  {
+    "id": 125,
+    "description": "SOUL_GUN.DISTINCT.U2A",
+    "prevUpgradeId": 424,
+    "upgradeId": 425,
+    "reagents": [
+      [
+        1,
+        35
+      ],
+      [
+        20,
+        15
+      ],
+      [
+        42,
+        10
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 126,
+    "description": "SOUL_GUN.DISTINCT.U2B",
+    "prevUpgradeId": 424,
+    "upgradeId": 426,
+    "reagents": [
+      [
+        9,
+        30
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        40,
+        8
+      ]
+    ],
+    "requiredLevel": 24,
+    "level": 2
+  },
+  {
+    "id": 127,
+    "description": "BAT.DISTINCT.U2A",
+    "prevUpgradeId": 394,
+    "upgradeId": 427,
+    "reagents": [
+      [
+        6,
+        40
+      ],
+      [
+        23,
+        20
+      ],
+      [
+        41,
+        5
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
+  },
+  {
+    "id": 128,
+    "description": "BAT.DISTINCT.U2B",
+    "prevUpgradeId": 394,
+    "upgradeId": 428,
+    "reagents": [
+      [
+        2,
+        30
+      ],
+      [
+        22,
+        15
+      ],
+      [
+        44,
+        12
+      ]
+    ],
+    "requiredLevel": 21,
+    "level": 2
   }
 ]
