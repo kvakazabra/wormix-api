@@ -35,15 +35,18 @@ class InitGameData extends Command
 
     private function parseNames():void
     {
-        $this->info('Parsing strings from items_messages_ru.xml');
-        $items_messages_path = resource_path('game/items.messages_ru.xml');
-        if(!File::exists($items_messages_path)){
-            $this->error("Can't find items.messages_ru.xml in resources");
+        $this->info('Parsing strings from items.xml');
+        $items_messages_path = resource_path('game/items.xml');
+        if(!File::exists($items_messages_path))
+        {
+            $this->warn("Can't find items.xml in resources");
             return;
         }
+
         $messages_array = simplexml_load_file($items_messages_path);
         $messages_object = [];
-        foreach($messages_array->children() as $message){
+        foreach($messages_array->children() as $message)
+        {
             $messages_object[(string)$message['name']] = (string)$message['value'];
         }
         $this->messages = $messages_object;
