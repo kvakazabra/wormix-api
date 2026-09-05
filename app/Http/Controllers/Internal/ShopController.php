@@ -206,6 +206,10 @@ class ShopController extends Controller
         $race = Race::query()
             ->where('race_id', $request->json('RaceId'))
             ->first();
+        if(!$race->playable)
+        {
+            return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
+        }
 
         if ($userWorm->race === $request->json('RaceId'))
         {
