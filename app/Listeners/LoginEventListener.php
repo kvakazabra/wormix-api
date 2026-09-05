@@ -67,8 +67,12 @@ class LoginEventListener
 
         //Check current hat
         $race_and_hat = WormixTrashHelper::getRaceAndHatIds($user->worm_data->hat);
-        $current_hat = UserWeapon::query()->where('id', $race_and_hat[1])->get()->first();
-        if($current_hat != null && @$current_hat->expire_at < time()){
+        $current_hat = UserWeapon::query()
+            ->where('owner_id', $user->id)
+            ->where('weapon_id', $race_and_hat[1])
+            ->first();
+        if ($current_hat != null && $current_hat->expire_at < time())
+        {
             //Reset expired hat
             $new_hat = WormixTrashHelper::getHatByRaceAndHatIds(0, $race_and_hat[0]);
             $user_worm = $user->worm_data;
