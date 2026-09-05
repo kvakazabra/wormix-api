@@ -159,5 +159,26 @@
     "description": "SEARCH_ZONE_GRADE_B",
     "menuIcon": "IconTitanBar",
     "price": 150
+  },
+  {
+    "id": 50,
+    "name": "BADGE",
+    "description": "SEARCH_ZONE_GRADE_S",
+    "menuIcon": "IconBadge",
+    "price": 500
+  },
+  {
+    "id": 51,
+    "name": "CRATE_KEY",
+    "description": "CHRISTMAS_KEY_DESCRIPTION",
+    "menuIcon": "IconChristmasKey",
+    "price": 999999
+  },
+  {
+    "id": 52,
+    "name": "TOXY",
+    "description": "TOXY_DESCRIPTION",
+    "menuIcon": "IconToxy",
+    "price": 999999
   }
 ]
