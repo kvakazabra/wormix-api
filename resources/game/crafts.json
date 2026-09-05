@@ -1,0 +1,705 @@
+[
+  {
+    "familyId": 1500,
+    "name": "HAT.CRAFT_SAMURAI_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1500,
+      "realprice": 15,
+      "badge": 2,
+      "equipment": [
+        1011
+      ]
+    },
+    "remakeCost": {
+      "price": 800,
+      "realprice": 8,
+      "badge": 2,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1510,
+    "name": "HAT.CRAFT_RESPIRATOR",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1200,
+      "realprice": 12,
+      "badge": 4,
+      "equipment": [
+        1030,
+        1005
+      ]
+    },
+    "remakeCost": {
+      "price": 3000,
+      "realprice": 30,
+      "badge": 6,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1520,
+    "name": "HAT.CRAFT_PSYKER_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 8,
+      "equipment": [
+        1075,
+        1015
+      ]
+    },
+    "remakeCost": {
+      "price": 2800,
+      "realprice": 28,
+      "badge": 8,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1530,
+    "name": "HAT.CRAFT_CHAMPION_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 6,
+      "equipment": [
+        2014,
+        1065,
+        2005
+      ]
+    },
+    "remakeCost": {
+      "price": 3200,
+      "realprice": 32,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1540,
+    "name": "HAT.CRAFT_SPEC_OPS",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1500,
+      "realprice": 15,
+      "badge": 8,
+      "equipment": [
+        1066,
+        1024
+      ]
+    },
+    "remakeCost": {
+      "price": 4400,
+      "realprice": 44,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1550,
+    "name": "HAT.STEAMPUNK_GLASSES",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1200,
+      "realprice": 12,
+      "badge": 6,
+      "equipment": [
+        1057,
+        1091
+      ]
+    },
+    "remakeCost": {
+      "price": 2000,
+      "realprice": 20,
+      "badge": 8,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1560,
+    "name": "HAT.NORDIC_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 8,
+      "equipment": [
+        1004,
+        1064
+      ]
+    },
+    "remakeCost": {
+      "price": 2800,
+      "realprice": 28,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1570,
+    "name": "HAT.FIRESHEEP_HAT",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 10,
+      "equipment": [
+        1080,
+        1000
+      ]
+    },
+    "remakeCost": {
+      "price": 4600,
+      "realprice": 46,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1580,
+    "name": "HAT.FIRE_MASK",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2200,
+      "realprice": 22,
+      "badge": 10,
+      "equipment": [
+        1074,
+        1096
+      ]
+    },
+    "remakeCost": {
+      "price": 5000,
+      "realprice": 50,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1590,
+    "name": "HAT.VILE_MASK",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1600,
+      "realprice": 16,
+      "badge": 8,
+      "equipment": [
+        1055,
+        1028,
+        1040
+      ]
+    },
+    "remakeCost": {
+      "price": 5200,
+      "realprice": 52,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1600,
+    "name": "HAT.GENERAL_CAP",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 10,
+      "equipment": [
+        1052,
+        1014,
+        1135
+      ]
+    },
+    "remakeCost": {
+      "price": 4800,
+      "realprice": 48,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1610,
+    "name": "HAT.HELM_SAPPER",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 4,
+      "equipment": [
+        1062,
+        1038,
+        2028
+      ]
+    },
+    "remakeCost": {
+      "price": 3600,
+      "realprice": 36,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1620,
+    "name": "HAT.RAVEN_MASK",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 6,
+      "equipment": [
+        1061,
+        1079,
+        1103
+      ]
+    },
+    "remakeCost": {
+      "price": 5200,
+      "realprice": 52,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1630,
+    "name": "HAT.FIEND_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 6,
+      "equipment": [
+        1010,
+        1012
+      ]
+    },
+    "remakeCost": {
+      "price": 2200,
+      "realprice": 22,
+      "badge": 6,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1640,
+    "name": "HAT.HELL_RACER_HELM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1600,
+      "realprice": 16,
+      "badge": 6,
+      "equipment": [
+        1063,
+        1042
+      ]
+    },
+    "remakeCost": {
+      "price": 3000,
+      "realprice": 30,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1650,
+    "name": "HAT.SITH_HOOD",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2200,
+      "realprice": 22,
+      "badge": 10,
+      "equipment": [
+        1121,
+        1095,
+        1129
+      ]
+    },
+    "remakeCost": {
+      "price": 5800,
+      "realprice": 58,
+      "badge": 18,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1660,
+    "name": "HAT.SURGEON_BAND",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 8,
+      "equipment": [
+        1056,
+        1058,
+        1123
+      ]
+    },
+    "remakeCost": {
+      "price": 6200,
+      "realprice": 62,
+      "badge": 20,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1680,
+    "name": "HAT.WOLF_PELT",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1670,
+    "name": "HAT.SPORTS_CAP",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1690,
+    "name": "HAT.HOCKEY_HELM",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1700,
+    "name": "HAT.KNIGHT_HELM",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1710,
+    "name": "HAT.STRATEGIST_HAT",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2500,
+    "name": "ARTIFACT.CRAFT_CHROME_SHIELD",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 400,
+      "realprice": 4,
+      "badge": 4,
+      "equipment": [
+        2008,
+        2001,
+        2002
+      ]
+    },
+    "remakeCost": {
+      "price": 1200,
+      "realprice": 12,
+      "badge": 3,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2510,
+    "name": "ARTIFACT.CRAFT_BLADE",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 600,
+      "realprice": 6,
+      "badge": 4,
+      "equipment": [
+        2003,
+        2004
+      ]
+    },
+    "remakeCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 4,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2520,
+    "name": "ARTIFACT.ARHI_SWORD",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1500,
+      "realprice": 15,
+      "badge": 8,
+      "equipment": [
+        2003,
+        2010,
+        2007
+      ]
+    },
+    "remakeCost": {
+      "price": 3600,
+      "realprice": 36,
+      "badge": 12,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2530,
+    "name": "ARTIFACT.SNAKE_STAFF",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 7,
+      "equipment": [
+        2006,
+        2009
+      ]
+    },
+    "remakeCost": {
+      "price": 2400,
+      "realprice": 24,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2540,
+    "name": "ARTIFACT.JAWBLADE",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2000,
+      "realprice": 20,
+      "badge": 8,
+      "equipment": [
+        2021,
+        2012
+      ]
+    },
+    "remakeCost": {
+      "price": 4600,
+      "realprice": 46,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2550,
+    "name": "ARTIFACT.FROST_SHIELD",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1600,
+      "realprice": 16,
+      "badge": 6,
+      "equipment": [
+        2019,
+        2015
+      ]
+    },
+    "remakeCost": {
+      "price": 3800,
+      "realprice": 38,
+      "badge": 10,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2560,
+    "name": "ARTIFACT.BLAZING_AXE",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2400,
+      "realprice": 24,
+      "badge": 10,
+      "equipment": [
+        2023,
+        1702
+      ]
+    },
+    "remakeCost": {
+      "price": 4200,
+      "realprice": 42,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2570,
+    "name": "ARTIFACT.HAM_MACE",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 4,
+      "equipment": [
+        2029
+      ]
+    },
+    "remakeCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 6,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2580,
+    "name": "ARTIFACT.DEATH_HAMMER",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 3200,
+      "realprice": 32,
+      "badge": 10,
+      "equipment": [
+        2039,
+        2019
+      ]
+    },
+    "remakeCost": {
+      "price": 5400,
+      "realprice": 54,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2590,
+    "name": "ARTIFACT.JEDI_SWORD_RED",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2600,
+    "name": "ARTIFACT.JEDI_SWORD_RED_CROSS",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2610,
+    "name": "ARTIFACT.HEALER_STAFF",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2000,
+      "realprice": 20,
+      "badge": 10,
+      "equipment": [
+        2011,
+        2017,
+        1117
+      ]
+    },
+    "remakeCost": {
+      "price": 5400,
+      "realprice": 54,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2620,
+    "name": "ARTIFACT.STRATEGIST_FAN",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 3000,
+      "realprice": 30,
+      "badge": 10,
+      "equipment": [
+        2036,
+        1712
+      ]
+    },
+    "remakeCost": {
+      "price": 5200,
+      "realprice": 52,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2630,
+    "name": "ARTIFACT.MIRAGE",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 3000,
+      "realprice": 30,
+      "badge": 10,
+      "equipment": [
+        1059,
+        2046,
+        2020
+      ]
+    },
+    "remakeCost": {
+      "price": 5200,
+      "realprice": 52,
+      "badge": 14,
+      "equipment": []
+    }
+  }
+]
