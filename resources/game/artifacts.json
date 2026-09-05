@@ -1,0 +1,401 @@
+[
+  {
+    "id": 2001,
+    "name": "ARTIFACT.WOODEN_SHIELD",
+    "price": 1000,
+    "realprice": 10,
+    "requiredLevel": 8,
+    "requiredRating": 40
+  },
+  {
+    "id": 2002,
+    "name": "ARTIFACT.TRAINING_SHIELD",
+    "price": 1200,
+    "realprice": 12,
+    "requiredLevel": 10,
+    "requiredRating": 100
+  },
+  {
+    "id": 2003,
+    "name": "ARTIFACT.BROKEN_SWORD",
+    "realprice": 16
+  },
+  {
+    "id": 2004,
+    "name": "ARTIFACT.WHINGER",
+    "price": 1000,
+    "realprice": 10,
+    "requiredLevel": 8,
+    "requiredRating": 40
+  },
+  {
+    "id": 2005,
+    "name": "ARTIFACT.TALISMAN",
+    "price": 2200,
+    "realprice": 22,
+    "requiredLevel": 12,
+    "requiredRating": 500
+  },
+  {
+    "id": 2006,
+    "name": "ARTIFACT.SKULL_STAFF",
+    "realprice": 26,
+    "requiredLevel": 1
+  },
+  {
+    "id": 2007,
+    "name": "ARTIFACT.SHIELD_ARCHDEMON",
+    "price": 99999,
+    "realprice": 99999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23,
+    "requiredRating": 0
+  },
+  {
+    "id": 2008,
+    "name": "ARTIFACT.METAL_SHIELD",
+    "price": 1800,
+    "realprice": 18,
+    "requiredLevel": 12,
+    "requiredRating": 300
+  },
+  {
+    "id": 2009,
+    "name": "ARTIFACT.JEDI_SWORD",
+    "price": 2400,
+    "realprice": 24,
+    "requiredLevel": 14,
+    "requiredRating": 800
+  },
+  {
+    "id": 2010,
+    "name": "ARTIFACT.TOTEM_FIRE",
+    "price": 2700,
+    "realprice": 27,
+    "requiredLevel": 14,
+    "requiredRating": 1000
+  },
+  {
+    "id": 2011,
+    "name": "ARTIFACT.TOTEM_POISON",
+    "realprice": 28,
+    "requiredLevel": 1
+  },
+  {
+    "id": 2013,
+    "name": "ARTIFACT.PIRATE_HOOK",
+    "price": 4200,
+    "realprice": 42,
+    "requiredLevel": 18,
+    "requiredRating": 3000
+  },
+  {
+    "id": 2012,
+    "name": "ARTIFACT.SAW",
+    "price": 3000,
+    "realprice": 30,
+    "requiredLevel": 16,
+    "requiredRating": 1200
+  },
+  {
+    "id": 2014,
+    "name": "ARTIFACT.PALADIN_SWORD",
+    "price": 2000,
+    "realprice": 20,
+    "requiredScenario": 101
+  },
+  {
+    "id": 2015,
+    "name": "ARTIFACT.ROBO_SHIELD",
+    "price": 2800,
+    "realprice": 28,
+    "requiredLevel": 14,
+    "requiredRating": 1000
+  },
+  {
+    "id": 2016,
+    "name": "ARTIFACT.JARL_SPEAR",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 12
+  },
+  {
+    "id": 2017,
+    "name": "ARTIFACT.JARL_STONE_HAMMER",
+    "price": 6400,
+    "realprice": 64,
+    "requiredLevel": 22,
+    "requiredRating": 7000
+  },
+  {
+    "id": 2018,
+    "name": "ARTIFACT.ARCHBOT_TOTEM",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2019,
+    "name": "ARTIFACT.ICE_SHARD",
+    "realprice": 42,
+    "requiredLevel": 1
+  },
+  {
+    "id": 2020,
+    "name": "ARTIFACT.WATER_SWORD",
+    "price": 8999,
+    "realprice": 89,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2021,
+    "name": "ARTIFACT.VAMPIRIC_SWORD",
+    "price": 3200,
+    "realprice": 32,
+    "requiredLevel": 16,
+    "requiredRating": 1800
+  },
+  {
+    "id": 2022,
+    "name": "ARTIFACT.MORGENSHTERN",
+    "price": 9999,
+    "realprice": 99,
+    "requiredLevel": 1,
+    "hideInShop": true
+  },
+  {
+    "id": 2024,
+    "name": "ARTIFACT.DEATH_TORCH",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2023,
+    "name": "ARTIFACT.FIERY_DAGGER",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2025,
+    "name": "ARTIFACT.EMPEROR",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2026,
+    "name": "ARTIFACT.SCIENTIST",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2027,
+    "name": "ARTIFACT.SYMBIOTE",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2028,
+    "name": "ARTIFACT.SHOVEL_SAPPER",
+    "price": 3400,
+    "realprice": 34,
+    "requiredLevel": 18,
+    "requiredRating": 2000
+  },
+  {
+    "id": 2029,
+    "name": "ARTIFACT.GNAWED_BONE",
+    "price": 600,
+    "realprice": 6,
+    "requiredLevel": 10,
+    "requiredScenario": 7
+  },
+  {
+    "id": 2030,
+    "name": "ARTIFACT.PROVOKER_SHIELD",
+    "price": 4400,
+    "realprice": 44,
+    "requiredLevel": 18,
+    "requiredRating": 3000
+  },
+  {
+    "id": 2031,
+    "name": "ARTIFACT.GRAVITY_MASTER_SHIELD",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2032,
+    "name": "ARTIFACT.TANK_SHIELD",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2033,
+    "name": "ARTIFACT.ARMY_KNIFE",
+    "price": 3600,
+    "realprice": 36,
+    "requiredLevel": 18,
+    "requiredRating": 1400
+  },
+  {
+    "id": 2034,
+    "name": "ARTIFACT.SOLAR_SICKLE",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2035,
+    "name": "ARTIFACT.MIRROR_SHIELD",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2036,
+    "name": "ARTIFACT.ARCTIC_SWORD",
+    "price": 9999,
+    "realprice": 9999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2037,
+    "name": "ARTIFACT.SUPER_MORGENSHTERN",
+    "price": 9999,
+    "realprice": 99,
+    "requiredLevel": 1,
+    "hideInShop": true
+  },
+  {
+    "id": 2038,
+    "name": "ARTIFACT.BLACKSMITH_HAMMER",
+    "price": 9999,
+    "realprice": 99,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2039,
+    "name": "ARTIFACT.SOUL_MASTER_STAFF",
+    "price": 9999,
+    "realprice": 99,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2040,
+    "name": "ARTIFACT.BOTTLE_ROSE",
+    "price": 99999,
+    "realprice": 99999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2041,
+    "name": "ARTIFACT.PICK",
+    "price": 99999,
+    "realprice": 99999,
+    "requiredLevel": 1,
+    "hideInShop": true,
+    "duration": 23
+  },
+  {
+    "id": 2042,
+    "name": "ARTIFACT.FIRE_FIGHTER_AXE",
+    "price": 5600,
+    "realprice": 56,
+    "requiredLevel": 20,
+    "requiredRating": 5000
+  },
+  {
+    "id": 2043,
+    "name": "ARTIFACT.COLT_M",
+    "realprice": 55,
+    "requiredLevel": 1
+  },
+  {
+    "id": 2044,
+    "name": "ARTIFACT.TOPOGRAPHIC_MAP",
+    "price": 1400,
+    "realprice": 14,
+    "requiredLevel": 11,
+    "requiredRating": 300
+  },
+  {
+    "id": 2045,
+    "name": "ARTIFACT.FLAMBEAU",
+    "price": 4000,
+    "realprice": 40,
+    "requiredLevel": 22,
+    "requiredRating": 2000
+  },
+  {
+    "id": 2046,
+    "name": "ARTIFACT.GOLDEN_HORN",
+    "price": 3800,
+    "realprice": 38,
+    "requiredLevel": 19,
+    "requiredRating": 3000
+  },
+  {
+    "id": 2047,
+    "name": "ARTIFACT.WINE_HORN",
+    "price": 1500,
+    "realprice": 15,
+    "requiredLevel": 1,
+    "hideInShop": true
+  },
+  {
+    "id": 2048,
+    "name": "ARTIFACT.NUNCHAKU",
+    "price": 4600,
+    "realprice": 46,
+    "requiredLevel": 23,
+    "requiredRating": 7000
+  },
+  {
+    "id": 2049,
+    "name": "ARTIFACT.PHOSPHORUS_LAMP",
+    "price": 6200,
+    "realprice": 62,
+    "requiredLevel": 25,
+    "requiredRating": 14000
+  }
+]

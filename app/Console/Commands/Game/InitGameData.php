@@ -9,6 +9,7 @@ use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\Weapon;
+use App\Models\Wormix\Item;
 use App\Models\Wormix\Equipment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -158,6 +159,46 @@ class InitGameData extends Command
         }
     }
 
+    private function parseArtifacts() : void
+    {
+        $this->info('Parsing gifts from artifacts.json');
+        $artifactsPath = resource_path('game/artifacts.json');
+        if(!File::exists($artifactsPath))
+        {
+            $this->error("Can't find artifacts.json in resources");
+            return;
+        }
+
+        $artifactsArray = json_decode(file_get_contents($artifactsPath), true);
+        foreach($artifactsArray as $artifact)
+        {
+            try
+            {
+                DB::beginTransaction();
+                Item::insert(
+                    [
+                        'id' => $artifact['id'],
+                        'name' => $this->messages[$artifact['name']] ?? $artifact['name'],
+                        'hide_in_shop' => array_key_exists('hideInShop', $artifact),
+                        'price' => $artifact['price'] ?? 0,
+                        'real_price' => $artifact['realprice'] ?? 0,
+                        'duration' => $artifact['duration'] ?? 0,
+                        'required_scenario' => $artifact['requiredScenario'] ?? 0,
+                        'required_rating' => $artifact['requiredRating'] ?? 0,
+                        'required_level' => $artifact['requiredLevel'] ?? 0,
+                    ]
+                );
+                DB::commit();
+                $this->info($artifact['name']." saved!");
+            }
+            catch (\Exception $ex)
+            {
+                $this->error("Error in {$artifact['id']}: {$ex->getMessage()}");
+                DB::rollBack();
+            }
+        }
+    }
+
     private function parseGifts() : void
     {
         $this->info('Parsing gifts from gifts.json');
@@ -217,7 +258,7 @@ class InitGameData extends Command
                     'real_price' => $race['realPrice'],
 
                     'required_level' => $race['requiredLevel'],
-                    'playable' => is_bool(@$race['playable']) && @$race['playable'],
+                    'playable' => is_bool($race['playable']) && $race['playable'],
                 ]);
                 $this->info('Saved new race ' . $race['configName']);
                 DB::commit();
@@ -409,6 +450,7 @@ class InitGameData extends Command
 
         $this->parseWeapons();
         $this->parseHats();
+        $this->parseArtifacts();
         $this->addStartItems();
 
         $this->parseGifts();
