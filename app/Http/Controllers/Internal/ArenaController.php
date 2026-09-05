@@ -173,9 +173,9 @@ class ArenaController extends Controller
             if($item['Count'] <= 0)
                 continue;
             $user_weapon = UserWeapon::query()
+                ->where('owner_id', $battleInfo->user_id)
                 ->where('weapon_id', $item['Id'])
                 ->where('count', '!=', -1)
-                ->where('owner_id', $battleInfo->user_id)
                 ->get()->first();
 
             $user_weapon->count -= $item['Count'];

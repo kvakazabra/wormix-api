@@ -19,7 +19,6 @@ class InternalAccountController extends Controller
         $user_weapon = UserWeapon::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->where('weapon_id', $request->json('StuffId'))
-            ->get()
             ->first();
 
         if($user_weapon === null)

@@ -89,6 +89,7 @@ class LoginEventListener
             $battle_info->last_mission_id = 0;
             $battle_info->save();
         }
+
         //Destroy expired items
         UserWeapon::destroy(
             UserWeapon::query()

@@ -72,9 +72,10 @@ class ShopController extends Controller
 
             $new_weapons = Collection::empty();
             foreach($request->json('ShopItems') as $item){
-                $old_weapon = UserWeapon::query()->
-                where('owner_id', $request->json('internal_user_id'))->
-                where('weapon_id', $item['Id'])->get()->first();
+                $old_weapon = UserWeapon::query()
+                    ->where('owner_id', $request->json('internal_user_id'))
+                    ->where('weapon_id', $item['Id'])
+                    ->first();
 
                 if($item['Count'] == -1 || $old_weapon === null){
                     $user_weapon = new UserWeapon();
