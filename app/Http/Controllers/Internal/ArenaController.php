@@ -13,7 +13,7 @@ use App\Models\Wormix\Mission;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\WormData;
 use Illuminate\Support\Facades\Log;
 
@@ -172,9 +172,9 @@ class ArenaController extends Controller
         foreach($request->json('Items') as $item){
             if($item['Count'] <= 0)
                 continue;
-            $user_weapon = UserWeapon::query()
+            $user_weapon = UserItem::query()
                 ->where('owner_id', $battleInfo->user_id)
-                ->where('weapon_id', $item['Id'])
+                ->where('item_id', $item['Id'])
                 ->where('count', '!=', -1)
                 ->get()->first();
 

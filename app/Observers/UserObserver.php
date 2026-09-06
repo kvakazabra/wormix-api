@@ -8,7 +8,7 @@ use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserTeam;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 
@@ -60,9 +60,9 @@ class UserObserver
         //Add starter user weapons
         $starter_weapons = Weapon::query()->where('is_starter', 1)->get();
         foreach($starter_weapons as $w){
-            $weapon = new UserWeapon();
+            $weapon = new UserItem();
             $weapon->owner_id = $user->id;
-            $weapon->weapon_id = $w->id;
+            $weapon->item_id = $w->id;
             $weapon->save();
         }
     }

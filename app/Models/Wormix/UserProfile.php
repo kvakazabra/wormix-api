@@ -41,7 +41,7 @@ class UserProfile extends Model
 
     public function weapons() : HasMany
     {
-        return $this->hasMany(UserWeapon::class, 'owner_id', 'user_id');
+        return $this->hasMany(UserItem::class, 'owner_id', 'user_id');
     }
 
     public function user() : BelongsTo

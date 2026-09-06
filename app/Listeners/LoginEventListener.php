@@ -6,7 +6,7 @@ use App\Events\InternalLoginEvent;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserBattleInfo;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -67,9 +67,9 @@ class LoginEventListener
 
         //Check current hat
         $race_and_hat = WormixTrashHelper::getRaceAndHatIds($user->worm_data->hat);
-        $current_hat = UserWeapon::query()
+        $current_hat = UserItem::query()
             ->where('owner_id', $user->id)
-            ->where('weapon_id', $race_and_hat[1])
+            ->where('item_id', $race_and_hat[1])
             ->first();
         if ($current_hat != null && $current_hat->expire_at < time())
         {
@@ -91,8 +91,8 @@ class LoginEventListener
         }
 
         //Destroy expired items
-        UserWeapon::destroy(
-            UserWeapon::query()
+        UserItem::destroy(
+            UserItem::query()
                 ->select('id')
                 ->where('expire_at', '!=', -1)
                 ->where('expire_at', '<', time())

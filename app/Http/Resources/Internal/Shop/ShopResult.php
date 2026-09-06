@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Internal\Shop;
 
 use App\Http\Resources\Internal\Account\WeaponRecordList;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

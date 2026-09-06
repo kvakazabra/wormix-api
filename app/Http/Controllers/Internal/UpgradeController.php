@@ -10,7 +10,7 @@ use App\Http\Resources\Internal\Craft\UpgradeWeaponResult;
 use App\Models\Wormix\Craft;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\WormData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
@@ -27,9 +27,9 @@ class UpgradeController extends Controller
     {
         // Requires owning the base weapon
         if ($craft->prev_upgrade_id < self::UPGRADE_BASE &&
-            UserWeapon::query()
+            UserItem::query()
                 ->where('owner_id', $wormData->owner_id)
-                ->where('weapon_id', $craft->prev_upgrade_id)
+                ->where('item_id', $craft->prev_upgrade_id)
                 ->where('count', -1)
                 ->count() === 0)
         {

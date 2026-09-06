@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wormix_users_weapons', function (Blueprint $table) {
+        Schema::create('wormix_users_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('weapon_id')->constrained('wormix_weapons')->cascadeOnDelete();
+            $table->unsignedBigInteger('item_id');
+            $table->string('item_type')->default('null');
             $table->integer('count')->default(-1);
             $table->integer('expire_at')->default(-1);
             $table->timestamps();
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wormix_users_weapons');
+        Schema::dropIfExists('wormix_users_items');
     }
 };

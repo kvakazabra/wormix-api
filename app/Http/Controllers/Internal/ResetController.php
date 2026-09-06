@@ -10,7 +10,7 @@ use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 use Illuminate\Database\Eloquent\Collection;
@@ -96,8 +96,8 @@ class ResetController extends Controller
                     ->toArray()
             );
 
-            UserWeapon::destroy(
-                UserWeapon::query()
+            UserItem::destroy(
+                UserItem::query()
                     ->where('owner_id', $request->json('internal_user_id'))
                     ->select('id')
                     ->get()
@@ -123,8 +123,8 @@ class ResetController extends Controller
 
         //Add starter weapons
         foreach(Weapon::query()->where('is_starter', 1)->get() as $w){
-            $newWeapon = new UserWeapon();
-            $newWeapon->weapon_id = $w->id;
+            $newWeapon = new UserItem();
+            $newWeapon->item_id = $w->id;
             $newWeapon->count = -1;
             $newWeapon->owner_id = $request->json('internal_user_id');
             $newWeapon->save();

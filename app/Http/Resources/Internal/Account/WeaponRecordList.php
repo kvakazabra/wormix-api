@@ -16,7 +16,7 @@ class WeaponRecordList extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'Id' => $this->weapon_id,
+            'Id' => $this->item_id,
             'Count' => $this->count
         ];
     }

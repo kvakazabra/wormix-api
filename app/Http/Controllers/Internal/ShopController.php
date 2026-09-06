@@ -19,7 +19,7 @@ use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 use Illuminate\Database\Eloquent\Collection;
@@ -72,15 +72,15 @@ class ShopController extends Controller
 
             $new_weapons = Collection::empty();
             foreach($request->json('ShopItems') as $item){
-                $old_weapon = UserWeapon::query()
+                $old_weapon = UserItem::query()
                     ->where('owner_id', $request->json('internal_user_id'))
-                    ->where('weapon_id', $item['Id'])
+                    ->where('item_id', $item['Id'])
                     ->first();
 
                 if($item['Count'] == -1 || $old_weapon === null){
-                    $user_weapon = new UserWeapon();
+                    $user_weapon = new UserItem();
                     $user_weapon->owner_id = $request->json('internal_user_id');
-                    $user_weapon->weapon_id = $item['Id'];
+                    $user_weapon->item_id = $item['Id'];
                     $user_weapon->count = $item['Count'];
                     $user_weapon->save();
                     $new_weapons->add($user_weapon);

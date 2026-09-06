@@ -4,7 +4,7 @@ namespace App\Helpers\Wormix;
 
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 use Illuminate\Support\Facades\Log;
@@ -113,12 +113,12 @@ class WormixTrashHelper
         $weapons = Weapon::query()
             ->whereIn('id', $awards_weapons_ids)
             ->whereNotIn('id',
-                UserWeapon::query()
+                UserItem::query()
                     ->where('owner_id', $wormData->owner_id)
-                    ->whereIn('weapon_id', $awards_weapons_ids)
+                    ->whereIn('item_id', $awards_weapons_ids)
                     ->where('count', '!=', '-1')
-                    ->select('weapon_id')
-                    ->pluck('weapon_id')
+                    ->select('item_id')
+                    ->pluck('item_id')
                     ->toArray()
             )->get();
 
@@ -133,15 +133,15 @@ class WormixTrashHelper
 
         foreach ($new_weapons as $weapon)
         {
-            $old_weapon = UserWeapon::query()
+            $old_weapon = UserItem::query()
                 ->where('owner_id', $wormData->owner_id)
-                ->where('weapon_id', $weapon[0])
+                ->where('item_id', $weapon[0])
                 ->first();
             $user_weapon = $old_weapon === null ?
-                new UserWeapon() :
+                new UserItem() :
                 $old_weapon;
             $user_weapon->owner_id = $wormData->owner_id;
-            $user_weapon->weapon_id = $weapon[0];
+            $user_weapon->item_id = $weapon[0];
             $user_weapon->count = $weapon[1];
             if ($weapon[0] >= self::STUFF_START_INDEX)
             {

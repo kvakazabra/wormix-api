@@ -30,7 +30,8 @@ class UserProfileStructure extends JsonResource
 
             'Recipes' => $this->recipes,
 
-            'Stuff' => $this->weapons()->where('weapon_id', '>', 1000)->get()->pluck('weapon_id')
+            // this is bullshit todo
+            'Stuff' => $this->weapons()->where('item_id', '>', 1000)->get()->pluck('item_id')
         ];
     }
 }

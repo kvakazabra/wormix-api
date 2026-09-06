@@ -4,7 +4,7 @@ namespace App\Observers\Wormix;
 
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\Level;
-use App\Models\Wormix\UserWeapon;
+use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 
