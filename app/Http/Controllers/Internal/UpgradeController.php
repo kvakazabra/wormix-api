@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class UpgradeController extends Controller
 {
-    private const UPGRADE_BASE = 300;
+    public const UPGRADE_BASE = 300;
 
     private function isUpgradeAvailable(
         Craft $craft,

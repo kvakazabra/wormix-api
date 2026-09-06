@@ -122,9 +122,11 @@ class ResetController extends Controller
 
 
         //Add starter weapons
-        foreach(Weapon::query()->where('is_starter', 1)->get() as $w){
+        foreach (Weapon::query()->where('is_starter', 1)->get() as $w)
+        {
             $newWeapon = new UserItem();
             $newWeapon->item_id = $w->id;
+            $newWeapon->item_type = UserItem::itemTypeForId($newWeapon->item_id);
             $newWeapon->count = -1;
             $newWeapon->owner_id = $request->json('internal_user_id');
             $newWeapon->save();

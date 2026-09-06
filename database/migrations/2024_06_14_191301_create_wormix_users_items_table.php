@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->unsignedBigInteger('item_id');
-            $table->string('item_type')->default('null');
+            $table->string('item_type');
             $table->integer('count')->default(-1);
             $table->integer('expire_at')->default(-1);
             $table->timestamps();

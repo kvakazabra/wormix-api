@@ -59,10 +59,12 @@ class UserObserver
 
         //Add starter user weapons
         $starter_weapons = Weapon::query()->where('is_starter', 1)->get();
-        foreach($starter_weapons as $w){
+        foreach ($starter_weapons as $w)
+        {
             $weapon = new UserItem();
             $weapon->owner_id = $user->id;
             $weapon->item_id = $w->id;
+            $weapon->item_type = UserItem::itemTypeForId($w->id);
             $weapon->save();
         }
     }

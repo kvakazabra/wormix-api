@@ -142,6 +142,7 @@ class WormixTrashHelper
                 $old_weapon;
             $user_weapon->owner_id = $wormData->owner_id;
             $user_weapon->item_id = $weapon[0];
+            $user_weapon->item_type = UserItem::itemTypeForId($user_weapon->item_id);
             $user_weapon->count = $weapon[1];
             if ($weapon[0] >= self::STUFF_START_INDEX)
             {
