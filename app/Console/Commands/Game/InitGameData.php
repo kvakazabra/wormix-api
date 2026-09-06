@@ -9,6 +9,7 @@ use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\Weapon;
+use App\Models\Wormix\Equipment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -117,18 +118,19 @@ class InitGameData extends Command
         foreach($hats_array as $hat){
             try{
                 DB::beginTransaction();
-                Weapon::insert(
+                Equipment::insert(
                     [
                         'id' => $hat['id'],
-                        'name' => @$this->messages[$hat['name']] ?? $hat['name'],
-                        'hide_in_shop' => array_key_exists('hideInShop', $hat),
-                        'is_starter' => false,
-                        'price' => @$hat['price'] ?? 0,
-                        'real_price' => @$hat['realprice'] ?? 0,
-                        'required_rating' => @$hat['requiredRating'] ?? 0,
-                        'required_level' => @$hat['requiredLevel'] ?? 0,
-                        'infinity' => is_bool(@$hat['infinite']) && @$hat['infinite'],
-                        'one_day' => is_bool(@$hat['oneDay']) && @$hat['infinite']
+                        'name' => $this->messages[$hat['name']] ?? $hat['name'],
+
+                        'hide_in_shop' => $hat['hideInShop'] ?? false,
+                        'price' => $hat['price'] ?? 0,
+                        'real_price' => $hat['realprice'] ?? 0,
+                        'duration' => ($hat['oneDay'] ?? false) ? 23 : 0,
+
+                        'required_scenario' => $hat['requiredScenario'] ?? 0,
+                        'required_rating' => $hat['requiredRating'] ?? 0,
+                        'required_level' => $hat['requiredLevel'] ?? 0,
                     ]
                 );
                 DB::commit();

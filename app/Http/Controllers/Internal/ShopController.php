@@ -15,6 +15,7 @@ use App\Http\Resources\Internal\Shop\ChangeRaceResult;
 use App\Http\Resources\Internal\Shop\ShopResult;
 use App\Http\Resources\Internal\Shop\UnlockMissionResult;
 use App\Models\User;
+use App\Models\Wormix\Equipment;
 use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\UserBattleInfo;
@@ -29,9 +30,11 @@ class ShopController extends Controller
 {
     public function buyItems(BuyShopItemsRequest $request)
     {
-        try{
+        try
+        {
             $shopItems = [];
-            foreach($request->json('ShopItems') as $item){
+            foreach ($request->json('ShopItems') as $item)
+            {
                 $shopItems["{$item['Id']}"] = [
                     'Count' => $item['Count'],
                     'MoneyType' => $item['MoneyType'],
@@ -40,44 +43,109 @@ class ShopController extends Controller
             $sum = 0;
             $realSum = 0;
 
-            foreach(Weapon::query()->whereIn('id', array_keys($shopItems))->get() as $weapon){
-                if($weapon->hide_in_shop && $weapon->ref_id === null)
-                    throw new \Exception("Attempt to buy hidden item!");
+            foreach (Weapon::query()
+                         ->whereIn('id', array_keys($shopItems))
+                         ->get() as $weapon)
+            {
+                if ($weapon->hide_in_shop && $weapon->ref_id === null)
+                {
+                    throw new \Exception("Weapon: Attempt to buy hidden item!");
+                }
 
-                if(!$weapon->infinity && $shopItems["{$weapon->id}"]['Count'] === -1)
+                if (!$weapon->infinity && $shopItems["{$weapon->id}"]['Count'] === -1)
+                {
                     return new ShopResult(Collection::empty(), ShopResult::Error);
-
-                if($shopItems["{$weapon->id}"]['MoneyType'] === 0){
-                    if($weapon->real_price === 0)
-                        return new ShopResult(Collection::empty(), ShopResult::Error);
-                    $realSum += $weapon->infinity ? $weapon->real_price : ($weapon->real_price * $shopItems["{$weapon->id}"]['Count']);
                 }
-                if($shopItems["{$weapon->id}"]['MoneyType'] === 1){
+
+                if ($shopItems["{$weapon->id}"]['MoneyType'] === 0)
+                {
+                    if ($weapon->real_price === 0)
+                    {
+                        return new ShopResult(Collection::empty(), ShopResult::Error);
+                    }
+
+                    $realSum += $weapon->infinity ?
+                        $weapon->real_price :
+                        $weapon->real_price * $shopItems["{$weapon->id}"]['Count'];
+                }
+
+                if ($shopItems["{$weapon->id}"]['MoneyType'] === 1)
+                {
                     if($weapon->price === 0)
+                    {
                         return new ShopResult(Collection::empty(), ShopResult::Error);
-                    $sum += $weapon->infinity ? $weapon->price : ($weapon->price * $shopItems["{$weapon->id}"]['Count']);
+                    }
+
+                    $sum += $weapon->infinity ?
+                        $weapon->price :
+                        $weapon->price * $shopItems["{$weapon->id}"]['Count'];
                 }
 
-                //Mb add validation to friends, rating, etc
+                // todo: add required_* validation
             }
 
-            $user_profile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->get()->first();
+            foreach (Equipment::query()
+                         ->whereIn('id', array_keys($shopItems))
+                         ->get() as $equipment)
+            {
+                if ($equipment->hide_in_shop || $equipment->duration > 0)
+                {
+                    throw new \Exception("Equipment: Attempt to buy hidden item or temporary item!");
+                }
 
+                if ($shopItems["{$equipment->id}"]['Count'] !== -1)
+                {
+                    throw new \Exception("Equipment: Count for hats must be -1!");
+                }
+
+                switch ($shopItems["{$equipment->id}"]['MoneyType'])
+                {
+                    case 0:
+                        if ($equipment->real_price === 0)
+                        {
+                            return new ShopResult(Collection::empty(), ShopResult::Error);
+                        }
+
+                        $realSum += $equipment->real_price;
+                        break;
+                    case 1:
+                        if ($equipment->price === 0)
+                        {
+                            return new ShopResult(Collection::empty(), ShopResult::Error);
+                        }
+
+                        $sum += $equipment->price;
+                        break;
+                    default:
+                        Log::error("Naturoi ne oplacivaetsa");
+                        return new ShopResult(Collection::empty(), ShopResult::Error);
+                }
+
+                // todo: add required_* validation
+            }
+
+            $user_profile = UserProfile::query()
+                ->where('user_id', $request->json('internal_user_id'))
+                ->first();
             if($user_profile->money < $sum || $user_profile->real_money < $realSum)
+            {
                 return new ShopResult(Collection::empty(), ShopResult::NotEnoughMoney);
+            }
 
             $user_profile->money -= $sum;
             $user_profile->real_money -= $realSum;
             $user_profile->save();
 
             $new_weapons = Collection::empty();
-            foreach($request->json('ShopItems') as $item){
+            foreach ($request->json('ShopItems') as $item)
+            {
                 $old_weapon = UserItem::query()
                     ->where('owner_id', $request->json('internal_user_id'))
                     ->where('item_id', $item['Id'])
                     ->first();
 
-                if($item['Count'] == -1 || $old_weapon === null){
+                if ($item['Count'] == -1 || $old_weapon === null)
+                {
                     $user_weapon = new UserItem();
                     $user_weapon->owner_id = $request->json('internal_user_id');
                     $user_weapon->item_id = $item['Id'];

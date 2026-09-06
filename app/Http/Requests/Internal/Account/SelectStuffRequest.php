@@ -23,7 +23,7 @@ class SelectStuffRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'StuffId' => 'required|integer|exists:wormix_weapons,id|min:1000',
+            'StuffId' => 'required|integer|exists:wormix_equipment,id|min:1000',
         ];
     }
 }

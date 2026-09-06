@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Internal\Shop;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Wormix\Weapon;
+use App\Models\Wormix\Equipment;
 
 class BuyShopItemsRequest extends FormRequest
 {
@@ -24,7 +26,13 @@ class BuyShopItemsRequest extends FormRequest
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
             'ShopItems' => 'required|array',
-            'ShopItems.*.Id' => 'required|exists:wormix_weapons,id',
+            'ShopItems.*.Id' => [
+                'required',
+                fn ($attribute, $value, $fail) =>
+                !Weapon::where('id', $value)->exists() && !Equipment::where('id', $value)->exists()
+                    ? $fail('Item not found.')
+                    : null,
+            ],
             'ShopItems.*.Count' => 'required|integer|min:-1',
             'ShopItems.*.MoneyType' => 'required|integer|max:1|min:0',
         ];

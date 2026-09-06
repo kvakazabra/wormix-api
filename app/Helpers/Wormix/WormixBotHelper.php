@@ -3,11 +3,13 @@
 namespace App\Helpers\Wormix;
 
 use App\Models\User;
+use App\Models\Wormix\Equipment;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\Race;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\Translation\Exception\MissingRequiredOptionException;
 
 class WormixBotHelper
 {
@@ -19,8 +21,9 @@ class WormixBotHelper
 
         $user_profile = $userWorm->owner->user_profile;
 
-        $random_stuff = Weapon::query()
-            ->where('id', '>', WormixTrashHelper::STUFF_START_INDEX)
+        // todo: change magic value to hat crafts id
+        $random_stuff = Equipment::query()
+            ->where('id', '<', 1500)
             ->where('required_level', '<=', $userWorm->level)
             ->where('required_rating', '<=', $user_profile->rating)
             ->where('hide_in_shop', 0)
@@ -29,11 +32,9 @@ class WormixBotHelper
             ->pluck('id')
             ->toArray();
 
-
         $random_race = Race::query()
             ->where('required_level', '<=', $userWorm->level)
             ->get()->pluck('race_id')->toArray();
-
 
         $bots = Collection::empty();
 

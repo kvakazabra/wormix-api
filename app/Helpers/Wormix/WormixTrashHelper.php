@@ -2,6 +2,7 @@
 
 namespace App\Helpers\Wormix;
 
+use App\Models\Wormix\Equipment;
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
@@ -101,59 +102,65 @@ class WormixTrashHelper
         $profile->save();
     }
 
-    public static function addWeaponsAwards(array $awards, WormData $wormData):void
+    public static function addWeaponsAwards(array $awards, WormData $wormData): void
     {
         if (count($awards) === 0)
         {
             return;
         }
 
-        //Add awards weapons
-        $awards_weapons_ids = array_map(function ($x) { return $x[0];}, $awards);
-        $weapons = Weapon::query()
-            ->whereIn('id', $awards_weapons_ids)
-            ->whereNotIn('id',
-                UserItem::query()
-                    ->where('owner_id', $wormData->owner_id)
-                    ->whereIn('item_id', $awards_weapons_ids)
-                    ->where('count', '!=', '-1')
-                    ->select('item_id')
-                    ->pluck('item_id')
-                    ->toArray()
-            )->get();
+        $awardIds = array_map(fn ($award) => $award[0], $awards);
 
-        //Bad coding
-        $weapons_ids = $weapons->pluck('id')->toArray(); //Owned weapons
-        $new_weapons = array_values(
-            array_filter($awards, function($x) use ($weapons_ids)
-            {
-                return in_array($x[0], $weapons_ids);
-            })
+        // Item ids the user already has a consumable copy of
+        $ownedConsumables = UserItem::query()
+            ->where('owner_id', $wormData->owner_id)
+            ->whereIn('item_id', $awardIds)
+            ->where('count', '!=', '-1')
+            ->pluck('item_id')
+            ->toArray();
+
+        // Awarded ids not owned as consumables yet (weapons and equipment)
+        $awardItemIds = array_merge(
+            Weapon::query()
+                ->whereIn('id', $awardIds)
+                ->whereNotIn('id', $ownedConsumables)
+                ->pluck('id')
+                ->toArray(),
+            Equipment::query()
+                ->whereIn('id', $awardIds)
+                ->whereNotIn('id', $ownedConsumables)
+                ->pluck('id')
+                ->toArray()
         );
 
-        foreach ($new_weapons as $weapon)
+        $newAwards = array_values(
+            array_filter(
+                $awards,
+                fn ($award) => in_array($award[0], $awardItemIds)
+            )
+        );
+
+        foreach ($newAwards as $award)
         {
-            $old_weapon = UserItem::query()
+            $oldItem = UserItem::query()
                 ->where('owner_id', $wormData->owner_id)
-                ->where('item_id', $weapon[0])
+                ->where('item_id', $award[0])
                 ->first();
-            $user_weapon = $old_weapon === null ?
-                new UserItem() :
-                $old_weapon;
-            $user_weapon->owner_id = $wormData->owner_id;
-            $user_weapon->item_id = $weapon[0];
-            $user_weapon->item_type = UserItem::itemTypeForId($user_weapon->item_id);
-            $user_weapon->count = $weapon[1];
-            if ($weapon[0] >= self::STUFF_START_INDEX)
+
+            $userItem = $oldItem ?? new UserItem();
+            $userItem->owner_id = $wormData->owner_id;
+            $userItem->item_id = $award[0];
+            $userItem->item_type = UserItem::itemTypeForId($userItem->item_id);
+            $userItem->count = $award[1];
+
+            if ($award[0] >= self::STUFF_START_INDEX)
             {
                 // Add a day, instead of overwriting expire_at value
-                $user_weapon->expire_at =
-                    max($user_weapon->expire_at, time())
-                    + 24 * 60 * 60;
+                $userItem->expire_at = max($userItem->expire_at, time()) + 24 * 60 * 60;
                 // todo: worth checking duration of the item, instead of giving a day each time
             }
 
-            $user_weapon->save();
+            $userItem->save();
         }
     }
 }
