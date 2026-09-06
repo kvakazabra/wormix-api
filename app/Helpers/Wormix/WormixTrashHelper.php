@@ -154,6 +154,13 @@ class WormixTrashHelper
             $userItem->owner_id = $wormData->owner_id;
             $userItem->item_id = $award[0];
             $userItem->item_type = UserItem::itemTypeForId($userItem->item_id);
+
+            if ($userItem->item_type == "hat")
+            {
+                $wormData->hat = $userItem->item_id;
+                $wormData->save();
+            }
+
             $userItem->count = $award[1];
 
             if ($award[0] >= self::STUFF_START_INDEX)

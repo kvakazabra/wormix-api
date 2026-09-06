@@ -84,6 +84,8 @@ class ShopController extends Controller
                 // todo: add required_* validation
             }
 
+            // todo: this doesnt work properly with multiple hat purchases on 1.05.0
+            $lastEquipmentId = -1;
             foreach (Equipment::query()
                          ->whereIn('id', array_keys($shopItems))
                          ->get() as $equipment)
@@ -121,6 +123,7 @@ class ShopController extends Controller
                         return new ShopResult(Collection::empty(), ShopResult::Error);
                 }
 
+                $lastEquipmentId = $equipment->id;
                 // todo: add required_* validation
             }
 
@@ -135,6 +138,15 @@ class ShopController extends Controller
             $user_profile->money -= $sum;
             $user_profile->real_money -= $realSum;
             $user_profile->save();
+
+            if ($lastEquipmentId !== -1)
+            {
+                $wormData = WormData::query()
+                    ->where('owner_id', $user_profile->user_id)
+                    ->first();
+                $wormData->hat = $lastEquipmentId;
+                $wormData->save();
+            }
 
             $new_weapons = Collection::empty();
             foreach ($request->json('ShopItems') as $item)
@@ -154,11 +166,16 @@ class ShopController extends Controller
                     $user_weapon->save();
                     $new_weapons->add($user_weapon);
                 }
-                else{
-                    if($old_weapon->weapon->infinity)
+                else
+                {
+                    if ($old_weapon->weapon->infinity)
+                    {
                         $old_weapon->count = $item['Count'];
+                    }
                     else
+                    {
                         $old_weapon->count += $item['Count'];
+                    }
 
                     $old_weapon->save();
 
@@ -166,6 +183,7 @@ class ShopController extends Controller
                     $new_weapons->add($old_weapon);
                 }
             }
+
             return new ShopResult($new_weapons, ShopResult::Success);
         }
         catch (\Exception $ex){
