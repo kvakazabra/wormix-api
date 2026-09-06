@@ -54,6 +54,11 @@ class UpgradeController extends Controller
             return false;
         }
 
+        if ($craft->prev_upgrade === null)
+        {
+            return true;
+        }
+
         // A competing recipe for the same upgrade is already upgraded
         $competing_craft = Craft::query()
             ->where('upgrade_id', $craft->prev_upgrade->id)
