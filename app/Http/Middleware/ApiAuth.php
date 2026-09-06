@@ -14,12 +14,14 @@ class ApiAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
-        if(!auth('api')->check())
+        if (!auth('api')->check())
+        {
             return \response([
                'message' => 'Access Denied'
             ], 403);
+        }
 
         return $next($request);
     }

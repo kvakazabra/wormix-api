@@ -14,7 +14,7 @@ class Mission extends Model
 {
     protected $table = 'wormix_missions';
 
-    protected $casts =[
+    protected $casts = [
         'awards' => 'array'
     ];
 }

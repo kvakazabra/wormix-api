@@ -17,20 +17,20 @@ class UserObserver
     /**
      * Handle the User "created" event.
      */
-    public function created(User $user): void
+    public function created(User $user) : void
     {
         //Create user profile
-        $user_profile = new UserProfile();
-        $user_profile->user_id = $user->id;
-        $user_profile->money = config('wormix.starter.money');
-        $user_profile->real_money = config('wormix.starter.real_money');
-        $user_profile->save();
+        $userProfile = new UserProfile();
+        $userProfile->user_id = $user->id;
+        $userProfile->money = config('wormix.starter.money');
+        $userProfile->real_money = config('wormix.starter.real_money');
+        $userProfile->save();
 
         //Create user worm data
-        $worm_data = new WormData();
-        $worm_data->owner_id = $user->id;
-        $worm_data->race = config('wormix.starter.race');
-        $worm_data->save();
+        $wormData = new WormData();
+        $wormData->owner_id = $user->id;
+        $wormData->race = config('wormix.starter.race');
+        $wormData->save();
 
         //Create user default teammate
         $teammate = new UserTeam();
@@ -39,27 +39,27 @@ class UserObserver
         $teammate->save();
 
         //Create user social data
-        $social_data = new UserSocialData();
-        $social_data->user_id = $user->id;
-        $social_data->first_name = $user->login;
-        $social_data->save();
+        $socialData = new UserSocialData();
+        $socialData->user_id = $user->id;
+        $socialData->first_name = $user->login;
+        $socialData->save();
 
         //Create user battle info
-        $battle_info = new UserBattleInfo();
-        $battle_info->user_id = $user->id;
-        $battle_info->battles_count = config('wormix.starter.missions');
-        $battle_info->save();
+        $battleInfo = new UserBattleInfo();
+        $battleInfo->user_id = $user->id;
+        $battleInfo->battles_count = config('wormix.starter.missions');
+        $battleInfo->save();
 
         //Create user login sequence info
-        $login_sequence = new LoginSequence();
-        $login_sequence->user_id = $user->id;
-        $login_sequence->last_login = date("Y-m-d");
-        $login_sequence->gift_accepted = 1;
-        $login_sequence->save();
+        $loginSequence = new LoginSequence();
+        $loginSequence->user_id = $user->id;
+        $loginSequence->last_login = date("Y-m-d");
+        $loginSequence->gift_accepted = 1;
+        $loginSequence->save();
 
         //Add starter user weapons
-        $starter_weapons = Weapon::query()->where('is_starter', 1)->get();
-        foreach ($starter_weapons as $w)
+        $starterWeapons = Weapon::query()->where('is_starter', 1)->get();
+        foreach ($starterWeapons as $w)
         {
             $weapon = new UserItem();
             $weapon->owner_id = $user->id;
@@ -72,7 +72,7 @@ class UserObserver
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user): void
+    public function updated(User $user) : void
     {
         //
     }
@@ -80,7 +80,7 @@ class UserObserver
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user): void
+    public function deleted(User $user) : void
     {
         //
     }
@@ -88,7 +88,7 @@ class UserObserver
     /**
      * Handle the User "restored" event.
      */
-    public function restored(User $user): void
+    public function restored(User $user) : void
     {
         //
     }
@@ -96,7 +96,7 @@ class UserObserver
     /**
      * Handle the User "force deleted" event.
      */
-    public function forceDeleted(User $user): void
+    public function forceDeleted(User $user) : void
     {
         //
     }

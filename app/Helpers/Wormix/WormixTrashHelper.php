@@ -47,21 +47,21 @@ class WormixTrashHelper
             $raceId = (int)(($merged - self::STUFF_START_INDEX) / self::RACE_BASE);
         }
 
-        return [ $raceId, $hatId ];
+        return [$raceId, $hatId];
     }
 
     /**
-     * @param int $user_id
+     * @param int $userId
      * @return int
      */
-    public static function getSearchKeys(int $user_id) : int
+    public static function getSearchKeys(int $userId) : int
     {
         return max(
             0,
             (config('wormix.game.search_keys_per_day') -
                 HouseAction::query()
                     ->where('action_type', 1)
-                    ->where('user_id', $user_id)
+                    ->where('user_id', $userId)
                     ->where('created_at', '>=', now()->subDay())
                     ->count()
             )
@@ -69,35 +69,42 @@ class WormixTrashHelper
     }
 
     /**
-     * @param int $user_id
-     * @param int $to_user_id
+     * @param int $userId
+     * @param int $toUserId
      * @return bool
      */
-    public static function isSearchedToday(int $user_id, int $to_user_id):bool
+    public static function isSearchedToday(int $userId, int $toUserId) : bool
     {
         return HouseAction::query()
-                ->where('user_id', $user_id)
-                ->where('to_user_id', $to_user_id)
+                ->where('user_id', $userId)
+                ->where('to_user_id', $toUserId)
                 ->where('action_type', 1)
-                ->where('created_at', '>=', now()->subDay())->count() > 0;
+                ->where('created_at', '>=', now()->subDay())
+                ->count() > 0;
     }
 
-    public static function addReagents(UserProfile $profile, array $reagents):void
+    public static function addReagents(UserProfile $profile, array $reagents) : void
     {
-        if(count($reagents) === 0)
+        if (count($reagents) === 0)
+        {
             return;
+        }
+
         //Log::debug("Add reagents...");
         $userReagents = $profile->reagents;
         $maxReagent = max($reagents);
-        if($maxReagent + 1 > count($userReagents)){
-           $old_reagents  = $userReagents;
+        if ($maxReagent + 1 > count($userReagents))
+        {
+            $oldReagents = $userReagents;
             $userReagents = array_fill(0, $maxReagent + 1, 0);
-           for($i = 0; $i < count($old_reagents); $i++){
-               $userReagents[$i] = $old_reagents[$i];
-           }
+            for ($i = 0; $i < count($oldReagents); $i++)
+            {
+                $userReagents[$i] = $oldReagents[$i];
+            }
         }
 
-        for($i = 0; $i < count($reagents); $i++){
+        for ($i = 0; $i < count($reagents); $i++)
+        {
             $userReagents[$reagents[$i]] += 1;
         }
 
@@ -105,7 +112,7 @@ class WormixTrashHelper
         $profile->save();
     }
 
-    public static function addWeaponsAwards(array $awards, WormData $wormData): void
+    public static function addWeaponsAwards(array $awards, WormData $wormData) : void
     {
         if (count($awards) === 0)
         {

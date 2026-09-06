@@ -18,28 +18,32 @@ class InternalLoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        try{
+        try
+        {
             $session = new UserSession($request->json(['Id']));
 
-            if($session->getAuthKey() != $request->json('AuthKey') || $session->isLoggedIn()){
+            if ($session->getAuthKey() != $request->json('AuthKey') || $session->isLoggedIn())
+            {
                 return [
                     'type' => 'LoginError',
                     'data' => new LoginError($request, 1)
                 ];
             }
-            else{
-
-                $old_session =  $session->getTcpSession();
+            else
+            {
+                $oldSession = $session->getTcpSession();
                 $session->setTcpSession($request->json('tcp_session'));
                 Event::dispatch(new InternalLoginEvent($session->getSessionUser()));
                 $session->loggedIn();
                 return [
                     'type' => 'EnterAccount',
-                    'old_session' => $old_session,
-                    'data' => new  EnterAccount($session->getSessionUser(), $request->json('Id').'.'.$session->setSessionKey())
+                    'old_session' => $oldSession,
+                    'data' => new EnterAccount($session->getSessionUser(), $request->json('Id').'.'.$session->setSessionKey())
                 ];
             }
-        }catch (\Exception $ex){
+        }
+        catch (\Exception $ex)
+        {
             Log::error("Inernal login error", [
                 'request' => $request->json()->all(),
                 'message' => $ex->getMessage()

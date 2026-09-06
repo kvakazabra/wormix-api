@@ -54,7 +54,7 @@ class User extends Authenticatable
         return $this->hasOne(WormData::class, 'owner_id', 'id');
     }
 
-    public function social_data(): HasOne
+    public function social_data() : HasOne
     {
         return $this->hasOne(UserSocialData::class, 'user_id', 'id');
     }

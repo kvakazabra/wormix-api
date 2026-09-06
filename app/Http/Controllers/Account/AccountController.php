@@ -40,46 +40,52 @@ class AccountController extends Controller
 
     public function updateAccount(UpdateAccountRequest $request)
     {
-        if($request->json('social_data') !== null){
-            $social_data = $request->user()->social_data;
-            $social_data->fill($request->json('social_data'));
-            $social_data->save();
+        if ($request->json('social_data') !== null)
+        {
+            $socialData = $request->user()->social_data;
+            $socialData->fill($request->json('social_data'));
+            $socialData->save();
         }
 
-        if($request->json('user_profile') !== null){
-            $user_profile = $request->user()->user_profile;
-            $user_profile->fill($request->json('user_profile'));
-            $user_profile->save();
+        if ($request->json('user_profile') !== null)
+        {
+            $userProfile = $request->user()->user_profile;
+            $userProfile->fill($request->json('user_profile'));
+            $userProfile->save();
         }
 
-        if($request->json('worm_data') !== null){
-            $worm_data = $request->user()->worm_data;
+        if ($request->json('worm_data') !== null)
+        {
+            $wormData = $request->user()->worm_data;
 
-            $worm_data->fill($request->json('worm_data'));
-            $strip_params = WormixBotHelper::stripData(
-                (int)(($worm_data->armor + $worm_data->attack) / 2),
-                $worm_data->level,
-                $worm_data->armor,
-                $worm_data->attack
+            $wormData->fill($request->json('worm_data'));
+            $stripParams = WormixBotHelper::stripData(
+                (int)(($wormData->armor + $wormData->attack) / 2),
+                $wormData->level,
+                $wormData->armor,
+                $wormData->attack
             );
-            $worm_data->armor = $strip_params['armor'];
-            $worm_data->attack = $strip_params['attack'];
-            $worm_data->experience = 0;
-            $worm_data->race = $request->json('worm_data.race');
-            $worm_data->save();
+            $wormData->armor = $stripParams['armor'];
+            $wormData->attack = $stripParams['attack'];
+            $wormData->experience = 0;
+            $wormData->race = $request->json('worm_data.race');
+            $wormData->save();
 
             return [
-                'worm_data' => $worm_data,
+                'worm_data' => $wormData,
             ];
         }
 
-        if($request->json('user') !== null){
+        if ($request->json('user') !== null)
+        {
             $user = $request->user();
-            if($request->json('user.login') !== null){
-                if(User::query()
+            if ($request->json('user.login') !== null)
+            {
+                if (User::query()
                         ->where('login', $request->json('user.login'))
                         ->where('id', '!=', $user->id)->count() > 0
-                ){
+                )
+                {
                     return response([
                         'message' => 'User login must be unique'
                     ], 422);
@@ -87,23 +93,26 @@ class AccountController extends Controller
                 $user->login = $request->json('user.login');
             }
 
-            if($request->json('user.password') !== null) {
+            if ($request->json('user.password') !== null)
+            {
                 $user->password = $request->json('user.password');
                 $user->tokens()->where('id', '!=', $user->currentAccessToken()->id)->delete();
             }
 
-            if($user->isDirty([
+            if ($user->isDirty([
                 'login',
                 'password'
             ]))
+            {
                 $user->save();
-
+            }
         }
 
-        if($request->json('battle_info.battles_count') !== null){
-            $battle_info = $request->user()->battle_info;
-            $battle_info->battles_count = $request->json('battle_info.battles_count');
-            $battle_info->save();
+        if ($request->json('battle_info.battles_count') !== null)
+        {
+            $battleInfo = $request->user()->battle_info;
+            $battleInfo->battles_count = $request->json('battle_info.battles_count');
+            $battleInfo->save();
         }
 
         return [
@@ -113,24 +122,27 @@ class AccountController extends Controller
 
     public function updateAccountPhoto(UpdatePhotoRequest $request)
     {
-        $user_social_data = $request->user()->social_data;
-        $user_photo = $request->file('photo');
+        $userSocialData = $request->user()->social_data;
+        $userPhoto = $request->file('photo');
 
-        $new_photo_name = Str::uuid()->toString().".".$user_photo->extension();
+        $newPhotoName = Str::uuid()->toString().".".$userPhoto->extension();
 
-        if($user_social_data->photo !== null){
-            $old_photo_path = resource_path('images/users/'.$user_social_data->photo);
-            if(File::exists($old_photo_path))
-                File::delete($old_photo_path);
+        if ($userSocialData->photo !== null)
+        {
+            $oldPhotoPath = resource_path('images/users/'.$userSocialData->photo);
+            if (File::exists($oldPhotoPath))
+            {
+                File::delete($oldPhotoPath);
+            }
         }
 
-        $user_social_data->photo = $new_photo_name;
-        $user_social_data->save();
+        $userSocialData->photo = $newPhotoName;
+        $userSocialData->save();
 
-        $user_photo->move(resource_path('images/users/'), $new_photo_name);
+        $userPhoto->move(resource_path('images/users/'), $newPhotoName);
 
         return [
-            'data' => $user_social_data
+            'data' => $userSocialData
         ];
     }
 
@@ -139,9 +151,9 @@ class AccountController extends Controller
      */
     public function startGame(Request $request)
     {
-        $user_session = new UserSession($request->user()->id);
+        $userSession = new UserSession($request->user()->id);
         return response([
-            'auth_key' => $user_session->setAuthKey()
+            'auth_key' => $userSession->setAuthKey()
         ]);
     }
 }

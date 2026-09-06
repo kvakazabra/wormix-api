@@ -15,10 +15,10 @@ class DowngradeWeaponResult extends JsonResource
 
     private int $recipe_id;
 
-    public function __construct($resource, int $result, int $recipe_id)
+    public function __construct($resource, int $result, int $recipeId)
     {
         $this->result = $result;
-        $this->recipe_id = $recipe_id;
+        $this->recipe_id = $recipeId;
         parent::__construct($resource);
     }
 
@@ -27,7 +27,7 @@ class DowngradeWeaponResult extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Result' => $this->result,

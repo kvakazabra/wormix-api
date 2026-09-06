@@ -23,107 +23,117 @@ class ArenaController extends Controller
 
     public function getArena(GetArenaRequest $request)
     {
-        $battle_info = UserBattleInfo::query()
+        $battleInfo = UserBattleInfo::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
         //Add battles (one battle per x minutes)
-        if($battle_info->battles_count < config('wormix.game.missions.max')){
-            $battle_info->battles_count += min(
-                (int)((time() - $battle_info->last_battle_time) / config('wormix.game.missions.delay')),
+        if ($battleInfo->battles_count < config('wormix.game.missions.max'))
+        {
+            $battleInfo->battles_count += min(
+                (int)((time() - $battleInfo->last_battle_time) / config('wormix.game.missions.delay')),
                 config('wormix.game.missions.max')
             );
-            $battle_info->battles_count = min(
-                $battle_info->battles_count,
+            $battleInfo->battles_count = min(
+                $battleInfo->battles_count,
                 config('wormix.game.missions.max')
             );
-            $battle_info->save();
+            $battleInfo->save();
         }
 
-        if($battle_info->battles_count === 0){
+        if ($battleInfo->battles_count === 0)
+        {
             return [
                 'type' => 'ArenaLocked',
-                'data' => new ArenaLocked($battle_info)
+                'data' => new ArenaLocked($battleInfo)
             ];
         }
         return [
             'type' => 'ArenaResult',
-            'data' => new ArenaResult($battle_info, $request->json('ReturnUsersProfiles'))
+            'data' => new ArenaResult($battleInfo, $request->json('ReturnUsersProfiles'))
         ];
     }
 
     public function startBattle(StartBattleRequest $request)
     {
-        $battle_info = UserBattleInfo::query()
+        $battleInfo = UserBattleInfo::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        if($battle_info->battles_count <= 0)
+        if ($battleInfo->battles_count <= 0)
+        {
             return response([
                 'message' => 'Not enough battles'
             ], 422);
+        }
 
-        if($request->json('MissionId') !== 0){
-            if(
+        if ($request->json('MissionId') !== 0)
+        {
+            if (
                 //Check for bosses
-                ($request->json('MissionId') > ($battle_info->last_mission_id + 1))||
+                ($request->json('MissionId') > ($battleInfo->last_mission_id + 1)) ||
 
                 //Check for lessons
-                ($request->json('MissionId') !== ($battle_info->last_mission_id - 1) && $battle_info->last_mission_id < -1)
-            ){
+                ($request->json('MissionId') !== ($battleInfo->last_mission_id - 1) && $battleInfo->last_mission_id < -1)
+            )
+            {
                 return response([
                     'message' => 'Try to start invalid mission'
                 ], 422);
             }
 
-            $mission = Mission::query()->where('mission_id', $request->json('MissionId'))->get()->first();
-            $worm_data = WormData::query()->where('owner_id', $request->json('internal_user_id'))->get()->first();
-            if($worm_data->level < $mission->required_level){
+            $mission = Mission::query()->where('mission_id', $request->json('MissionId'))->first();
+            $wormData = WormData::query()->where('owner_id', $request->json('internal_user_id'))->first();
+            if ($wormData->level < $mission->required_level)
+            {
                 return response([
                     'message' => 'Mission required level mismatch'
                 ], 422);
             }
         }
 
-        $battle_info->last_battle_time = time();
+        $battleInfo->last_battle_time = time();
 
-        if($request->json('MissionId') >= 0)
-            $battle_info->battles_count -= 1;
+        if ($request->json('MissionId') >= 0)
+        {
+            $battleInfo->battles_count -= 1;
+        }
 
-        $battle_info->current_battle_id = self::BATTLE_BASE + $battle_info->user_id + $request->json('MissionId');
+        $battleInfo->current_battle_id = self::BATTLE_BASE + $battleInfo->user_id + $request->json('MissionId');
 
         //Random reagents generation
         srand(time());
         $reagents = [];
-        if($request->json('MissionId') >= 0)
+        if ($request->json('MissionId') >= 0)
+        {
             $reagents = Reagent::query()->select('reagent_id')->pluck('reagent_id')->random(rand(0, 3))->toArray();
+        }
 
-        if($request->json('MissionId') === 0) {
-            $battle_info->battle_type = 0;
+        if ($request->json('MissionId') === 0)
+        {
+            $battleInfo->battle_type = 0;
             $awards = [];
         }
-        else{
-            $battle_info->battle_type = 1;
+        else
+        {
+            $battleInfo->battle_type = 1;
             $awards = Mission::query()
                 ->where('mission_id', $request->json('MissionId'))
-                ->get()
                 ->first()
                 ->awards;
         }
 
-        $battle_info->mission_id = $request->json('MissionId');
-        $battle_info->awards = [
+        $battleInfo->mission_id = $request->json('MissionId');
+        $battleInfo->awards = [
             'reagents' => $reagents,
             'awards'   => $awards
         ];
-        $battle_info->save();
+        $battleInfo->save();
 
         return [
             'data' => [
                 'Awards' => $awards,
-                'BattleId' => $battle_info->current_battle_id,
+                'BattleId' => $battleInfo->current_battle_id,
                 'ReagentForBattle' => $reagents
             ]
         ];
@@ -131,30 +141,31 @@ class ArenaController extends Controller
 
     public function endBattle(EndBattleRequest $request)
     {
-        $battle_info =
-            UserBattleInfo::query()->
-            where('user_id', $request->json('internal_user_id'))
-                ->get()
+        $battleInfo =
+            UserBattleInfo::query()
+                ->where('user_id', $request->json('internal_user_id'))
                 ->first();
 
-        $result = $request->json('Result') - $battle_info->current_battle_id;
-        if(abs($result) >= 2){
+        $result = $request->json('Result') - $battleInfo->current_battle_id;
+        if (abs($result) >= 2)
+        {
             Log::debug("Invalid battle id", [
                 'request' => $request->json('BattleId'),
-                'current' => $battle_info->current_battle_id,
+                'current' => $battleInfo->current_battle_id,
             ]);
             return response([]);
         }
 
-        if($request->json('MissionId') !== $battle_info->mission_id) {
+        if ($request->json('MissionId') !== $battleInfo->mission_id)
+        {
             Log::debug("Invalid mission id", [
                 'request' => $request->json('MissionId'),
-                'current' => $battle_info->mission_id,
+                'current' => $battleInfo->mission_id,
             ]);
             return response([]);
         }
 
-        $this->processBattleResult($request, $result, $battle_info);
+        $this->processBattleResult($request, $result, $battleInfo);
         return [
             'Status' => 'OK'
         ];
@@ -162,108 +173,129 @@ class ArenaController extends Controller
 
     private function processBattleResult(EndBattleRequest $request, int $result, UserBattleInfo $battleInfo)
     {
-        $wormData = WormData::query()->where('owner_id', $battleInfo->user_id)->get()->first();
-        $user_info = UserProfile::query()->where('user_id', $battleInfo->user_id)->get()->first();
+        $wormData = WormData::query()->where('owner_id', $battleInfo->user_id)->first();
+        $userInfo = UserProfile::query()->where('user_id', $battleInfo->user_id)->first();
 
-        if($battleInfo->battle_type === 0)
+        if ($battleInfo->battle_type === 0)
+        {
             $wormData->experience += $request->json('ExpBonus');
+        }
 
         //Decrease used weapons
-        foreach($request->json('Items') as $item){
-            if($item['Count'] <= 0)
+        foreach ($request->json('Items') as $item)
+        {
+            if ($item['Count'] <= 0)
+            {
                 continue;
-            $user_weapon = UserItem::query()
+            }
+            $userWeapon = UserItem::query()
                 ->where('owner_id', $battleInfo->user_id)
                 ->where('item_id', $item['Id'])
                 ->where('count', '!=', -1)
-                ->get()->first();
+                ->first();
 
-            $user_weapon->count -= $item['Count'];
-            if($user_weapon->count < 0)
-                $user_weapon->count = 0;
-            $user_weapon->save();
+            $userWeapon->count -= $item['Count'];
+            if ($userWeapon->count < 0)
+            {
+                $userWeapon->count = 0;
+            }
+            $userWeapon->save();
         }
 
         $mission = null;
         $twiceRun = false;
 
-        switch($result){
+        switch ($result)
+        {
             case 0: //Draw
-                if($battleInfo->battle_type === 0){
-                    switch ($request->json('Type')){
+                if ($battleInfo->battle_type === 0)
+                {
+                    switch ($request->json('Type'))
+                    {
                         case 0: //MyLevel draw
-                            $user_info->money += config('wormix.game.missions.awards.draw.money.medium');
+                            $userInfo->money += config('wormix.game.missions.awards.draw.money.medium');
                             $wormData->experience += config('wormix.game.missions.awards.draw.experience.medium');
                             break;
                         case 1: //High level draw
-                            $user_info->money += config('wormix.game.missions.awards.draw.money.high');
+                            $userInfo->money += config('wormix.game.missions.awards.draw.money.high');
                             $wormData->experience += config('wormix.game.missions.awards.draw.experience.high');
                             break;
                         case 2: //Low level draw
-                            $user_info->money += config('wormix.game.missions.awards.draw.money.low');
+                            $userInfo->money += config('wormix.game.missions.awards.draw.money.low');
                             $wormData->experience += config('wormix.game.missions.awards.draw.experience.low');
                             break;
                     }
                 }
                 break;
             case 1: //Winner
-                if($battleInfo->battle_type === 1){
+                if ($battleInfo->battle_type === 1)
+                {
                     $mission = Mission::query()->where('mission_id', $battleInfo->mission_id)
-                        ->get()
                         ->first();
-                    if($battleInfo->mission_id < 0) {
+                    if ($battleInfo->mission_id < 0)
+                    {
                         $battleInfo->last_mission_id = $battleInfo->mission_id;
                     }
-                    else{
+                    else
+                    {
                         $twiceRun = $battleInfo->mission_id - $battleInfo->last_mission_id <= 0;
-                        if(!$twiceRun){
+                        if (!$twiceRun)
+                        {
                             $battleInfo->last_mission_id = $battleInfo->mission_id;
                         }
                         $battleInfo->last_boss_fight_time = time();
                     }
                 }
-                else{
-                    switch ($request->json('Type')){
+                else
+                {
+                    switch ($request->json('Type'))
+                    {
                         case 0: //MyLevel win
-                            $user_info->money += config('wormix.game.missions.awards.win.money.medium');
+                            $userInfo->money += config('wormix.game.missions.awards.win.money.medium');
                             $wormData->experience += config('wormix.game.missions.awards.win.experience.medium');
                             break;
                         case 1: //High level win
-                            $user_info->money += config('wormix.game.missions.awards.win.money.high');
+                            $userInfo->money += config('wormix.game.missions.awards.win.money.high');
                             $wormData->experience += config('wormix.game.missions.awards.win.experience.high');
                             break;
                         case 2: //Low level win
-                            $user_info->money += config('wormix.game.missions.awards.win.money.low');
+                            $userInfo->money += config('wormix.game.missions.awards.win.money.low');
                             $wormData->experience += config('wormix.game.missions.awards.win.experience.low');
                             break;
                     }
                 }
                 break;
             case -1: //Looser
-                if($battleInfo->battle_type == 0){
-                    $user_info->money += config('wormix.game.missions.awards.loose.money');
+                if ($battleInfo->battle_type == 0)
+                {
+                    $userInfo->money += config('wormix.game.missions.awards.loose.money');
                     $wormData->experience += config('wormix.game.missions.awards.loose.experience');
                 }
                 break;
         }
 
-
-        $user_info->save();
+        $userInfo->save();
         $wormData->save();
 
         $valid = true;
-        foreach($request->json('CollectedReagents') as $reagent){
-            if(!in_array($reagent, $battleInfo->awards['reagents'])){
+        foreach ($request->json('CollectedReagents') as $reagent)
+        {
+            if (!in_array($reagent, $battleInfo->awards['reagents']))
+            {
                 $valid = false;
                 break;
             }
         }
 
-        if($valid)
-            WormixTrashHelper::addReagents($user_info, $request->json('CollectedReagents'));
+        if ($valid)
+        {
+            WormixTrashHelper::addReagents($userInfo, $request->json('CollectedReagents'));
+        }
 
-        if($mission !== null)
-            $this->processAwards($mission, $twiceRun, $user_info, $wormData);
+        if ($mission !== null)
+        {
+            $this->processAwards($mission, $twiceRun, $userInfo, $wormData);
+        }
 
         $battleInfo->current_battle_id = 0;
         $battleInfo->mission_id = 0;
@@ -271,18 +303,26 @@ class ArenaController extends Controller
         $battleInfo->save();
     }
 
-    private function processAwards(Mission $mission, bool $isDouble, UserProfile $userProfile, WormData $wormData):void
+    private function processAwards(Mission $mission, bool $isDouble, UserProfile $userProfile, WormData $wormData) : void
     {
         $awards = $mission->awards;
-        if(count($awards) === 0)
+        if (count($awards) === 0)
+        {
             return;
+        }
 
-        if(count($awards) === 1)
+        if (count($awards) === 1)
+        {
             $awards = $awards[0];
-        elseif(!$isDouble)
+        }
+        elseif (!$isDouble)
+        {
             $awards = $awards[0];
+        }
         else
-            $awards  = $awards[1];
+        {
+            $awards = $awards[1];
+        }
 
         $userProfile->money += $awards['money'];
         $userProfile->real_money += $awards['real_money'];
@@ -294,4 +334,3 @@ class ArenaController extends Controller
         $wormData->save();
     }
 }
-

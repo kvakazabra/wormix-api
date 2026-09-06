@@ -23,28 +23,24 @@ class ResetController extends Controller
 {
     public function resetAccount(ResetAccountRequest $request)
     {
-        $user_profile =
+        $userProfile =
             UserProfile::query()->where('user_id', $request->json('internal_user_id'))
-                ->get()
                 ->first();
 
         $wormData = WormData::query()
             ->where('owner_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
         $battleInfo = UserBattleInfo::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
         $loginSequence = LoginSequence::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-
-        try{
+        try
+        {
             DB::beginTransaction();
 
             //Wipe battle info
@@ -58,9 +54,9 @@ class ResetController extends Controller
             $battleInfo->last_battle_time = 0;
             $battleInfo->save();
 
-
             //Wipe worm data
-            WormData::withoutEvents(function () use ($wormData) {
+            WormData::withoutEvents(function () use ($wormData)
+            {
                 $wormData->armor = 0;
                 $wormData->attack = 0;
                 $wormData->level = 1;
@@ -71,13 +67,13 @@ class ResetController extends Controller
             });
 
             //Wipe user profile
-            $user_profile->money = config('wormix.starter.money');
-            $user_profile->real_money = config('wormix.starter.real_money');
-            $user_profile->rating = 0;
-            $user_profile->reaction_rate = 0;
-            $user_profile->reagents = [];
-            $user_profile->recipes = [];
-            $user_profile->save();
+            $userProfile->money = config('wormix.starter.money');
+            $userProfile->real_money = config('wormix.starter.real_money');
+            $userProfile->rating = 0;
+            $userProfile->reaction_rate = 0;
+            $userProfile->reagents = [];
+            $userProfile->recipes = [];
+            $userProfile->save();
 
             //wipe login sequence
             $loginSequence->last_login = date("Y-m-d");
@@ -91,23 +87,19 @@ class ResetController extends Controller
                 HouseAction::query()
                     ->where('user_id', $request->json('internal_user_id'))
                     ->orWhere('to_user_id', $request->json('internal_user_id'))
-                    ->select('id')
-                    ->get()
                     ->pluck('id')
-                    ->toArray()
             );
 
             UserItem::destroy(
                 UserItem::query()
                     ->where('owner_id', $request->json('internal_user_id'))
-                    ->select('id')
-                    ->get()
                     ->pluck('id')
-                    ->toArray()
             );
 
             DB::commit();
-        }catch (\Exception $ex){
+        }
+        catch (\Exception $ex)
+        {
             DB::rollBack();
             Log::debug("Wipe error", [
                 $ex->getMessage(),
@@ -120,7 +112,6 @@ class ResetController extends Controller
                 ]
             ];
         }
-
 
         //Add starter weapons
         foreach (Weapon::query()->where('is_starter', 1)->get() as $w)
@@ -143,37 +134,40 @@ class ResetController extends Controller
 
     public function resetParameters(ResetParametersRequest $request)
     {
-        $user_profile = UserProfile::query()
+        $userProfile = UserProfile::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
         $wormData = WormData::query()
             ->where('owner_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        if(
-            ($request->json('MoneyType') === 1 && $user_profile->money < config('wormix.game.buy.reset_stats.money')) ||
-            $request->json('MoneyType') === 0 && $user_profile->real_money < config('wormix.game.buy.reset_stats.real_money')
+        if (
+            ($request->json('MoneyType') === 1 && $userProfile->money < config('wormix.game.buy.reset_stats.money')) ||
+            ($request->json('MoneyType') === 0 && $userProfile->real_money < config('wormix.game.buy.reset_stats.real_money'))
         )
+        {
             return [
                 'data' => new ResetParametersResult(Collection::empty(), ResetParametersResult::NotEnoughMoney)
             ];
+        }
 
-        if($request->json('MoneyType') === 1)
-            $user_profile->money -= config('wormix.game.buy.reset_stats.money');
+        if ($request->json('MoneyType') === 1)
+        {
+            $userProfile->money -= config('wormix.game.buy.reset_stats.money');
+        }
         else
-            $user_profile->real_money -= config('wormix.game.buy.reset_stats.real_money');
+        {
+            $userProfile->real_money -= config('wormix.game.buy.reset_stats.real_money');
+        }
 
         $wormData->armor = 0;
         $wormData->attack = 0;
         $wormData->save();
 
-        $user_profile->save();
+        $userProfile->save();
 
         return [
             'data' => new ResetParametersResult(Collection::empty(), ResetParametersResult::Success)
         ];
-
     }
 }

@@ -18,12 +18,13 @@ class DistributePointsResult extends JsonResource
         $this->result = $result;
         parent::__construct($resource);
     }
+
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Result' => $this->result,

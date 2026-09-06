@@ -16,10 +16,8 @@ class SearchTheHouseResult extends JsonResource
     public const KeyLimitExceed = 5;
     public const Reagent = 7;
 
-
     private int $result;
     private int $value;
-
 
     public function __construct($resource, int $result, int $value)
     {
@@ -33,7 +31,7 @@ class SearchTheHouseResult extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Result' => $this->result,

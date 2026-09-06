@@ -14,10 +14,11 @@ class InternalRequest
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
-        $tcp_session = $request->header('X-TCP-SESSION');
-        if($tcp_session == null){
+        $tcpSession = $request->header('X-TCP-SESSION');
+        if ($tcpSession == null)
+        {
             return \response([
                'message' => 'Not found'
             ], 404);

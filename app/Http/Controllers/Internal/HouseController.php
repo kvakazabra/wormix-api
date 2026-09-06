@@ -21,34 +21,35 @@ class HouseController extends Controller
     {
         $result = [];
 
-        foreach($request->json('FriendsIds') as $friendId) {
-            if(HouseAction::query()
-                ->where('user_id', $request->json('internal_user_id'))
-                ->where('to_user_id', $friendId)
-                ->where('action_type', 0)
-                ->where('created_at', '>', now()->subDay())
-                ->exists() ||
+        foreach ($request->json('FriendsIds') as $friendId)
+        {
+            if (HouseAction::query()
+                    ->where('user_id', $request->json('internal_user_id'))
+                    ->where('to_user_id', $friendId)
+                    ->where('action_type', 0)
+                    ->where('created_at', '>', now()->subDay())
+                    ->exists() ||
                 !HouseAction::query()
-                    ->where('user_id',  $friendId)
+                    ->where('user_id', $friendId)
                     ->where('to_user_id', $request->json('internal_user_id'))
                     ->where('action_type', 0)
                     ->where('created_at', '>', now()->subDays(3))
-                    ->exists()
-            )
+                    ->exists())
+            {
                 continue;
+            }
 
             $result[] = [
                 'FriendId' => $friendId,
                 'Result' => 0
             ];
 
-            $user_profile = UserProfile::query()
+            $userProfile = UserProfile::query()
                 ->where('user_id', $friendId)
-                ->get()
                 ->first();
 
-            $user_profile->reaction_rate += 1;
-            $user_profile->save();
+            $userProfile->reaction_rate += 1;
+            $userProfile->save();
 
             $action = new HouseAction();
             $action->action_type = 0;
@@ -66,94 +67,99 @@ class HouseController extends Controller
 
     public function pumpReaction(PumpReactionRateRequest $request)
     {
-        if($request->json('internal_user_id') === $request->json('FriendId'))
+        if ($request->json('internal_user_id') === $request->json('FriendId'))
+        {
             return new PumpReactionTheHouseResult(Collection::empty(), PumpReactionTheHouseResult::Error);
+        }
 
-        $pump_reaction_friend = HouseAction::query()
+        $pumpReactionFriend = HouseAction::query()
             ->where('to_user_id', $request->json('FriendId'))
             ->where('user_id', $request->json('internal_user_id'))
             ->where('action_type', 0)
             ->where('created_at', '>', date('Y-m-d H:i:s', strtotime('-1 day')))
-            ->get()
             ->first();
 
-        if($pump_reaction_friend !== null){
-            return  new PumpReactionTheHouseResult(Collection::empty(), PumpReactionTheHouseResult::TodayAlreadyPumped);
+        if ($pumpReactionFriend !== null)
+        {
+            return new PumpReactionTheHouseResult(Collection::empty(), PumpReactionTheHouseResult::TodayAlreadyPumped);
         }
 
-
-        $to_user_profile = UserProfile::query()->where('user_id', $request->json('FriendId'))
-            ->get()
+        $toUserProfile = UserProfile::query()->where('user_id', $request->json('FriendId'))
             ->first();
 
-        $to_user_profile->reaction_rate += 1;
-        $to_user_profile->save();
+        $toUserProfile->reaction_rate += 1;
+        $toUserProfile->save();
 
-        $new_action = new HouseAction();
-        $new_action->user_id = $request->json('internal_user_id');
-        $new_action->to_user_id = $request->json('FriendId');
-        $new_action->action_type = 0;
-        $new_action->save();
+        $newAction = new HouseAction();
+        $newAction->user_id = $request->json('internal_user_id');
+        $newAction->to_user_id = $request->json('FriendId');
+        $newAction->action_type = 0;
+        $newAction->save();
 
         return new PumpReactionTheHouseResult(Collection::empty(), PumpReactionTheHouseResult::Ok);
     }
 
     public function searchTheHouse(SearchTheHouseRequest $request)
     {
-        $search_action = new HouseAction();
-        $search_action->user_id = $request->json('internal_user_id');
-        $search_action->to_user_id = $request->json('FriendId');
-        $search_action->action_type = 1;
+        $searchAction = new HouseAction();
+        $searchAction->user_id = $request->json('internal_user_id');
+        $searchAction->to_user_id = $request->json('FriendId');
+        $searchAction->action_type = 1;
 
-        if($request->json('internal_user_id') === $request->json('FriendId'))
-            return new SearchTheHouseResult($search_action, SearchTheHouseResult::Error, 0);
-
-        $search_keys = WormixTrashHelper::getSearchKeys($request->json('internal_user_id'));
-
-        if($search_keys <= 0){
-            return new SearchTheHouseResult($search_action, SearchTheHouseResult::KeyLimitExceed, 0);
+        if ($request->json('internal_user_id') === $request->json('FriendId'))
+        {
+            return new SearchTheHouseResult($searchAction, SearchTheHouseResult::Error, 0);
         }
 
-        if(WormixTrashHelper::isSearchedToday($request->json('internal_user_id'), $request->json('FriendId'))){
-            return new SearchTheHouseResult($search_action, SearchTheHouseResult::Empty, 0);
+        $searchKeys = WormixTrashHelper::getSearchKeys($request->json('internal_user_id'));
+
+        if ($searchKeys <= 0)
+        {
+            return new SearchTheHouseResult($searchAction, SearchTheHouseResult::KeyLimitExceed, 0);
         }
 
-        $user_profile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->get()->first();
-        $search_action->save();
+        if (WormixTrashHelper::isSearchedToday($request->json('internal_user_id'), $request->json('FriendId')))
+        {
+            return new SearchTheHouseResult($searchAction, SearchTheHouseResult::Empty, 0);
+        }
+
+        $userProfile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->first();
+        $searchAction->save();
 
         srand(time());
 
-        switch (rand(0, 3)) {
+        switch (rand(0, 3))
+        {
             case 0: //Empty
                 return [
-                    'data' => new SearchTheHouseResult($search_action, SearchTheHouseResult::Empty, 0)
+                    'data' => new SearchTheHouseResult($searchAction, SearchTheHouseResult::Empty, 0)
                 ];
 
             case 1: //Money
                 $money = rand(1, 20);
-                $user_profile->money += $money;
-                $user_profile->save();
+                $userProfile->money += $money;
+                $userProfile->save();
                 return [
-                    'data' => new SearchTheHouseResult($search_action, SearchTheHouseResult::Money, $money)
+                    'data' => new SearchTheHouseResult($searchAction, SearchTheHouseResult::Money, $money)
                 ];
 
             case 2: //Real money
                 $money = rand(1, 5);
-                $user_profile->real_money += $money;
-                $user_profile->save();
+                $userProfile->real_money += $money;
+                $userProfile->save();
                 return [
-                    'data' => new SearchTheHouseResult($search_action, SearchTheHouseResult::RealMoney, $money)
+                    'data' => new SearchTheHouseResult($searchAction, SearchTheHouseResult::RealMoney, $money)
                 ];
 
             case 3: //Reagent
                 $reagents = Reagent::query()->select('reagent_id')->pluck('reagent_id')->toArray();
                 $reagent = $reagents[array_rand($reagents)];
-                WormixTrashHelper::addReagents($user_profile, [$reagent]);
+                WormixTrashHelper::addReagents($userProfile, [$reagent]);
                 return [
-                    'data' => new SearchTheHouseResult($search_action, SearchTheHouseResult::Reagent, $reagent)
+                    'data' => new SearchTheHouseResult($searchAction, SearchTheHouseResult::Reagent, $reagent)
                 ];
         }
 
-        return new SearchTheHouseResult($search_action, SearchTheHouseResult::Error, 0);
+        return new SearchTheHouseResult($searchAction, SearchTheHouseResult::Error, 0);
     }
 }

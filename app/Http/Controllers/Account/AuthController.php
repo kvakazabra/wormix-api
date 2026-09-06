@@ -11,22 +11,26 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    private function respondWithToken(User $user){
-        $new_token = $user->createToken('auth_token-'.$user->id);
-        $user->tokens()->where('id', '!=', $new_token->accessToken->id)->delete();
+    private function respondWithToken(User $user)
+    {
+        $newToken = $user->createToken('auth_token-'.$user->id);
+        $user->tokens()->where('id', '!=', $newToken->accessToken->id)->delete();
 
         return response()->json([
-            'auth_token' => $new_token->plainTextToken,
+            'auth_token' => $newToken->plainTextToken,
             'id' => $user->id,
         ]);
     }
+
     public function signIn(SignInRequest $request)
     {
-        $user = User::query()->where('login', $request->json('login'))->get()->first();
-        if(!Hash::check($request->json('password'), $user->password))
+        $user = User::query()->where('login', $request->json('login'))->first();
+        if (!Hash::check($request->json('password'), $user->password))
+        {
             return response([
                 'message' => 'Access Denied'
             ], 403);
+        }
 
         return $this->respondWithToken($user);
     }
@@ -46,7 +50,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response([
-           'message' => 'Logged out'
+            'message' => 'Logged out'
         ]);
     }
 }

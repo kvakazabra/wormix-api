@@ -22,10 +22,9 @@ class TeamController extends Controller
                 'worm_data.level_model',
                 'user_profile.teammates'
             ])
-            ->get()
             ->first();
 
-        if(
+        if (
             UserTeam::query()
                 ->where('user_id', $request->json('internal_user_id'))
                 ->where('teammate_id', $request->json('ProfileId'))
@@ -34,9 +33,11 @@ class TeamController extends Controller
             ($user->user_profile->money < config('wormix.game.buy.teammate.money') && $request->json('MoneyType') === 1) ||
             ($user->user_profile->real_money < config('wormix.game.buy.teammate.real_money') && $request->json('MoneyType') === 0)
         )
+        {
             return [
                 'data' => new TeamResult(Collection::empty(), TeamResult::Error)
             ];
+        }
 
         $teammate = new UserTeam();
         $teammate->user_id = $request->json('internal_user_id');
@@ -44,13 +45,17 @@ class TeamController extends Controller
         $teammate->order = count($user->user_profile->teammates) + 1;
         $teammate->save();
 
-        $user_profile = $user->user_profile;
-        if($request->json('MoneyType') === 0)
-            $user_profile->money -= config('wormix.game.buy.teammate.money');
+        $userProfile = $user->user_profile;
+        if ($request->json('MoneyType') === 0)
+        {
+            $userProfile->money -= config('wormix.game.buy.teammate.money');
+        }
         else
-            $user_profile->real_money -= config('wormix.game.buy.teammate.real_money');
+        {
+            $userProfile->real_money -= config('wormix.game.buy.teammate.real_money');
+        }
 
-        $user_profile->save();
+        $userProfile->save();
 
         return [
             'data' => new TeamResult(Collection::empty(), TeamResult::Success)
@@ -64,7 +69,6 @@ class TeamController extends Controller
                 ->where('user_id', $request->json('internal_user_id'))
                 ->where('teammate_id', $request->json('ProfileId'))
                 ->select('id')
-                ->get()
                 ->pluck('id')
                 ->toArray()
         );
@@ -75,16 +79,18 @@ class TeamController extends Controller
 
     public function reorderTeam(ReorderTeamRequest $request)
     {
-        foreach($request->json('ReorderedWormGroup') as $key => $profileId){
+        foreach ($request->json('ReorderedWormGroup') as $key => $profileId)
+        {
             $teammate = UserTeam::query()
                 ->where('user_id', $request->json('internal_user_id'))
                 ->where('teammate_id', $profileId)
-                ->get()
                 ->first();
-            if($teammate === null)
+            if ($teammate === null)
+            {
                 return [
                     'data' => new TeamResult(Collection::empty(), TeamResult::Error)
                 ];
+            }
             $teammate->order = $key;
             $teammate->save();
         }

@@ -13,11 +13,12 @@ class DailyBonusStructure extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
-        if(!$this->gift_accepted){
+        if (!$this->gift_accepted)
+        {
             return [
-                'LoginSequence' =>  $this->login_sequence,
+                'LoginSequence' => $this->login_sequence,
                 'DailyBonusType' => $this->bonus_type,
                 'DailyBonusCount' => $this->bonus_count,
             ];
@@ -26,8 +27,7 @@ class DailyBonusStructure extends JsonResource
         return [
             'LoginSequence' => 0,
             'DailyBonusType' => 0,
-            'DailyBonusCount' =>0,
+            'DailyBonusCount' => 0,
         ];
-
     }
 }

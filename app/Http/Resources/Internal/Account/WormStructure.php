@@ -14,7 +14,7 @@ class WormStructure extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         $armor = $this->teammate->armor;
         $attack = $this->teammate->attack;

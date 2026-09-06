@@ -12,7 +12,7 @@ class ProfileDoubleKeyStructure extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'LongId' => $this->user_profile->user_id,

@@ -17,20 +17,22 @@ class ShopResult extends JsonResource
 
     private int $result;
 
-    public function __construct($resource, int $result) {
+    public function __construct($resource, int $result)
+    {
         $this->result = $result;
         parent::__construct($resource);
     }
+
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Result' => $this->result,
-            'Weapons' =>  WeaponRecordList::collection($this),
+            'Weapons' => WeaponRecordList::collection($this),
             'Stuff' => []
         ];
     }

@@ -9,7 +9,7 @@ class LoginRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,7 +19,7 @@ class LoginRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'tcp_session' => 'required|uuid',
@@ -28,7 +28,8 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function messages(): array{
+    public function messages() : array
+    {
         return [
             'tcp_session.required' => 'TCP session is required.',
             'tcp_session.uuid' => 'TCP session must be is GUID.',

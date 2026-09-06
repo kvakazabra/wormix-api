@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Log;
 
 class VkApiController extends Controller
 {
-    public function handleRequest(VkApiRequest $request){
+    public function handleRequest(VkApiRequest $request)
+    {
         //Log::debug("VK_API_REQUEST", $request->toArray());
-        return match ($request->post('method')) {
+        return match ($request->post('method'))
+        {
             'getUserSettings' => $this->getUserSettings(),
             'getAppFriends' => $this->getAppFriends(),
             'getProfiles' => $this->getProfiles($request),
@@ -40,44 +42,56 @@ class VkApiController extends Controller
 
     private function getProfiles(Request $request)
     {
-        $uids_array = json_decode($request->post('uids'), true);
-        $is_bots = false;
+        $uidsArray = json_decode($request->post('uids'), true);
+        $isBots = false;
 
-        foreach ($uids_array as $uid) {
-            if($uid < 0){
-                $is_bots = true;
+        foreach ($uidsArray as $uid)
+        {
+            if ($uid < 0)
+            {
+                $isBots = true;
                 break;
             }
         }
 
-        if(!$is_bots)
+        if (!$isBots)
+        {
             return [
                 'response' => VkProfile::collection(UserSocialData::all())
             ];
+        }
 
         $profiles = Collection::empty();
         $names = null;
 
-        if(File::exists(resource_path('game/names.json')))
+        if (File::exists(resource_path('game/names.json')))
+        {
             $names = json_decode(File::get(resource_path('game/names.json')), true);
+        }
 
-        if($names === null)
+        if ($names === null)
+        {
             $names = ["NaN Bot"];
+        }
 
-        foreach($uids_array as $uid){
-            $random_name = explode(" ", $names[array_rand($names)]);
-            $bot_profile = new UserSocialData();
-            $bot_profile->user_id = $uid;
-            $bot_profile->first_name = $random_name[1];
-            $bot_profile->last_name = $random_name[0];
-            $bot_profile->nickname = "bot";
+        foreach ($uidsArray as $uid)
+        {
+            $randomName = explode(" ", $names[array_rand($names)]);
+            $botProfile = new UserSocialData();
+            $botProfile->user_id = $uid;
+            $botProfile->first_name = $randomName[1];
+            $botProfile->last_name = $randomName[0];
+            $botProfile->nickname = "bot";
 
-            if(File::exists(resource_path('images/bots'))){
-                $file_list = File::files(resource_path('images/bots'));
-                if(count($file_list) !== 0)
-                    $bot_profile->photo = $file_list[array_rand($file_list)]->getFilename();
+            if (File::exists(resource_path('images/bots')))
+            {
+                $fileList = File::files(resource_path('images/bots'));
+                if (count($fileList) !== 0)
+                {
+                    $botProfile->photo = $fileList[array_rand($fileList)]->getFilename();
+                }
             }
-            $profiles->add($bot_profile);
+            $profiles->add($botProfile);
         }
 
         return [

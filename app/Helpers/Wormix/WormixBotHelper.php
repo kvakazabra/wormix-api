@@ -6,10 +6,8 @@ use App\Models\User;
 use App\Models\Wormix\Equipment;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\Race;
-use App\Models\Wormix\Weapon;
 use App\Models\Wormix\WormData;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\Translation\Exception\MissingRequiredOptionException;
 
 class WormixBotHelper
 {
@@ -17,76 +15,79 @@ class WormixBotHelper
 
     public static function GenerateBots(WormData $userWorm)
     {
-        $bot_base_id = User::query()->select('id')->count();
+        $botBaseId = User::query()->select('id')->count();
 
-        $user_profile = $userWorm->owner->user_profile;
+        $userProfile = $userWorm->owner->user_profile;
 
         // todo: change magic value to hat crafts id
-        $random_stuff = Equipment::query()
+        $randomStuff = Equipment::query()
             ->where('id', '<', 1500)
             ->where('required_level', '<=', $userWorm->level)
-            ->where('required_rating', '<=', $user_profile->rating)
+            ->where('required_rating', '<=', $userProfile->rating)
             ->where('hide_in_shop', 0)
             ->where('price', '!=', 0)
-            ->get()
             ->pluck('id')
             ->toArray();
 
-        $random_race = Race::query()
+        $randomRace = Race::query()
             ->where('required_level', '<=', $userWorm->level)
-            ->get()->pluck('race_id')->toArray();
+            ->pluck('race_id')
+            ->toArray();
 
         $bots = Collection::empty();
 
-        $bots_count = (
+        $botsCount = (
             $userWorm->level >= 5 ||
             $userWorm->owner->battle_info->mission_id < -2 ||
             $userWorm->owner->battle_info->mission_id >= 0
         ) ? 6 : 4;
 
-        for($i = 0; $i < $bots_count; $i++){
-            $worm_group = [];
-            $random_level = rand(
+        for ($i = 0; $i < $botsCount; $i++)
+        {
+            $wormGroup = [];
+            $randomLevel = rand(
                 max(1, $userWorm->level - 1),
                 min($userWorm->level + 1, 30)
             );
 
-            $level = Level::query()->where('id', $random_level)->get()->first();
-            $random_worms_count = rand(1, $level->max_worms_count);
+            $level = Level::query()->where('id', $randomLevel)->first();
+            $randomWormsCount = rand(1, $level->max_worms_count);
 
-            for($j = 0; $j < $random_worms_count; $j++){
-
-                $random_armor = rand(0, $random_level * 2);
-                $random_attack = $random_level * 2 - $random_armor;
-                $hat = count($random_stuff) === 0 ? 0 : $random_stuff[array_rand($random_stuff)];
-                if(rand(0, 10) % 5 === 0)
+            for ($j = 0; $j < $randomWormsCount; $j++)
+            {
+                $randomArmor = rand(0, $randomLevel * 2);
+                $randomAttack = $randomLevel * 2 - $randomArmor;
+                $hat = count($randomStuff) === 0 ? 0 : $randomStuff[array_rand($randomStuff)];
+                if (rand(0, 10) % 5 === 0)
+                {
                     $hat = 0;
+                }
 
-                $race = count($random_race) === 0 ? 0 : $random_race[array_rand($random_race)];
+                $race = count($randomRace) === 0 ? 0 : $randomRace[array_rand($randomRace)];
 
-                $worm_group[] = [
-                    'Armor' => $random_armor,
-                    'Attack' => $random_attack,
+                $wormGroup[] = [
+                    'Armor' => $randomArmor,
+                    'Attack' => $randomAttack,
                     'Experience' => 0,
-                    'Level' => $random_level,
+                    'Level' => $randomLevel,
                     'Hat' => WormixTrashHelper::mergeHatRaceIds($hat, $race),
-                    'OwnerId' => $bot_base_id + ($i+$j+1) * 10,
-                    'SocialOwnerId' => (string)(0 - $bot_base_id + self::BOT_BASE - ($i+1+$j)*10)
+                    'OwnerId' => $botBaseId + ($i+$j+1) * 10,
+                    'SocialOwnerId' => (string)(0 - $botBaseId + self::BOT_BASE - ($i+1+$j)*10)
                 ];
             }
 
             $profile = [
-                'Id' => $bot_base_id + ($i+1) * 10,
-                'Rating' => rand(0, $user_profile->rating),
-                'Money' => rand(0, $user_profile->money),
-                'RealMoney' => rand(0, $user_profile->real_money),
+                'Id' => $botBaseId + ($i+1) * 10,
+                'Rating' => rand(0, $userProfile->rating),
+                'Money' => rand(0, $userProfile->money),
+                'RealMoney' => rand(0, $userProfile->real_money),
                 'Recipes' => [],
-                'SocialId' => (string)(0 - $bot_base_id + self::BOT_BASE - ($i+1)*10),
+                'SocialId' => (string)(0 - $botBaseId + self::BOT_BASE - ($i+1)*10),
                 'Stuff' => $hat == 0 ? [] : [$hat],
                 'WeaponRecordList' => [
                     ['Id' => 1, 'Count' => -1]
                 ],
-                'WormsGroup' => $worm_group
+                'WormsGroup' => $wormGroup
             ];
             $bots->add($profile);
         }
@@ -103,9 +104,10 @@ class WormixBotHelper
         $levelPoints = $level * 2;
         $toLevelPoints = $toLevel * 2;
 
-        if($armor + $attack < $levelPoints)
+        if ($armor + $attack < $levelPoints)
+        {
             $armor += $levelPoints - ($armor + $attack);
-
+        }
 
         $armorPoints = (int)(($armor / $levelPoints) * $toLevelPoints);
         $attackPoints = $toLevelPoints - $armorPoints;

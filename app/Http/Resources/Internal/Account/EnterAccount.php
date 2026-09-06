@@ -11,16 +11,15 @@ class EnterAccount extends JsonResource
 {
     private string $session_key;
 
-    public function __construct($resource, $session_key)
+    public function __construct($resource, $sessionKey)
     {
-        $this->session_key = $session_key;
+        $this->session_key = $sessionKey;
         parent::__construct($resource);
     }
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
-
         return [
-            'UserProfileStructure' => new  UserProfileStructure($this->user_profile),
+            'UserProfileStructure' => new UserProfileStructure($this->user_profile),
 
             'UserProfileStructures' => UserProfileStructure::collection(UserProfile::query()->where('user_id', '!=', $this->id)->get()),
 

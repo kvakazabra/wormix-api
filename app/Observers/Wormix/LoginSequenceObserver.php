@@ -13,7 +13,7 @@ class LoginSequenceObserver
     /**
      * Handle the LoginSequence "created" event.
      */
-    public function created(LoginSequence $loginSequence): void
+    public function created(LoginSequence $loginSequence) : void
     {
         //
     }
@@ -21,37 +21,41 @@ class LoginSequenceObserver
     /**
      * Handle the LoginSequence "updated" event.
      */
-    public function updated(LoginSequence $loginSequence): void
+    public function updated(LoginSequence $loginSequence) : void
     {
-        $user_profile = UserProfile::query()->where('user_id', $loginSequence->user_id)->get()->first();
-        $bonus = DailyBonus::query()->where('login_sequence', $loginSequence->login_sequence)->get()->first();
-        $battle_info = UserBattleInfo::query()->where('user_id', $loginSequence->user_id)->get()->first();
-        if($user_profile === null || $bonus === null || $battle_info == null)
+        $userProfile = UserProfile::query()->where('user_id', $loginSequence->user_id)->first();
+        $bonus = DailyBonus::query()->where('login_sequence', $loginSequence->login_sequence)->first();
+        $battleInfo = UserBattleInfo::query()->where('user_id', $loginSequence->user_id)->first();
+        if ($userProfile === null || $bonus === null || $battleInfo == null)
+        {
             return;
+        }
 
         srand(time());
 
-        LoginSequence::withoutEvents(function () use ($loginSequence, $user_profile, $bonus, $battle_info) {
+        LoginSequence::withoutEvents(function () use ($loginSequence, $userProfile, $bonus, $battleInfo)
+        {
             $amount = $bonus->random_gift ? rand($bonus->rand_min, $bonus->rand_max) : $bonus->bonus_value;
             $type = $bonus->random_gift ? rand(1, 4) : $bonus->bonus_type;
-            switch ($type){
+            switch ($type)
+            {
                 case 1: //fuzzes
-                    $user_profile->money += $amount;
-                    $user_profile->save();
+                    $userProfile->money += $amount;
+                    $userProfile->save();
                     break;
                 case 2: //rubies
-                    $user_profile->real_money += $amount;
-                    $user_profile->save();
+                    $userProfile->real_money += $amount;
+                    $userProfile->save();
                     break;
 
                 case 3: //missions
-                    $battle_info->battles_count += $amount;
-                    $battle_info->save();
+                    $battleInfo->battles_count += $amount;
+                    $battleInfo->save();
                     break;
 
                 case 4: // reaction rate
-                    $user_profile->reaction_rate += $amount;
-                    $user_profile->save();
+                    $userProfile->reaction_rate += $amount;
+                    $userProfile->save();
                     break;
             }
             $loginSequence->bonus_count = $amount;
@@ -63,7 +67,7 @@ class LoginSequenceObserver
     /**
      * Handle the LoginSequence "deleted" event.
      */
-    public function deleted(LoginSequence $loginSequence): void
+    public function deleted(LoginSequence $loginSequence) : void
     {
         //
     }
@@ -71,7 +75,7 @@ class LoginSequenceObserver
     /**
      * Handle the LoginSequence "restored" event.
      */
-    public function restored(LoginSequence $loginSequence): void
+    public function restored(LoginSequence $loginSequence) : void
     {
         //
     }
@@ -79,7 +83,7 @@ class LoginSequenceObserver
     /**
      * Handle the LoginSequence "force deleted" event.
      */
-    public function forceDeleted(LoginSequence $loginSequence): void
+    public function forceDeleted(LoginSequence $loginSequence) : void
     {
         //
     }

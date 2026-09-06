@@ -15,23 +15,26 @@ class FileController extends Controller
 //            'name' => $name
 //        ]);
 
-        $full_path = "";
-        switch (strtolower($photo)){
+        $fullPath = "";
+        switch (strtolower($photo))
+        {
             case "bot":
-                $full_path = resource_path("images/bots/{$name}");
+                $fullPath = resource_path("images/bots/{$name}");
                 break;
             case "users":
-                $full_path = resource_path("images/users/{$name}");
+                $fullPath = resource_path("images/users/{$name}");
                 break;
             default:
-                $full_path == resource_path("images/default.png");
+                $fullPath = resource_path("images/default.png");
         }
 
-        if(!File::exists($full_path))
-            $full_path = resource_path("images/default.png");
+        if (!File::exists($fullPath))
+        {
+            $fullPath = resource_path("images/default.png");
+        }
 
-        $file = File::get($full_path);
-        $type = File::mimeType($full_path);
+        $file = File::get($fullPath);
+        $type = File::mimeType($fullPath);
         $rsp = Response::make($file);
         $rsp->header('Cache-Control', 'no-transform,public,max-age=120');
         $rsp->header('Content-Type', $type);

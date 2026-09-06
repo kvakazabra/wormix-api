@@ -11,7 +11,7 @@ class BuyShopItemsRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class BuyShopItemsRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
@@ -29,9 +29,9 @@ class BuyShopItemsRequest extends FormRequest
             'ShopItems.*.Id' => [
                 'required',
                 fn ($attribute, $value, $fail) =>
-                !Weapon::where('id', $value)->exists() && !Equipment::where('id', $value)->exists()
-                    ? $fail('Item not found.')
-                    : null,
+                    !Weapon::where('id', $value)->exists() && !Equipment::where('id', $value)->exists()
+                        ? $fail('Item not found.')
+                        : null,
             ],
             'ShopItems.*.Count' => 'required|integer|min:-1',
             'ShopItems.*.MoneyType' => 'required|integer|max:1|min:0',

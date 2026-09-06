@@ -12,7 +12,7 @@ class ArenaLocked extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Delay' => (config('wormix.game.missions.delay') - (time() - $this->last_battle_time)) * 1000,

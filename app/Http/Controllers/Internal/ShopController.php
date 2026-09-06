@@ -71,7 +71,7 @@ class ShopController extends Controller
 
                 if ($shopItems["{$weapon->id}"]['MoneyType'] === 1)
                 {
-                    if($weapon->price === 0)
+                    if ($weapon->price === 0)
                     {
                         return new ShopResult(Collection::empty(), ShopResult::Error);
                     }
@@ -127,66 +127,67 @@ class ShopController extends Controller
                 // todo: add required_* validation
             }
 
-            $user_profile = UserProfile::query()
+            $userProfile = UserProfile::query()
                 ->where('user_id', $request->json('internal_user_id'))
                 ->first();
-            if($user_profile->money < $sum || $user_profile->real_money < $realSum)
+            if ($userProfile->money < $sum || $userProfile->real_money < $realSum)
             {
                 return new ShopResult(Collection::empty(), ShopResult::NotEnoughMoney);
             }
 
-            $user_profile->money -= $sum;
-            $user_profile->real_money -= $realSum;
-            $user_profile->save();
+            $userProfile->money -= $sum;
+            $userProfile->real_money -= $realSum;
+            $userProfile->save();
 
             if ($lastEquipmentId !== -1)
             {
                 $wormData = WormData::query()
-                    ->where('owner_id', $user_profile->user_id)
+                    ->where('owner_id', $userProfile->user_id)
                     ->first();
                 $wormData->hat = $lastEquipmentId;
                 $wormData->save();
             }
 
-            $new_weapons = Collection::empty();
+            $newWeapons = Collection::empty();
             foreach ($request->json('ShopItems') as $item)
             {
-                $old_weapon = UserItem::query()
+                $oldWeapon = UserItem::query()
                     ->where('owner_id', $request->json('internal_user_id'))
                     ->where('item_id', $item['Id'])
                     ->first();
 
-                if ($item['Count'] == -1 || $old_weapon === null)
+                if ($item['Count'] == -1 || $oldWeapon === null)
                 {
-                    $user_weapon = new UserItem();
-                    $user_weapon->owner_id = $request->json('internal_user_id');
-                    $user_weapon->item_id = $item['Id'];
-                    $user_weapon->item_type = UserItem::itemTypeForId($user_weapon->item_id);
-                    $user_weapon->count = $item['Count'];
-                    $user_weapon->save();
-                    $new_weapons->add($user_weapon);
+                    $userWeapon = new UserItem();
+                    $userWeapon->owner_id = $request->json('internal_user_id');
+                    $userWeapon->item_id = $item['Id'];
+                    $userWeapon->item_type = UserItem::itemTypeForId($userWeapon->item_id);
+                    $userWeapon->count = $item['Count'];
+                    $userWeapon->save();
+                    $newWeapons->add($userWeapon);
                 }
                 else
                 {
-                    if ($old_weapon->weapon->infinity)
+                    if ($oldWeapon->weapon->infinity)
                     {
-                        $old_weapon->count = $item['Count'];
+                        $oldWeapon->count = $item['Count'];
                     }
                     else
                     {
-                        $old_weapon->count += $item['Count'];
+                        $oldWeapon->count += $item['Count'];
                     }
 
-                    $old_weapon->save();
+                    $oldWeapon->save();
 
-                    $old_weapon->count = $item['Count'];
-                    $new_weapons->add($old_weapon);
+                    $oldWeapon->count = $item['Count'];
+                    $newWeapons->add($oldWeapon);
                 }
             }
 
-            return new ShopResult($new_weapons, ShopResult::Success);
+            return new ShopResult($newWeapons, ShopResult::Success);
         }
-        catch (\Exception $ex){
+        catch (\Exception $ex)
+        {
             Log::error("Internal exception", [
                 'exception' => $ex,
             ]);
@@ -196,105 +197,115 @@ class ShopController extends Controller
 
     public function changeRace(ChangeRaceRequest $request)
     {
-        $user_worm = WormData::query()->where('owner_id', $request->json('internal_user_id'))->get()->first();
-        $user_profile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->get()->first();
-        $race = Race::query()->where('race_id', $request->json('RaceId'))->get()->first();
+        $userWorm = WormData::query()
+            ->where('owner_id', $request->json('internal_user_id'))
+            ->first();
+        $userProfile = UserProfile::query()
+            ->where('user_id', $request->json('internal_user_id'))
+            ->first();
+        $race = Race::query()
+            ->where('race_id', $request->json('RaceId'))
+            ->first();
 
-        if ($user_worm->race === $request->json('RaceId'))
+        if ($userWorm->race === $request->json('RaceId'))
         {
             return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
         }
 
-        if (($request->json('MoneyType') === 1 && $user_worm->level < $race->required_level) ||
-            ($request->json('MoneyType') === 0 && $user_profile->real_money < $race->real_price) ||
-            ($request->json('MoneyType') === 1 && $user_profile->money < $race->price))
+        if (($request->json('MoneyType') === 1 && $userWorm->level < $race->required_level) ||
+            ($request->json('MoneyType') === 0 && $userProfile->real_money < $race->real_price) ||
+            ($request->json('MoneyType') === 1 && $userProfile->money < $race->price))
         {
             return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::MinRequirementsError);
         }
 
         if ($request->json('MoneyType') === 0)
         {
-            $user_profile->real_money -= $race->real_price;
+            $userProfile->real_money -= $race->real_price;
         }
         else
         {
-            $user_profile->money -= $race->price;
+            $userProfile->money -= $race->price;
         }
 
-        $user_profile->save();
+        $userProfile->save();
 
-        $user_worm->race = $request->json('RaceId');
-        $user_worm->save();
+        $userWorm->race = $request->json('RaceId');
+        $userWorm->save();
 
         return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Success);
     }
 
     public function buyReaction(BuyReactionRateRequest $request)
     {
-        $user_profile = UserProfile::query()
+        $userProfile = UserProfile::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        if(
-            $request->json('ReactionRateCount') % 3 !== 0 ||
-            $user_profile->real_money < $request->json('ReactionRateCount') / 3
-        )
+        if ($request->json('ReactionRateCount') % 3 !== 0 ||
+            $userProfile->real_money < $request->json('ReactionRateCount') / 3)
+        {
             return [
-                'data' => new BuyReactionRateResult(Collection::empty(), BuyReactionRateResult::Error, 0)
+                'data' => new BuyReactionRateResult(Collection::empty(),
+                    BuyReactionRateResult::Error, 0)
             ];
+        }
 
-        $user_profile->real_money -= $request->json('ReactionRateCount') / 3;
-        $user_profile->reaction_rate += $request->json('ReactionRateCount');
-        $user_profile->save();
+        $userProfile->real_money -= $request->json('ReactionRateCount') / 3;
+        $userProfile->reaction_rate += $request->json('ReactionRateCount');
+        $userProfile->save();
 
         return [
-            'data' => new BuyReactionRateResult(Collection::empty(), BuyReactionRateResult::Success, $request->json('ReactionRateCount'))
+            'data' => new BuyReactionRateResult(Collection::empty(),
+                BuyReactionRateResult::Success, $request->json('ReactionRateCount'))
         ];
     }
 
     public function buyBattle(BuyBattleRequest $request)
     {
-        $battle_info = UserBattleInfo::query()
+        $battleInfo = UserBattleInfo::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        $user_profile = UserProfile::query()
+        $userProfile = UserProfile::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        if($battle_info->battles_count >= config('wormix.game.missions.max'))
+        if ($battleInfo->battles_count >= config('wormix.game.missions.max'))
+        {
             return [
-                'data' => new BuyBattleResult(Collection::empty(), BuyBattleResult::Error)
+                'data' => new BuyBattleResult(Collection::empty(),
+                    BuyBattleResult::Error)
             ];
+        }
 
-        if(
-            (
-                $request->json('MoneyType') === 0
-                && $user_profile->real_money < config('wormix.game.missions.buy.real_money')
-            )
-            || (
-                $request->json('MoneyType') === 1
-                && $user_profile->money < config('wormix.game.missions.buy.money')
-            )
-        )
+        if (($request->json('MoneyType') === 0 &&
+                $userProfile->real_money < config('wormix.game.missions.buy.real_money')) ||
+            ($request->json('MoneyType') === 1 &&
+                $userProfile->money < config('wormix.game.missions.buy.money')))
+        {
             return [
                 'data' => new BuyBattleResult(Collection::empty(), BuyBattleResult::NotEnoughMoney)
             ];
+        }
 
-        $battle_info->battles_count += 1;
-        $battle_info->save();
+        $battleInfo->battles_count += 1;
+        $battleInfo->save();
 
-        if($request->json('MoneyType') === 0)
-            $user_profile->real_money -= config('wormix.game.missions.buy.real_money');
+        if ($request->json('MoneyType') === 0)
+        {
+            $userProfile->real_money -= config('wormix.game.missions.buy.real_money');
+        }
         else
-            $user_profile->money -= config('wormix.game.missions.buy.money');
+        {
+            $userProfile->money -= config('wormix.game.missions.buy.money');
+        }
 
-        $user_profile->save();
+        $userProfile->save();
+
         return [
-            'data' => new BuyBattleResult(Collection::empty(), BuyBattleResult::Success)
+            'data' => new BuyBattleResult(Collection::empty(),
+                BuyBattleResult::Success)
         ];
     }
 
@@ -307,25 +318,23 @@ class ShopController extends Controller
                 'worm_data',
                 'user_profile'
             ])
-            ->get()
             ->first();
 
         $mission = Mission::query()
             ->where('mission_id', $request->json('MissionId'))
-            ->get()
             ->first();
 
         $mission_price =
             ($request->json('MissionId') - 1 - $user->battle_info->last_mission_id)
             * config('wormix.game.buy.boss_mission');
 
-        if(
-            $user->worm_data->level < $mission->required_level ||
+        if ($user->worm_data->level < $mission->required_level ||
             $user->battle_info->last_mission_id >= $mission->mission_id ||
-            $user->user_profile->real_money < $mission_price
-        ){
+            $user->user_profile->real_money < $mission_price)
+        {
             return [
-                'data' => new UnlockMissionResult(Collection::empty(), UnlockMissionResult::Error)
+                'data' => new UnlockMissionResult(Collection::empty(),
+                    UnlockMissionResult::Error)
             ];
         }
 
@@ -338,7 +347,8 @@ class ShopController extends Controller
         $battleInfo->save();
 
         return [
-            'data' => new UnlockMissionResult(Collection::empty(), UnlockMissionResult::Success)
+            'data' => new UnlockMissionResult(Collection::empty(),
+                UnlockMissionResult::Success)
         ];
     }
 

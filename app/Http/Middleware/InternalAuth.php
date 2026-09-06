@@ -14,29 +14,37 @@ class InternalAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
         //Token format {user_id}.{session_key}
-        $auth_key = $request->header('X-SESSION-KEY');
+        $authKey = $request->header('X-SESSION-KEY');
 
-        if(!$auth_key)
+        if (!$authKey)
+        {
             return $this->error();
+        }
 
-        $auth_key = explode('.', $auth_key);
+        $authKey = explode('.', $authKey);
 
-        if(count($auth_key) !== 2)
+        if (count($authKey) !== 2)
+        {
             return $this->error();
+        }
 
-        try{
-            $session = new UserSession((int)$auth_key[0]);
-            if($session->getSessionKey() !== $auth_key[1])
+        try
+        {
+            $session = new UserSession((int)$authKey[0]);
+            if ($session->getSessionKey() !== $authKey[1])
+            {
                 return $this->error();
+            }
         }
-        catch (\Exception){
+        catch (\Exception)
+        {
             return $this->error();
         }
 
-        $request->json()->add(['internal_user_id' => (int)$auth_key[0]]);
+        $request->json()->add(['internal_user_id' => (int)$authKey[0]]);
         return $next($request);
     }
 

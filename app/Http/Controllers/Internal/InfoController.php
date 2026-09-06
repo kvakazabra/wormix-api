@@ -20,7 +20,6 @@ class InfoController extends Controller
         return new WhoPumpedReactionResult(
             User::query()
                 ->where('id', $request->json('internal_user_id'))
-                ->get()
                 ->first()
         );
     }

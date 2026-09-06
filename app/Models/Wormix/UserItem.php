@@ -36,12 +36,12 @@ class UserItem extends Model
         }
 
         // Upgrades cannot be assigned in this table, but keep it here for now
-        if($id > UpgradeController::UPGRADE_BASE && $id < WormixTrashHelper::STUFF_START_INDEX)
+        if ($id > UpgradeController::UPGRADE_BASE && $id < WormixTrashHelper::STUFF_START_INDEX)
         {
             return self::WEAPON_UPGRADE_TYPE;
         }
 
-        if($id > WormixTrashHelper::STUFF_START_INDEX)
+        if ($id > WormixTrashHelper::STUFF_START_INDEX)
         {
             return self::HAT_TYPE;
         }

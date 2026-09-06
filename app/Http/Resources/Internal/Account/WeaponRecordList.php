@@ -13,7 +13,7 @@ class WeaponRecordList extends JsonResource
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'Id' => $this->item_id,
