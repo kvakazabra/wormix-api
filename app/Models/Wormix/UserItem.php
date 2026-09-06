@@ -49,6 +49,11 @@ class UserItem extends Model
         return "null";
     }
 
+    public function equipment() : BelongsTo
+    {
+        return $this->belongsTo(Equipment::class, 'item_id', 'id');
+    }
+
     public function weapon() : BelongsTo
     {
         return $this->belongsTo(Weapon::class, 'item_id', 'id');
