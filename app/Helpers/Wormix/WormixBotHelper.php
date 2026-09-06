@@ -69,7 +69,7 @@ class WormixBotHelper
                     'Attack' => $random_attack,
                     'Experience' => 0,
                     'Level' => $random_level,
-                    'Hat' => WormixTrashHelper::getHatByRaceAndHatIds($hat, $race),
+                    'Hat' => WormixTrashHelper::mergeHatRaceIds($hat, $race),
                     'OwnerId' => $bot_base_id + ($i+$j+1) * 10,
                     'SocialOwnerId' => (string)(0 - $bot_base_id + self::BOT_BASE - ($i+1+$j)*10)
                 ];

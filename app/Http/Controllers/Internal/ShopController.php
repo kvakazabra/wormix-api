@@ -182,27 +182,31 @@ class ShopController extends Controller
         $user_profile = UserProfile::query()->where('user_id', $request->json('internal_user_id'))->get()->first();
         $race = Race::query()->where('race_id', $request->json('RaceId'))->get()->first();
 
-        $raceAndHats = WormixTrashHelper::getRaceAndHatIds($user_worm->hat);
-        if($raceAndHats[0] === $request->json('RaceId'))
+        if ($user_worm->race === $request->json('RaceId'))
+        {
             return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
+        }
 
-        if(
-            ($request->json('MoneyType') === 1 && $user_worm->level < $race->required_level) ||
+        if (($request->json('MoneyType') === 1 && $user_worm->level < $race->required_level) ||
             ($request->json('MoneyType') === 0 && $user_profile->real_money < $race->real_price) ||
-            ($request->json('MoneyType') === 1 && $user_profile->money < $race->price)
-        )
+            ($request->json('MoneyType') === 1 && $user_profile->money < $race->price))
+        {
             return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::MinRequirementsError);
+        }
 
-
-        $user_worm->hat = WormixTrashHelper::getHatByRaceAndHatIds($raceAndHats[1], $request->json('RaceId'));
-        $user_worm->save();
-
-        if($request->json('MoneyType') === 0)
+        if ($request->json('MoneyType') === 0)
+        {
             $user_profile->real_money -= $race->real_price;
+        }
         else
+        {
             $user_profile->money -= $race->price;
+        }
 
         $user_profile->save();
+
+        $user_worm->race = $request->json('RaceId');
+        $user_worm->save();
 
         return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Success);
     }

@@ -25,67 +25,78 @@ class LoginEventListener
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(object $event) : void
     {
         if($event instanceof InternalLoginEvent)
+        {
             $this->handleInternalLoginEvent($event);
+        }
     }
 
-    private function handleInternalLoginEvent(InternalLoginEvent $event): void
+    private function handleInternalLoginEvent(InternalLoginEvent $event) : void
     {
         $user = $event->getUser();
 
-        //Update login sequence
-        $new_account = $user->login_sequence->last_login == null;
-        $old_login_date = $new_account ? now() : Carbon::createFromTimeString($user->login_sequence->last_login);
+        // Update login sequence
+        $is_new_account = $user->login_sequence->last_login == null;
+        $old_login_date = $is_new_account ?
+            now() :
+            Carbon::createFromTimeString($user->login_sequence->last_login);
         $login_sequence = $user->login_sequence;
 
         $days = max(0, (int)$old_login_date->diff(now())->totalDays);
 
-        if($days === 1){
+        if ($days === 1)
+        {
             $login_sequence->login_sequence += 1;
-        }elseif($days > 1){
+        }
+        elseif ($days > 1)
+        {
             $login_sequence->login_sequence  = 1;
         }
 
-        if($login_sequence->login_sequence > 5)
+        if ($login_sequence->login_sequence > 5)
+        {
             $login_sequence->login_sequence = 1;
+        }
 
         $user->login_sequence->last_login = date("Y-m-d");
         $login_sequence->gift_accepted = false;
 
         //Not add gifts if already taken
-        if($days === 0 && ! $new_account){
-            LoginSequence::withoutEvents(function () use ($login_sequence) {
+        if ($days === 0 && ! $is_new_account)
+        {
+            LoginSequence::withoutEvents(function () use ($login_sequence)
+            {
                 $login_sequence->gift_accepted = true;
                 $login_sequence->save();
             });
         }
-        else{
+        else
+        {
             $login_sequence->save();
         }
 
-        //Check current hat
-        $race_and_hat = WormixTrashHelper::getRaceAndHatIds($user->worm_data->hat);
+        // Check current hat & reset if it has expired
         $current_hat = UserItem::query()
             ->where('owner_id', $user->id)
-            ->where('item_id', $race_and_hat[1])
+            ->where('item_id', $user->worm_data->hat)
             ->first();
-        if ($current_hat != null && $current_hat->expire_at < time())
+        if ($current_hat != null &&
+            $current_hat->expire_at < time() &&
+            $current_hat->expire_at !== -1)
         {
-            //Reset expired hat
-            $new_hat = WormixTrashHelper::getHatByRaceAndHatIds(0, $race_and_hat[0]);
-            $user_worm = $user->worm_data;
-            $user_worm->hat = $new_hat;
-            $user_worm->save();
+            $user->worm_data->hat = 0;
+            $user->worm_data->save();
         }
 
-        $battle_info = UserBattleInfo::query()->where('user_id', $user->id)
-            ->get()
+        $battle_info = UserBattleInfo::query()
+            ->where('user_id', $user->id)
             ->first();
 
         //Clear mission id before boss fights
-        if($user->worm_data->level > 5 && $battle_info->last_mission_id < 0){
+        if ($user->worm_data->level > 5 && $battle_info->last_mission_id < 0)
+        {
             $battle_info->last_mission_id = 0;
             $battle_info->save();
         }

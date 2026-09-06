@@ -29,7 +29,7 @@ class UserObserver
         //Create user worm data
         $worm_data = new WormData();
         $worm_data->owner_id = $user->id;
-        $worm_data->hat = config('wormix.starter.race');
+        $worm_data->race = config('wormix.starter.race');
         $worm_data->save();
 
         //Create user default teammate

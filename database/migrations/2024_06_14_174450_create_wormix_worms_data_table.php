@@ -20,6 +20,7 @@ return new class extends Migration
             $table->smallInteger('level')->default(1);
             $table->smallInteger('experience')->default(0);
 
+            $table->smallInteger('race')->default(2);
             $table->smallInteger('hat')->default(0);
 
             $table->timestamps();

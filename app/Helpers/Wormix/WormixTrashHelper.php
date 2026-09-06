@@ -17,34 +17,37 @@ class WormixTrashHelper
 
     public const STUFF_START_INDEX = 1000;
 
-    /**
-     * @param int $hat worm_structure.hat
-     * @return int[] 0-race id, 1-hat id
-     */
-    public static function getRaceAndHatIds(int $hat) : array
-    {
-        $hatId = 0;
-        if($hat < self::RACE_LIMIT){
-            $raceId = $hat;
-        }
-        else{
-            $hatId = self::STUFF_START_INDEX + $hat % self::RACE_BASE;
-            $raceId = (int)(($hat - self::STUFF_START_INDEX) / self::RACE_BASE);
-        }
-        return  [
-            $raceId,
-            $hatId
-        ];
-    }
 
     /**
      * @param int $hatId
      * @param int $raceId
      * @return int worm_structure.hat
      */
-    public static function getHatByRaceAndHatIds(int $hatId, int $raceId) : int
+    public static function mergeHatRaceIds(int $hatId, int $raceId) : int
     {
-        return $hatId === 0 ? $raceId : ($raceId * self::RACE_BASE + $hatId);
+        return $hatId === 0 ?
+            $raceId :
+            $raceId * self::RACE_BASE + $hatId;
+    }
+
+    /**
+     * @param int $merged worm_structure.hat
+     * @return int[] 0-race id, 1-hat id
+     */
+    public static function extractHatAndRaceIds(int $merged) : array
+    {
+        $hatId = 0;
+        if ($merged < self::RACE_LIMIT)
+        {
+            $raceId = $merged;
+        }
+        else
+        {
+            $hatId = self::STUFF_START_INDEX + $merged % self::RACE_BASE;
+            $raceId = (int)(($merged - self::STUFF_START_INDEX) / self::RACE_BASE);
+        }
+
+        return [ $raceId, $hatId ];
     }
 
     /**

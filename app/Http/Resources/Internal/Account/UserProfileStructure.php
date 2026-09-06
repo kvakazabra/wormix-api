@@ -24,14 +24,14 @@ class UserProfileStructure extends JsonResource
             'ReactionRate' => $this->reaction_rate,
             'Rating' => $this->rating,
 
-            'WeaponRecordList' => WeaponRecordList::collection($this->weapons),
+            'WeaponRecordList' => WeaponRecordList::collection($this->items),
 
             'WormsGroup' => WormStructure::collection($this->teammates()->orderBy('order')->get()),
 
             'Recipes' => $this->recipes,
 
             // this is bullshit todo
-            'Stuff' => $this->weapons()->where('item_id', '>', 1000)->get()->pluck('item_id')
+            'Stuff' => $this->items()->where('item_id', '>', 1000)->get()->pluck('item_id')
         ];
     }
 }

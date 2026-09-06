@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Internal\Account;
 
 use App\Helpers\Wormix\WormixBotHelper;
+use App\Helpers\Wormix\WormixTrashHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,13 +20,16 @@ class WormStructure extends JsonResource
         $attack = $this->teammate->attack;
         $level = $this->teammate->level;
 
-
-        if($this->user_id !== $this->teammate_id && $this->owner->level !== $this->teammate->level){
-            $newPoints =  WormixBotHelper::stripData($level, $this->owner->level, $armor, $attack);
+        if ($this->user_id !== $this->teammate_id &&
+            $this->owner->level !== $this->teammate->level)
+        {
+            $newPoints =
+                WormixBotHelper::stripData($level, $this->owner->level, $armor, $attack);
             $level = $this->owner->level;
             $armor = $newPoints['armor'];
             $attack = $newPoints['attack'];
         }
+
         return [
             'OwnerId' => $this->teammate_id,
             'SocialOwnerId' => (string)$this->teammate_id,
@@ -35,7 +39,9 @@ class WormStructure extends JsonResource
 
             'Experience' => $this->teammate->experience,
             'Level' => $level,
-            'Hat' => $this->teammate->hat
+            'Hat' => WormixTrashHelper::mergeHatRaceIds(
+                $this->teammate->hat, $this->teammate->race
+            )
         ];
     }
 }

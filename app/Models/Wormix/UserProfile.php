@@ -39,7 +39,7 @@ class UserProfile extends Model
         'reaction_rate'
     ];
 
-    public function weapons() : HasMany
+    public function items() : HasMany
     {
         return $this->hasMany(UserItem::class, 'owner_id', 'user_id');
     }

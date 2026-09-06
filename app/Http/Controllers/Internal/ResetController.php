@@ -65,7 +65,8 @@ class ResetController extends Controller
                 $wormData->attack = 0;
                 $wormData->level = 1;
                 $wormData->experience = 0;
-                $wormData->hat = config('wormix.starter.race');
+                $wormData->race = config('wormix.starter.race');
+                $wormData->hat = 0;
                 $wormData->save();
             });
 

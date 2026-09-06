@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int experience
  *
  * @property int hat
+ * @property int race
  *
  * @property User owner
  * @property Level level_model

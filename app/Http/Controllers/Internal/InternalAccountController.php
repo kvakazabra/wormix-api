@@ -16,26 +16,26 @@ class InternalAccountController extends Controller
 {
     public function selectStuff(SelectStuffRequest $request)
     {
-        $user_weapon = UserItem::query()
+        $userItem = UserItem::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->where('item_id', $request->json('StuffId'))
             ->first();
 
-        if($user_weapon === null)
+        if ($userItem === null)
+        {
             return [
                 'data' => new SelectStuffResult(
                     Collection::empty(),
                     SelectStuffResult::Error,
                     0)
             ];
+        }
 
         $worm = WormData::query()
             ->where('owner_id', $request->json('internal_user_id'))
-            ->get()
             ->first();
 
-        $raceAndHat = WormixTrashHelper::getRaceAndHatIds($worm->hat);
-        $worm->hat = WormixTrashHelper::getHatByRaceAndHatIds($user_weapon->item_id, $raceAndHat[0]);
+        $worm->hat = $userItem->item_id;
         $worm->save();
 
         return [

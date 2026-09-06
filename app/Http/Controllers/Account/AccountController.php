@@ -55,9 +55,6 @@ class AccountController extends Controller
         if($request->json('worm_data') !== null){
             $worm_data = $request->user()->worm_data;
 
-            $wormHatAndRace = WormixTrashHelper::getRaceAndHatIds($worm_data->hat);
-            $wormHatAndRace[0] = $request->json('worm_data.race');
-
             $worm_data->fill($request->json('worm_data'));
             $strip_params = WormixBotHelper::stripData(
                 (int)(($worm_data->armor + $worm_data->attack) / 2),
@@ -68,7 +65,7 @@ class AccountController extends Controller
             $worm_data->armor = $strip_params['armor'];
             $worm_data->attack = $strip_params['attack'];
             $worm_data->experience = 0;
-            $worm_data->hat = WormixTrashHelper::getHatByRaceAndHatIds($wormHatAndRace[1], $wormHatAndRace[0]);
+            $worm_data->race = $request->json('worm_data.race');
             $worm_data->save();
 
             return [
