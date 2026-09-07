@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->smallInteger('race')->default(2);
             $table->smallInteger('hat')->default(0);
+            $table->smallInteger('artifact')->default(0); // new
 
             $table->timestamps();
         });

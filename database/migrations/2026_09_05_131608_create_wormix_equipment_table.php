@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->integer('duration')->unsigned()->nullable();
 
-            $table->integer('required_scenario')->unsigned()->default(0);
+            $table->integer('required_scenario')->unsigned()->default(0); // new
             $table->integer('required_level')->unsigned()->default(0);
             $table->integer('required_rating')->unsigned()->default(0);
 

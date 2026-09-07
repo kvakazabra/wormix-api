@@ -87,7 +87,7 @@ class InitGameData extends Command
                         'real_price' => $weapon['realprice'] ?? 0,
                         'sell_price' => $weapon['sellPrice'] ?? 0,
 
-                        'infinite' => $weapon['infinite'] ?? 0,
+                        'infinite' => $weapon['infinite'] ?? false,
                         'max_shots' => $weapon['maxShots'] ?? -1,
 
                         'required_friends' => $weapon['requiredFriends'] ?? 0,
