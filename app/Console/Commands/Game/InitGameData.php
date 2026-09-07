@@ -36,35 +36,35 @@ class InitGameData extends Command
     private function parseNames() : void
     {
         $this->info('Parsing items.xml');
-        $items_messages_path = resource_path('game/items.xml');
-        if (!File::exists($items_messages_path))
+        $itemsMessagesPath = resource_path('game/items.xml');
+        if (!File::exists($itemsMessagesPath))
         {
             $this->warn("Can't find items.xml in resources");
             return;
         }
 
-        $messages_array = simplexml_load_file($items_messages_path);
-        $messages_object = [];
-        foreach ($messages_array->children() as $message)
+        $messagesArray = simplexml_load_file($itemsMessagesPath);
+        $messagesObject = [];
+        foreach ($messagesArray->children() as $message)
         {
-            $messages_object[(string)$message['name']] = (string)$message['value'];
+            $messagesObject[(string)$message['name']] = (string)$message['value'];
         }
-        $this->messages = $messages_object;
+        $this->messages = $messagesObject;
     }
 
     private function parseWeapons() : void
     {
         $this->info('Parsing weapons.json');
-        $weapons_path = resource_path('game/weapons.json');
-        if (!File::exists($weapons_path))
+        $weaponsPath = resource_path('game/weapons.json');
+        if (!File::exists($weaponsPath))
         {
             $this->error("Can't find weapons.json in resources");
             return;
         }
 
         $count = 0;
-        $weapons_array = json_decode(file_get_contents($weapons_path), true);
-        foreach ($weapons_array as $weapon)
+        $weaponsArray = json_decode(file_get_contents($weaponsPath), true);
+        foreach ($weaponsArray as $weapon)
         {
             if (array_key_exists('name', $weapon))
             {
@@ -125,16 +125,16 @@ class InitGameData extends Command
     private function parseHats() : void
     {
         $this->info('Parsing hats.json');
-        $hats_path = resource_path('game/hats.json');
-        if (!File::exists($hats_path))
+        $hatsPath = resource_path('game/hats.json');
+        if (!File::exists($hatsPath))
         {
             $this->error("Can't find hats.json in resources");
             return;
         }
 
         $count = 0;
-        $hats_array = json_decode(file_get_contents($hats_path), true);
-        foreach ($hats_array as $hat)
+        $hatsArray = json_decode(file_get_contents($hatsPath), true);
+        foreach ($hatsArray as $hat)
         {
             try
             {
@@ -170,16 +170,16 @@ class InitGameData extends Command
     private function parseArtifacts() : void
     {
         $this->info('Parsing artifacts.json');
-        $art_path = resource_path('game/artifacts.json');
-        if (!File::exists($art_path))
+        $artifactsPath = resource_path('game/artifacts.json');
+        if (!File::exists($artifactsPath))
         {
             $this->error("Can't find artifacts.json in resources");
             return;
         }
 
         $count = 0;
-        $artifacts_array = json_decode(file_get_contents($art_path), true);
-        foreach ($artifacts_array as $artifact)
+        $artifactsArray = json_decode(file_get_contents($artifactsPath), true);
+        foreach ($artifactsArray as $artifact)
         {
             try
             {
@@ -213,16 +213,16 @@ class InitGameData extends Command
     private function parseCraftedEquipment() : void
     {
         $this->info('Parsing crafted equipment from crafts.json');
-        $crafts_path = resource_path('game/crafts.json');
-        if (!File::exists($crafts_path))
+        $craftsPath = resource_path('game/crafts.json');
+        if (!File::exists($craftsPath))
         {
             $this->error("Can't find crafts.json in resources");
             return;
         }
 
         $count = 0;
-        $crafted_equipment_array = json_decode(file_get_contents($crafts_path), true);
-        foreach ($crafted_equipment_array as $crafted_equipment)
+        $craftedEquipmentArray = json_decode(file_get_contents($craftsPath), true);
+        foreach ($craftedEquipmentArray as $crafted_equipment)
         {
             try
             {
@@ -252,16 +252,16 @@ class InitGameData extends Command
     private function parseGifts() : void
     {
         $this->info('Parsing gifts.json');
-        $gifts_path = resource_path('game/gifts.json');
-        if (!File::exists($gifts_path))
+        $giftsPath = resource_path('game/gifts.json');
+        if (!File::exists($giftsPath))
         {
             $this->error("Can't find gifts.json in resources");
             return;
         }
 
         $count = 0;
-        $gifts_array = json_decode(file_get_contents($gifts_path), true);
-        foreach ($gifts_array as $gift)
+        $giftsArray = json_decode(file_get_contents($giftsPath), true);
+        foreach ($giftsArray as $gift)
         {
             try
             {
@@ -288,16 +288,16 @@ class InitGameData extends Command
     private function parseRaces() : void
     {
         $this->info('Parsing races.json');
-        $races_path = resource_path('game/races.json');
-        if (!File::exists($races_path))
+        $racesPath = resource_path('game/races.json');
+        if (!File::exists($racesPath))
         {
             $this->error("Can't find races.json in resources");
             return;
         }
 
         $count = 0;
-        $races_array = json_decode(file_get_contents($races_path), true);
-        foreach ($races_array as $race)
+        $racesArray = json_decode(file_get_contents($racesPath), true);
+        foreach ($racesArray as $race)
         {
             try
             {
@@ -328,15 +328,15 @@ class InitGameData extends Command
     private function addStartItems() : void
     {
         $this->info('Parsing weapons_start.json');
-        $start_weapons_path = resource_path('game/weapons_start.json');
-        if (!File::exists($start_weapons_path))
+        $startWeaponsPath = resource_path('game/weapons_start.json');
+        if (!File::exists($startWeaponsPath))
         {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
 
-        $start_items = json_decode(file_get_contents($start_weapons_path), true);
-        if ($start_items == null)
+        $startItems = json_decode(file_get_contents($startWeaponsPath), true);
+        if ($startItems == null)
         {
             $this->error("Can't parse weapons_start.json");
         }
@@ -344,13 +344,13 @@ class InitGameData extends Command
         try
         {
             DB::beginTransaction();
-            $update_count = Weapon::query()
-                ->whereIn('id', $start_items)
+            $updateCount = Weapon::query()
+                ->whereIn('id', $startItems)
                 ->update([
                     'is_starter' => 1
                 ]);
             DB::commit();
-            $this->info("Set [{$update_count}] items ".json_encode($start_items)." as starter");
+            $this->info("Set [{$updateCount}] items ".json_encode($startItems)." as starter");
         }
         catch (\Exception $exception)
         {
@@ -362,16 +362,16 @@ class InitGameData extends Command
     private function parseLevelAwards() : void
     {
         $this->info('Parsing level_awards.json');
-        $levels_path = resource_path('game/level_awards.json');
-        if (!File::exists($levels_path))
+        $levelsPath = resource_path('game/level_awards.json');
+        if (!File::exists($levelsPath))
         {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
 
         $count = 0;
-        $levels = json_decode(file_get_contents($levels_path), true);
-        foreach ($levels as $level)
+        $levelsArray = json_decode(file_get_contents($levelsPath), true);
+        foreach ($levelsArray as $level)
         {
             try
             {
@@ -397,19 +397,19 @@ class InitGameData extends Command
     private function parseMissions() : void
     {
         $this->info('Parsing missions_awards.json');
-        $missions_path = resource_path('game/missions_awards.json');
-        if (!File::exists($missions_path))
+        $missionsPath = resource_path('game/missions_awards.json');
+        if (!File::exists($missionsPath))
         {
             $this->error("Can't find missions_awards.json in resources");
             return;
         }
 
         $count = 0;
-        $missions = json_decode(file_get_contents($missions_path), true);
+        $missionsArray = json_decode(file_get_contents($missionsPath), true);
         try
         {
             DB::beginTransaction();
-            foreach ($missions as $mission)
+            foreach ($missionsArray as $mission)
             {
                 $m = new Mission();
                 $m->mission_id = $mission['id'];
@@ -432,29 +432,29 @@ class InitGameData extends Command
     private function parseUpgrades() : void
     {
         $this->info('Parsing recipes.json');
-        $recipes_path = resource_path('game/recipes.json');
-        if (!File::exists($recipes_path))
+        $recipesPath = resource_path('game/recipes.json');
+        if (!File::exists($recipesPath))
         {
             $this->error("Can't find recipes.json in resources");
             return;
         }
 
         $count = 0;
-        $recipes = json_decode(file_get_contents($recipes_path), true);
+        $recipes = json_decode(file_get_contents($recipesPath), true);
         foreach ($recipes as $recipe)
         {
             try
             {
                 DB::beginTransaction();
-                $craft = new Upgrade();
-                $craft->id = $recipe['id'];
-                $craft->description = $recipe['description'];
-                $craft->upgrade_id = $recipe['upgradeId'];
-                $craft->prev_upgrade_id = $recipe['prevUpgradeId'] ?? null;
-                $craft->reagents = $recipe['reagents'];
-                $craft->level = $recipe['level'];
-                $craft->required_level = $recipe['requiredLevel'];
-                $craft->save();
+                $upgrade = new Upgrade();
+                $upgrade->id = $recipe['id'];
+                $upgrade->description = $recipe['description'];
+                $upgrade->upgrade_id = $recipe['upgradeId'];
+                $upgrade->prev_upgrade_id = $recipe['prevUpgradeId'];
+                $upgrade->reagents = $recipe['reagents'];
+                $upgrade->level = $recipe['level'];
+                $upgrade->required_level = $recipe['requiredLevel'];
+                $upgrade->save();
                 DB::commit();
                 $count++;
             }
@@ -471,16 +471,16 @@ class InitGameData extends Command
     private function parseReagents() : void
     {
         $this->info('Parsing reagents.json');
-        $reagents_path = resource_path('game/reagents.json');
-        if (!File::exists($reagents_path))
+        $reagentsPath = resource_path('game/reagents.json');
+        if (!File::exists($reagentsPath))
         {
             $this->error("Can't find weapons_start.json in resources");
             return;
         }
 
         $count = 0;
-        $reagents = json_decode(file_get_contents($reagents_path), true);
-        foreach ($reagents as $reagent)
+        $reagentsArray = json_decode(file_get_contents($reagentsPath), true);
+        foreach ($reagentsArray as $reagent)
         {
             try
             {
