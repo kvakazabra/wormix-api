@@ -66,56 +66,41 @@ class InitGameData extends Command
         $weaponsArray = json_decode(file_get_contents($weaponsPath), true);
         foreach ($weaponsArray as $weapon)
         {
-            if (array_key_exists('name', $weapon))
+            try
             {
-                try
-                {
-                    DB::beginTransaction();
-                    Weapon::insert(
-                        [
-                            'id' => $weapon['id'],
-                            'name' => $this->messages[$weapon['name']] ?? $weapon['name'],
-                            'hide_in_shop' => $weapon['hide_in_shop'] ?? false,
-                            'is_starter' => in_array((int)$weapon['id'], config('wormix.starter.weapons')),
-                            'price' => $weapon['price'] ?? 0,
-                            'real_price' => $weapon['realprice'] ?? 0,
-                            'required_friends' => $weapon['requiredFriends'] ?? 0,
-                            'required_level' => $weapon['requiredLevel'] ?? 0,
-                            'infinity' => $weapon['infinity'] ?? 0,
-                        ]
-                    );
-                    DB::commit();
-                    $count++;
-                }
-                catch (\Exception $ex)
-                {
-                    $this->error("Error in {$weapon['id']}: {$ex->getMessage()}");
-                    DB::rollBack();
-                }
+                DB::beginTransaction();
+                Weapon::insert(
+                    [
+                        'id' => $weapon['id'],
+
+                        'name' => $this->messages[$weapon['name']] ?? $weapon['name'],
+                        'description' => $this->messages[$weapon['description']] ?? $weapon['description'],
+                        'note' => $this->messages[$weapon['note']] ?? $weapon['note'],
+                        'hint' => $this->messages[$weapon['hint']] ?? $weapon['hint'],
+
+                        'is_starter' => in_array((int)$weapon['id'], config('wormix.starter.weapons')),
+                        'hide_in_shop' => $weapon['hide_in_shop'] ?? false,
+                        'boss_weapon' => $weapon['bossWeapon'] ?? false,
+                        'temporal' => $weapon['temporal'] ?? false,
+
+                        'price' => $weapon['price'] ?? 0,
+                        'real_price' => $weapon['realprice'] ?? 0,
+                        'sell_price' => $weapon['sellPrice'] ?? 0,
+
+                        'infinite' => $weapon['infinite'] ?? 0,
+                        'max_shots' => $weapon['maxShots'] ?? -1,
+
+                        'required_friends' => $weapon['requiredFriends'] ?? 0,
+                        'required_level' => $weapon['requiredLevel'] ?? 0,
+                    ]
+                );
+                DB::commit();
+                $count++;
             }
-            else if (array_key_exists('refId', $weapon))
+            catch (\Exception $ex)
             {
-                try
-                {
-                    DB::beginTransaction();
-                    Weapon::insert(
-                        [
-                            'id' => $weapon['id'],
-                            'ref_id' =>  $weapon['refId'],
-                            'hide_in_shop' => $weapon['hideInShop'] ?? true,
-                            'price' => $weapon['price'],
-                            'required_friends' => $weapon['requiredFriends'] ?? 0,
-                            'required_level' => $weapon['requiredLevel'] ?? 0,
-                        ]
-                    );
-                    DB::commit();
-                    $count++;
-                }
-                catch (\Exception $ex)
-                {
-                    $this->error("Error in {$weapon['id']}: {$ex->getMessage()}");
-                    DB::rollBack();
-                }
+                $this->error("Error in {$weapon['id']}: {$ex->getMessage()}");
+                DB::rollBack();
             }
         }
 

@@ -47,12 +47,12 @@ class ShopController extends Controller
                          ->whereIn('id', array_keys($shopItems))
                          ->get() as $weapon)
             {
-                if ($weapon->hide_in_shop && $weapon->ref_id === null)
+                if ($weapon->hide_in_shop)
                 {
                     throw new \Exception("Weapon: Attempt to buy hidden item!");
                 }
 
-                if (!$weapon->infinity && $shopItems["{$weapon->id}"]['Count'] === -1)
+                if (!$weapon->infinite && $shopItems["{$weapon->id}"]['Count'] === -1)
                 {
                     return new ShopResult(Collection::empty(), ShopResult::Error);
                 }
@@ -64,7 +64,7 @@ class ShopController extends Controller
                         return new ShopResult(Collection::empty(), ShopResult::Error);
                     }
 
-                    $realSum += $weapon->infinity ?
+                    $realSum += $weapon->infinite ?
                         $weapon->real_price :
                         $weapon->real_price * $shopItems["{$weapon->id}"]['Count'];
                 }
@@ -76,7 +76,7 @@ class ShopController extends Controller
                         return new ShopResult(Collection::empty(), ShopResult::Error);
                     }
 
-                    $sum += $weapon->infinity ?
+                    $sum += $weapon->infinite ?
                         $weapon->price :
                         $weapon->price * $shopItems["{$weapon->id}"]['Count'];
                 }
@@ -168,7 +168,7 @@ class ShopController extends Controller
                 }
                 else
                 {
-                    if ($oldWeapon->weapon->infinity)
+                    if ($oldWeapon->weapon->infinite)
                     {
                         $oldWeapon->count = $item['Count'];
                     }
