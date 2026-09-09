@@ -202,7 +202,7 @@
   },
   {
     "familyId": 1600,
-    "name": "HAT.GENERAL_CAP",
+    "name": "HAT.COMISSAR_HAT",
     "hideInShop": true,
     "craftCost": {
       "price": 1800,
@@ -346,8 +346,8 @@
     }
   },
   {
-    "familyId": 1680,
-    "name": "HAT.WOLF_PELT",
+    "familyId": 1670,
+    "name": "HAT.SPORTS_CAP",
     "hideInShop": true,
     "hideInCraft": true,
     "craftCost": {
@@ -362,8 +362,8 @@
     }
   },
   {
-    "familyId": 1670,
-    "name": "HAT.SPORTS_CAP",
+    "familyId": 1680,
+    "name": "HAT.WOLF_PELT",
     "hideInShop": true,
     "hideInCraft": true,
     "craftCost": {
@@ -424,6 +424,204 @@
     "remakeCost": {
       "realprice": 99999,
       "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1720,
+    "name": "HAT.PYROMANCER",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2200,
+      "realprice": 22,
+      "badge": 10,
+      "equipment": [
+        2048,
+        1041,
+        1149
+      ]
+    },
+    "remakeCost": {
+      "price": 6000,
+      "realprice": 60,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1730,
+    "name": "HAT.FALLING_PYROMANCER",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1740,
+    "name": "HAT.PHOENIX_COVER",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1750,
+    "name": "HAT.HOLOGRAM",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 3000,
+      "realprice": 30,
+      "badge": 10,
+      "equipment": [
+        2018,
+        2057,
+        1002
+      ]
+    },
+    "remakeCost": {
+      "price": 5500,
+      "realprice": 55,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1760,
+    "name": "HAT.MAGMATIC_STETSON",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 4000,
+      "realprice": 40,
+      "badge": 10,
+      "equipment": [
+        1142,
+        1146,
+        1032
+      ]
+    },
+    "remakeCost": {
+      "price": 6000,
+      "realprice": 60,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1770,
+    "name": "HAT.HOKAGE_HELMET",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 5,
+      "equipment": [
+        1102,
+        1018
+      ]
+    },
+    "remakeCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 5,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1780,
+    "name": "HAT.GUL_MASK",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2500,
+      "realprice": 25,
+      "badge": 6,
+      "equipment": [
+        1037,
+        1060
+      ]
+    },
+    "remakeCost": {
+      "price": 2400,
+      "realprice": 24,
+      "badge": 7,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1790,
+    "name": "HAT.COCKED_HAT",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1700,
+      "realprice": 17,
+      "badge": 6,
+      "equipment": [
+        1008,
+        1035,
+        1044
+      ]
+    },
+    "remakeCost": {
+      "price": 2900,
+      "realprice": 29,
+      "badge": 8,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1800,
+    "name": "HAT.RONINS_GARB",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 3,
+      "equipment": [
+        1013,
+        2054
+      ]
+    },
+    "remakeCost": {
+      "price": 2600,
+      "realprice": 26,
+      "badge": 4,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 1810,
+    "name": "HAT.RUSTY_BOILER",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1500,
+      "realprice": 15,
+      "badge": 2,
+      "equipment": [
+        1006,
+        1131
+      ]
+    },
+    "remakeCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 4,
       "equipment": []
     }
   },
@@ -558,8 +756,7 @@
       "realprice": 24,
       "badge": 10,
       "equipment": [
-        2023,
-        1702
+        2023
       ]
     },
     "remakeCost": {
@@ -670,8 +867,7 @@
       "realprice": 30,
       "badge": 10,
       "equipment": [
-        2036,
-        1712
+        2036
       ]
     },
     "remakeCost": {
@@ -699,6 +895,123 @@
       "price": 5200,
       "realprice": 52,
       "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2640,
+    "name": "ARTIFACT.ABSORBER",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 2200,
+      "realprice": 22,
+      "badge": 10,
+      "equipment": [
+        1077,
+        2043,
+        2031
+      ]
+    },
+    "remakeCost": {
+      "price": 5400,
+      "realprice": 54,
+      "badge": 14,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2650,
+    "name": "ARTIFACT.POLAR_SHARD",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2660,
+    "name": "ARTIFACT.NEPHRONOZH",
+    "hideInShop": true,
+    "hideInCraft": true,
+    "duration": 23,
+    "craftCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    },
+    "remakeCost": {
+      "realprice": 99999,
+      "badge": 0,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2670,
+    "name": "ARTIFACT.BIOLAMP",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 3200,
+      "realprice": 32,
+      "badge": 10,
+      "equipment": [
+        2049,
+        2058,
+        2027
+      ]
+    },
+    "remakeCost": {
+      "price": 5600,
+      "realprice": 56,
+      "badge": 16,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2680,
+    "name": "ARTIFACT.SPYGLASS",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1300,
+      "realprice": 13,
+      "badge": 4,
+      "equipment": [
+        1044,
+        2013,
+        2044
+      ]
+    },
+    "remakeCost": {
+      "price": 1800,
+      "realprice": 18,
+      "badge": 5,
+      "equipment": []
+    }
+  },
+  {
+    "familyId": 2690,
+    "name": "ARTIFACT.BULLFIGHTERS_CLOAK",
+    "hideInShop": true,
+    "craftCost": {
+      "price": 1000,
+      "realprice": 10,
+      "badge": 3,
+      "equipment": [
+        1020,
+        2030
+      ]
+    },
+    "remakeCost": {
+      "price": 1400,
+      "realprice": 14,
+      "badge": 4,
       "equipment": []
     }
   }

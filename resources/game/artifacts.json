@@ -2,10 +2,9 @@
   {
     "id": 2001,
     "name": "ARTIFACT.WOODEN_SHIELD",
-    "price": 1000,
+    "price": 200,
     "realprice": 10,
-    "requiredLevel": 8,
-    "requiredRating": 40
+    "requiredLevel": 10
   },
   {
     "id": 2002,
@@ -39,18 +38,15 @@
   {
     "id": 2006,
     "name": "ARTIFACT.SKULL_STAFF",
-    "realprice": 26,
-    "requiredLevel": 1
+    "realprice": 26
   },
   {
     "id": 2007,
-    "name": "ARTIFACT.SHIELD_ARCHDEMON",
-    "price": 99999,
-    "realprice": 99999,
-    "requiredLevel": 1,
-    "hideInShop": true,
+    "name": "ARTIFACT.BOSS_ARCHDEMON_SHIELD",
+    "price": 999999,
+    "realprice": 9999,
     "duration": 23,
-    "requiredRating": 0
+    "hideInShop": true
   },
   {
     "id": 2008,
@@ -79,16 +75,7 @@
   {
     "id": 2011,
     "name": "ARTIFACT.TOTEM_POISON",
-    "realprice": 28,
-    "requiredLevel": 1
-  },
-  {
-    "id": 2013,
-    "name": "ARTIFACT.PIRATE_HOOK",
-    "price": 4200,
-    "realprice": 42,
-    "requiredLevel": 18,
-    "requiredRating": 3000
+    "realprice": 28
   },
   {
     "id": 2012,
@@ -97,6 +84,14 @@
     "realprice": 30,
     "requiredLevel": 16,
     "requiredRating": 1200
+  },
+  {
+    "id": 2013,
+    "name": "ARTIFACT.PIRATE_HOOK",
+    "price": 4200,
+    "realprice": 42,
+    "requiredLevel": 18,
+    "requiredRating": 3000
   },
   {
     "id": 2014,
@@ -115,12 +110,12 @@
   },
   {
     "id": 2016,
-    "name": "ARTIFACT.JARL_SPEAR",
-    "price": 9999,
+    "name": "ARTIFACT.BOSS_JARL_SPEAR",
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 12
+    "duration": 23,
+    "requiredLevel": 18,
+    "hideInShop": true
   },
   {
     "id": 2017,
@@ -132,27 +127,25 @@
   },
   {
     "id": 2018,
-    "name": "ARTIFACT.ARCHBOT_TOTEM",
-    "price": 9999,
+    "name": "ARTIFACT.BOSS_ARCHBOT_STUFF",
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 20,
+    "hideInShop": true
   },
   {
     "id": 2019,
     "name": "ARTIFACT.ICE_SHARD",
-    "realprice": 42,
-    "requiredLevel": 1
+    "realprice": 42
   },
   {
     "id": 2020,
     "name": "ARTIFACT.WATER_SWORD",
     "price": 8999,
     "realprice": 89,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "hideInShop": true
   },
   {
     "id": 2021,
@@ -167,7 +160,15 @@
     "name": "ARTIFACT.MORGENSHTERN",
     "price": 9999,
     "realprice": 99,
-    "requiredLevel": 1,
+    "hideInShop": true
+  },
+  {
+    "id": 2023,
+    "name": "ARTIFACT.BOSS_ENCHANTER_FIERY_DAGGER",
+    "price": 9999,
+    "realprice": 9999,
+    "duration": 23,
+    "requiredLevel": 20,
     "hideInShop": true
   },
   {
@@ -175,45 +176,36 @@
     "name": "ARTIFACT.DEATH_TORCH",
     "price": 9999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
-  },
-  {
-    "id": 2023,
-    "name": "ARTIFACT.FIERY_DAGGER",
-    "price": 9999,
-    "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 20,
+    "hideInShop": true
   },
   {
     "id": 2025,
     "name": "ARTIFACT.EMPEROR",
-    "price": 9999,
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2026,
     "name": "ARTIFACT.SCIENTIST",
-    "price": 9999,
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2027,
-    "name": "ARTIFACT.SYMBIOTE",
-    "price": 9999,
+    "name": "ARTIFACT.BOSS_SYMBIOTE_BIOBLADE",
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2028,
@@ -227,9 +219,7 @@
     "id": 2029,
     "name": "ARTIFACT.GNAWED_BONE",
     "price": 600,
-    "realprice": 6,
-    "requiredLevel": 10,
-    "requiredScenario": 7
+    "realprice": 6
   },
   {
     "id": 2030,
@@ -241,21 +231,20 @@
   },
   {
     "id": 2031,
-    "name": "ARTIFACT.GRAVITY_MASTER_SHIELD",
-    "price": 9999,
+    "name": "ARTIFACT.BOSS_GRAVITY_MASTER_SHIELD",
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 20,
+    "hideInShop": true
   },
   {
     "id": 2032,
     "name": "ARTIFACT.TANK_SHIELD",
     "price": 9999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "hideInShop": true
   },
   {
     "id": 2033,
@@ -268,36 +257,35 @@
   {
     "id": 2034,
     "name": "ARTIFACT.SOLAR_SICKLE",
-    "price": 9999,
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 20,
+    "hideInShop": true
   },
   {
     "id": 2035,
     "name": "ARTIFACT.MIRROR_SHIELD",
     "price": 9999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 20,
+    "hideInShop": true
   },
   {
     "id": 2036,
-    "name": "ARTIFACT.ARCTIC_SWORD",
-    "price": 9999,
+    "name": "ARTIFACT.BOSS_ARCTIC_SWORD",
+    "price": 999999,
     "realprice": 9999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2037,
     "name": "ARTIFACT.SUPER_MORGENSHTERN",
     "price": 9999,
     "realprice": 99,
-    "requiredLevel": 1,
     "hideInShop": true
   },
   {
@@ -305,36 +293,35 @@
     "name": "ARTIFACT.BLACKSMITH_HAMMER",
     "price": 9999,
     "realprice": 99,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2039,
-    "name": "ARTIFACT.SOUL_MASTER_STAFF",
-    "price": 9999,
-    "realprice": 99,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "name": "ARTIFACT.BOSS_SOUL_MASTER_STAFF",
+    "price": 999999,
+    "realprice": 9999,
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2040,
     "name": "ARTIFACT.BOTTLE_ROSE",
     "price": 99999,
     "realprice": 99999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
   },
   {
     "id": 2041,
     "name": "ARTIFACT.PICK",
     "price": 99999,
     "realprice": 99999,
-    "requiredLevel": 1,
-    "hideInShop": true,
-    "duration": 23
+    "duration": 23,
+    "hideInShop": true
   },
   {
     "id": 2042,
@@ -347,8 +334,7 @@
   {
     "id": 2043,
     "name": "ARTIFACT.COLT_M",
-    "realprice": 55,
-    "requiredLevel": 1
+    "realprice": 55
   },
   {
     "id": 2044,
@@ -379,7 +365,6 @@
     "name": "ARTIFACT.WINE_HORN",
     "price": 1500,
     "realprice": 15,
-    "requiredLevel": 1,
     "hideInShop": true
   },
   {
@@ -397,5 +382,81 @@
     "realprice": 62,
     "requiredLevel": 25,
     "requiredRating": 14000
+  },
+  {
+    "id": 2050,
+    "name": "ARTIFACT.CURSED_BROOM",
+    "price": 99999,
+    "realprice": 999,
+    "duration": 12,
+    "hideInShop": true
+  },
+  {
+    "id": 2051,
+    "name": "ARTIFACT.GATEKEEPER",
+    "price": 7000,
+    "realprice": 70,
+    "requiredRating": 15000
+  },
+  {
+    "id": 2052,
+    "name": "ARTIFACT.PLASMA_SHIELD",
+    "price": 2900,
+    "realprice": 29,
+    "requiredLevel": 25,
+    "requiredRating": 1100
+  },
+  {
+    "id": 2053,
+    "name": "ARTIFACT.PIRATE_FLAG",
+    "price": 200,
+    "realprice": 60,
+    "requiredLevel": 25
+  },
+  {
+    "id": 2054,
+    "name": "ARTIFACT.BATTLE_PAN",
+    "price": 2300,
+    "realprice": 23,
+    "requiredRating": 600
+  },
+  {
+    "id": 2055,
+    "name": "ARTIFACT.BATTLE_HOT_PAN",
+    "price": 999999,
+    "realprice": 9999,
+    "requiredLevel": 25,
+    "requiredRating": 14000,
+    "hideInShop": true
+  },
+  {
+    "id": 2056,
+    "name": "ARTIFACT.CRYSTAL_SKULL",
+    "price": 3100,
+    "realprice": 31,
+    "requiredRating": 1500
+  },
+  {
+    "id": 2057,
+    "name": "ARTIFACT.ZIRCON_SKULL",
+    "realprice": 45
+  },
+  {
+    "id": 2058,
+    "name": "ARTIFACT.BOSS_SCORPION_STAFF",
+    "price": 999999,
+    "realprice": 9999,
+    "duration": 23,
+    "requiredLevel": 24,
+    "hideInShop": true
+  },
+  {
+    "id": 2059,
+    "name": "ARTIFACT.ROBINHOOD_BOW",
+    "price": 999999,
+    "realprice": 9999,
+    "duration": 1,
+    "requiredLevel": 30,
+    "hideInShop": true
   }
 ]

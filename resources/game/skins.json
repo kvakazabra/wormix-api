@@ -1,0 +1,224 @@
+[
+  {
+    "raceId": 2,
+    "configName": "boxer",
+    "modify": [
+      {
+        "id": 21,
+        "prefix": "Steel",
+        "realprice": 50
+      },
+      {
+        "id": 22,
+        "prefix": "Berserk",
+        "realprice": 50
+      },
+      {
+        "id": 23,
+        "prefix": "Detective",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 5,
+    "configName": "zombie",
+    "modify": [
+      {
+        "id": 51,
+        "prefix": "Rot",
+        "realprice": 50
+      },
+      {
+        "id": 52,
+        "prefix": "Ash",
+        "realprice": 50
+      },
+      {
+        "id": 53,
+        "prefix": "Talkative",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 4,
+    "configName": "rabbit",
+    "modify": [
+      {
+        "id": 41,
+        "prefix": "Wild",
+        "realprice": 50
+      },
+      {
+        "id": 42,
+        "prefix": "Murk",
+        "realprice": 50
+      },
+      {
+        "id": 43,
+        "prefix": "Singer",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 3,
+    "configName": "demon",
+    "modify": [
+      {
+        "id": 31,
+        "prefix": "Hider",
+        "realprice": 50
+      },
+      {
+        "id": 32,
+        "prefix": "Willie",
+        "realprice": 50
+      },
+      {
+        "id": 33,
+        "prefix": "Boiled",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 6,
+    "configName": "cat",
+    "modify": [
+      {
+        "id": 61,
+        "prefix": "Ice",
+        "realprice": 50
+      },
+      {
+        "id": 62,
+        "prefix": "Were",
+        "realprice": 50
+      },
+      {
+        "id": 63,
+        "prefix": "Fuzzy",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 7,
+    "configName": "dragon",
+    "modify": [
+      {
+        "id": 71,
+        "prefix": "Night",
+        "realprice": 50
+      },
+      {
+        "id": 72,
+        "prefix": "Fiery",
+        "realprice": 50
+      },
+      {
+        "id": 73,
+        "prefix": "Banker",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 8,
+    "configName": "robot",
+    "modify": [
+      {
+        "id": 81,
+        "prefix": "Cutter",
+        "realprice": 50
+      },
+      {
+        "id": 82,
+        "prefix": "Dozer",
+        "realprice": 50
+      },
+      {
+        "id": 83,
+        "prefix": "Cop",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 9,
+    "configName": "rhino",
+    "modify": [
+      {
+        "id": 91,
+        "prefix": "Goon",
+        "realprice": 50
+      },
+      {
+        "id": 92,
+        "prefix": "Blade",
+        "realprice": 50
+      },
+      {
+        "id": 93,
+        "prefix": "Fugitive",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 0,
+    "configName": "boar",
+    "modify": [
+      {
+        "id": 1,
+        "prefix": "Hulk",
+        "realprice": 50
+      },
+      {
+        "id": 2,
+        "prefix": "Hell",
+        "realprice": 50
+      },
+      {
+        "id": 3,
+        "prefix": "Burglar",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 10,
+    "configName": "alien",
+    "modify": [
+      {
+        "id": 101,
+        "prefix": "Toad",
+        "realprice": 50
+      },
+      {
+        "id": 102,
+        "prefix": "Forged",
+        "realprice": 50
+      },
+      {
+        "id": 103,
+        "prefix": "Maniac",
+        "realprice": 50
+      }
+    ]
+  },
+  {
+    "raceId": 11,
+    "configName": "crab"
+  },
+  {
+    "raceId": 12,
+    "configName": "donut"
+  },
+  {
+    "raceId": 13,
+    "configName": "snail"
+  }
+]

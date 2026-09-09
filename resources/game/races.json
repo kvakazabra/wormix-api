@@ -10,7 +10,7 @@
     {
         "raceId": 5,
         "configName": "zombie",
-        "requiredLevel": 8,
+        "requiredLevel": 6,
         "price": 1800,
         "realPrice": 18,
         "playable": true
@@ -58,7 +58,7 @@
     {
         "raceId": 9,
         "configName": "rhino",
-        "requiredLevel": 18,
+        "requiredLevel": 20,
         "price": 4800,
         "realPrice": 48,
         "playable": true
