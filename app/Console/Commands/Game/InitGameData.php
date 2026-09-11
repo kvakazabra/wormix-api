@@ -52,6 +52,11 @@ class InitGameData extends Command
         $this->messages = $messagesObject;
     }
 
+    private function translate(string $key) : string
+    {
+        return $this->messages[$key] ?? $key;
+    }
+
     private function parseWeapons() : void
     {
         $this->info('Parsing weapons.json');
@@ -68,15 +73,23 @@ class InitGameData extends Command
         {
             try
             {
+                $infinite = $weapon['infinite'] ?? false;
+                $maxShots = $weapon['maxShots'] ?? -1;
+                if (is_array($infinite))
+                {
+                    $maxShots = $infinite['maxShots'] ?? -1;
+                    $infinite = true;
+                }
+
                 DB::beginTransaction();
                 Weapon::insert(
                     [
                         'id' => $weapon['id'],
 
-                        'name' => $this->messages[$weapon['name']] ?? $weapon['name'],
-                        'description' => $this->messages[$weapon['description']] ?? $weapon['description'],
-                        'note' => $this->messages[$weapon['note']] ?? $weapon['note'],
-                        'hint' => $this->messages[$weapon['hint']] ?? $weapon['hint'],
+                        'name' => $this->translate($weapon['name'] ?? ""),
+                        'description' => $this->translate($weapon['description'] ?? ""),
+                        'note' => $this->translate($weapon['note'] ?? ""),
+                        'hint' => $this->translate($weapon['hint'] ?? ""),
 
                         'is_starter' => in_array((int)$weapon['id'], config('wormix.starter.weapons')),
                         'hide_in_shop' => $weapon['hide_in_shop'] ?? false,
@@ -87,8 +100,8 @@ class InitGameData extends Command
                         'real_price' => $weapon['realprice'] ?? 0,
                         'sell_price' => $weapon['sellPrice'] ?? 0,
 
-                        'infinite' => $weapon['infinite'] ?? false,
-                        'max_shots' => $weapon['maxShots'] ?? -1,
+                        'infinite' => $infinite,
+                        'max_shots' => $maxShots,
 
                         'required_friends' => $weapon['requiredFriends'] ?? 0,
                         'required_level' => $weapon['requiredLevel'] ?? 0,
@@ -127,7 +140,7 @@ class InitGameData extends Command
                 Equipment::insert(
                     [
                         'id' => $hat['id'],
-                        'name' => $this->messages[$hat['name']] ?? $hat['name'],
+                        'name' => $this->translate($hat['name'] ?? ""),
 
                         'hide_in_shop' => $hat['hideInShop'] ?? false,
                         'price' => $hat['price'] ?? 0,
@@ -172,7 +185,7 @@ class InitGameData extends Command
                 Equipment::insert(
                     [
                         'id' => $artifact['id'],
-                        'name' => $this->messages[$artifact['name']] ?? $artifact['name'],
+                        'name' => $this->translate($artifact['name'] ?? ""),
                         'hide_in_shop' => $artifact['hideInShop'] ?? false,
                         'price' => $artifact['price'] ?? 0,
                         'real_price' => $artifact['realprice'] ?? 0,
@@ -214,7 +227,7 @@ class InitGameData extends Command
                 DB::beginTransaction();
                 CraftedEquipment::insert([
                     'family_id' => $crafted_equipment['familyId'],
-                    'name' => $this->messages[$crafted_equipment['name']] ?? $crafted_equipment['name'],
+                    'name' => $this->translate($crafted_equipment['name'] ?? ""),
                     'hide_in_shop' => $crafted_equipment['hideInShop'] ?? true,
                     'hide_in_craft' => $crafted_equipment['hideInCraft'] ?? false,
                     'duration' => $crafted_equipment['duration'] ?? 0,
@@ -433,7 +446,7 @@ class InitGameData extends Command
                 DB::beginTransaction();
                 $upgrade = new Upgrade();
                 $upgrade->id = $recipe['id'];
-                $upgrade->description = $recipe['description'];
+                $upgrade->description = $recipe['description'] ?? "";
                 $upgrade->upgrade_id = $recipe['upgradeId'];
                 $upgrade->prev_upgrade_id = $recipe['prevUpgradeId'];
                 $upgrade->reagents = $recipe['reagents'];
@@ -472,7 +485,7 @@ class InitGameData extends Command
                 DB::beginTransaction();
                 Reagent::insert([
                     'reagent_id' => $reagent['id'],
-                    'name' => $this->messages[$reagent['name']] ?? $reagent['name'],
+                    'name' => $this->translate($reagent['name'] ?? ""),
                     'reagent_price' => $reagent['price'],
                 ]);
                 DB::commit();
