@@ -30,6 +30,11 @@ class WormixTrashHelper
             $raceId * self::RACE_BASE + $hatId;
     }
 
+    public static function mergeSkinAndRaceIds(int $skinId, int $raceId) : int
+    {
+        return $raceId * 10 + $skinId;
+    }
+
     /**
      * @param int $merged worm_structure.hat
      * @return int[] 0-race id, 1-hat id
