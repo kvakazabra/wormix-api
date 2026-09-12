@@ -38,8 +38,8 @@ class WormixBotHelper
 
         $botsCount = (
             $userWorm->level >= 5 ||
-            $userWorm->owner->battle_info->mission_id < -2 ||
-            $userWorm->owner->battle_info->mission_id >= 0
+            $userWorm->owner->battle_info->solo_mission_id < -2 ||
+            $userWorm->owner->battle_info->solo_mission_id >= 0
         ) ? 6 : 4;
 
         for ($i = 0; $i < $botsCount; $i++)

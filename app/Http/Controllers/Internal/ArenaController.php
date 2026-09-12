@@ -82,7 +82,7 @@ class ArenaController extends Controller
                 ], 422);
             }
 
-            $mission = Mission::query()->where('mission_id', $request->json('MissionId'))->first();
+            $mission = Mission::query()->where('solo_mission_id', $request->json('MissionId'))->first();
             $wormData = WormData::query()->where('owner_id', $request->json('internal_user_id'))->first();
             if ($wormData->level < $mission->required_level)
             {

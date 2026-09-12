@@ -48,7 +48,8 @@ class ResetController extends Controller
             $battleInfo->last_mission_id = -1;
             $battleInfo->awards = [];
             $battleInfo->battle_type = 0;
-            $battleInfo->mission_id = 0;
+            $battleInfo->solo_mission_id = 0;
+            $battleInfo->coop_mission_id = 0;
             $battleInfo->current_battle_id = 0;
             $battleInfo->last_boss_fight_time = 0;
             $battleInfo->last_battle_time = 0;

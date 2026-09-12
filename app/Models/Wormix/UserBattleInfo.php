@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property array awards
  * @property int battle_type
  *
- * @property int mission_id
+ * @property int solo_mission_id
+ * @property int coop_mission_id
  * @property int last_mission_id
  *
  * @property int last_boss_fight_time
