@@ -11,8 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int user_id
  * @property int money
  * @property int real_money
+ * @property int rank
+ * @property int rank_points
  * @property int rating
  * @property int reaction_rate
+ * @property int extra_group_slots
+ * @property int race_change_timestamp
  *
  * @property array reagents
  * @property array recipes

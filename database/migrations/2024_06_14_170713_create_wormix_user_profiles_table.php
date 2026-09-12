@@ -18,8 +18,12 @@ return new class extends Migration
             $table->integer('money')->unsigned()->default(450)->comment('fuses');
             $table->integer('real_money')->unsigned()->default(3)->comment('rubies');
 
+            $table->smallInteger('extra_group_slots')->default(0)->comment('bought slots for teammates');
+            $table->smallInteger('rank')->unsigned()->default(20)->comment('rank');
+            $table->integer('rank_points')->unsigned()->default(0)->comment('rank points');
             $table->integer('rating')->unsigned()->default(0)->comment('user rating');
             $table->integer('reaction_rate')->unsigned()->default(0)->comment('user reaction rate');
+            $table->integer('race_change_timestamp')->unsigned()->default(0)->comment('timestamp');
 
             $table->json('reagents')->default(new Expression("('[]')"))->comment('user reagents');
             $table->json('recipes')->default(new Expression("('[]')"))->comment('user craft weapons');
