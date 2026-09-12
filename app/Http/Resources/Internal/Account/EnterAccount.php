@@ -7,6 +7,7 @@ use App\Http\Resources\Internal\House\BackpackConfStructure;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
+use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Http\Resources\Internal\Arena\ReconnectToSimpleBattleResultStructure;
 use App\Models\Wormix\CharData;
@@ -19,6 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property-read UserBackpack $backpack
  * @property-read CharData $char_data
  * @property-read LoginSequence $login_sequence
+ * @property-read UserCookies $cookies
  */
 class EnterAccount extends JsonResource
 {
@@ -68,7 +70,8 @@ class EnterAccount extends JsonResource
                 $this->char_data->skins,
             'LastPaymentTime' => time(),
             'Restrictions' => [],
-            'Cookies' => (object)[],
+            'Cookies' =>
+                (object)$this->cookies->cookies,
             'VipSubscriptionId' => 0,
             'HasReconnectResult' => false,
             'ReconnectResult' =>

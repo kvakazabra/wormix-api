@@ -17,7 +17,7 @@ class UserCookies extends Model
     protected $primaryKey = 'user_id';
 
     protected $casts = [
-        'cookies' => 'array',
+        'cookies' => 'json',
     ];
 
     public function user() : BelongsTo

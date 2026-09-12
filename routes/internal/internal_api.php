@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Internal\ArenaController;
+use App\Http\Controllers\Internal\CookiesController;
 use App\Http\Controllers\Internal\HouseController;
 use App\Http\Controllers\Internal\InfoController;
 use App\Http\Controllers\Internal\InternalAccountController;
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [InternalLoginController::class, 'login']);
 
 Route::middleware(['internal-auth'])->group(function () {
+
+    Route::prefix('cookies')->group(function () {
+        Route::post('set', [CookiesController::class, 'setCookies']);
+    });
 
     Route::prefix('account')->group(function () {
         Route::prefix('buy')->group(function () {
