@@ -11,7 +11,7 @@ use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\Reagent;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +22,7 @@ class UpgradeController extends Controller
     private function isUpgradeAvailable(
         Upgrade     $upgrade,
         UserProfile $userProfile,
-        WormData    $wormData,
+        CharData    $wormData,
         int         $recipeId) : bool
     {
         // Requires owning the base weapon
@@ -83,7 +83,7 @@ class UpgradeController extends Controller
             ->where('user_id', $request->json('internal_user_id'))
             ->first();
 
-        $wormData = WormData::query()
+        $wormData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 

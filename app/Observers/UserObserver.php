@@ -12,7 +12,7 @@ use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserTeam;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 
 class UserObserver
 {
@@ -29,7 +29,7 @@ class UserObserver
         $userProfile->save();
 
         //Create user worm data
-        $wormData = new WormData();
+        $wormData = new CharData();
         $wormData->owner_id = $user->id;
         $wormData->race = config('wormix.starter.race');
         $wormData->save();

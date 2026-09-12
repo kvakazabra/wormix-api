@@ -22,7 +22,7 @@ use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -141,7 +141,7 @@ class ShopController extends Controller
 
             if ($lastEquipmentId !== -1)
             {
-                $wormData = WormData::query()
+                $wormData = CharData::query()
                     ->where('owner_id', $userProfile->user_id)
                     ->first();
                 $wormData->hat = $lastEquipmentId;
@@ -197,7 +197,7 @@ class ShopController extends Controller
 
     public function changeRace(ChangeRaceRequest $request)
     {
-        $userWorm = WormData::query()
+        $userWorm = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
         $userProfile = UserProfile::query()
@@ -319,7 +319,7 @@ class ShopController extends Controller
             ->where('id', $request->json('internal_user_id'))
             ->with([
                 'battle_info',
-                'worm_data',
+                'char_data',
                 'user_profile'
             ])
             ->first();
@@ -332,7 +332,7 @@ class ShopController extends Controller
             ($request->json('MissionId') - 1 - $user->battle_info->last_mission_id)
             * config('wormix.game.buy.boss_mission');
 
-        if ($user->worm_data->level < $mission->required_level ||
+        if ($user->char_data->level < $mission->required_level ||
             $user->battle_info->last_mission_id >= $mission->mission_id ||
             $user->user_profile->real_money < $mission_price)
         {

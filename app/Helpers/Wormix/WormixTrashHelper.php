@@ -7,7 +7,7 @@ use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Support\Facades\Log;
 
 class WormixTrashHelper
@@ -117,7 +117,7 @@ class WormixTrashHelper
         $profile->save();
     }
 
-    public static function addWeaponsAwards(array $awards, WormData $wormData) : void
+    public static function addWeaponsAwards(array $awards, CharData $wormData) : void
     {
         if (count($awards) === 0)
         {

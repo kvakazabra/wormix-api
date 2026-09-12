@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wormix_worms_data', function (Blueprint $table) {
+        Schema::create('wormix_characters_data', function (Blueprint $table) {
             $table->foreignId('owner_id')->primary()->constrained('users')->cascadeOnDelete();
 
             $table->smallInteger('armor')->default(1);
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wormix_worms_data');
+        Schema::dropIfExists('wormix_characters_data');
     }
 };

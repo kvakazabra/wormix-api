@@ -8,7 +8,7 @@ use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,7 +23,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string password
  *
  * @property UserProfile user_profile
- * @property WormData worm_data
+ * @property CharData char_data
  * @property UserSocialData social_data
  * @property UserBattleInfo battle_info
  * @property LoginSequence login_sequence
@@ -51,9 +51,9 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 
-    public function worm_data() : HasOne
+    public function char_data() : HasOne
     {
-        return $this->hasOne(WormData::class, 'owner_id', 'id');
+        return $this->hasOne(CharData::class, 'owner_id', 'id');
     }
 
     public function social_data() : HasOne

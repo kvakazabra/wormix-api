@@ -80,14 +80,14 @@ class LoginEventListener
         // Check current hat & reset if it has expired
         $currentHat = UserItem::query()
             ->where('owner_id', $user->id)
-            ->where('item_id', $user->worm_data->hat)
+            ->where('item_id', $user->char_data->hat)
             ->first();
         if ($currentHat != null &&
             $currentHat->expire_at < time() &&
             $currentHat->expire_at !== -1)
         {
-            $user->worm_data->hat = 0;
-            $user->worm_data->save();
+            $user->char_data->hat = 0;
+            $user->char_data->save();
         }
 
         $battleInfo = UserBattleInfo::query()
@@ -95,7 +95,7 @@ class LoginEventListener
             ->first();
 
         //Clear mission id before boss fights
-        if ($user->worm_data->level > 5 && $battleInfo->last_mission_id < 0)
+        if ($user->char_data->level > 5 && $battleInfo->last_mission_id < 0)
         {
             $battleInfo->last_mission_id = 0;
             $battleInfo->save();

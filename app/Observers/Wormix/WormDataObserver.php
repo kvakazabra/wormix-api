@@ -6,14 +6,14 @@ use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 
 class WormDataObserver
 {
     /**
      * Handle the WormData "created" event.
      */
-    public function created(WormData $wormData) : void
+    public function created(CharData $wormData) : void
     {
 
     }
@@ -21,7 +21,7 @@ class WormDataObserver
     /**
      * Handle the WormData "updated" event.
      */
-    public function updated(WormData $wormData) : void
+    public function updated(CharData $wormData) : void
     {
         if ($wormData->experience < $wormData->level_model->required_experience)
         {
@@ -32,7 +32,7 @@ class WormDataObserver
         if ($wormData->level === 30)
         {
             $wormData->experience = $wormData->level_model->required_experience;
-            WormData::withoutEvents(function () use ($wormData)
+            CharData::withoutEvents(function () use ($wormData)
             {
                 $wormData->save();
             });
@@ -40,7 +40,7 @@ class WormDataObserver
         }
 
         //Save new level
-        WormData::withoutEvents(function () use ($wormData)
+        CharData::withoutEvents(function () use ($wormData)
         {
             $wormData->level += 1;
             $wormData->experience = $wormData->experience - $wormData->level_model->required_experience;
@@ -58,7 +58,7 @@ class WormDataObserver
     /**
      * Handle the WormData "deleted" event.
      */
-    public function deleted(WormData $wormData) : void
+    public function deleted(CharData $wormData) : void
     {
         //
     }
@@ -66,7 +66,7 @@ class WormDataObserver
     /**
      * Handle the WormData "restored" event.
      */
-    public function restored(WormData $wormData) : void
+    public function restored(CharData $wormData) : void
     {
         //
     }
@@ -74,7 +74,7 @@ class WormDataObserver
     /**
      * Handle the WormData "force deleted" event.
      */
-    public function forceDeleted(WormData $wormData) : void
+    public function forceDeleted(CharData $wormData) : void
     {
         //
     }

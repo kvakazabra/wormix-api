@@ -12,7 +12,7 @@ use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -27,7 +27,7 @@ class ResetController extends Controller
             UserProfile::query()->where('user_id', $request->json('internal_user_id'))
                 ->first();
 
-        $wormData = WormData::query()
+        $wormData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 
@@ -56,7 +56,7 @@ class ResetController extends Controller
             $battleInfo->save();
 
             //Wipe worm data
-            WormData::withoutEvents(function () use ($wormData)
+            CharData::withoutEvents(function () use ($wormData)
             {
                 $wormData->armor = 0;
                 $wormData->attack = 0;
@@ -138,7 +138,7 @@ class ResetController extends Controller
         $userProfile = UserProfile::query()
             ->where('user_id', $request->json('internal_user_id'))
             ->first();
-        $wormData = WormData::query()
+        $wormData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 

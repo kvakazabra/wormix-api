@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int teammate_id
  * @property int order
  *
- * @property WormData owner
- * @property WormData teammate
+ * @property CharData owner
+ * @property CharData teammate
  */
 class UserTeam extends Model
 {
@@ -21,12 +21,12 @@ class UserTeam extends Model
 
     public function owner() : BelongsTo
     {
-        return $this->belongsTo(WormData::class, 'user_id', 'owner_id');
+        return $this->belongsTo(CharData::class, 'user_id', 'owner_id');
     }
 
     public function teammate() : BelongsTo
     {
-        return $this->belongsTo(WormData::class, 'teammate_id', 'owner_id');
+        return $this->belongsTo(CharData::class, 'teammate_id', 'owner_id');
     }
 
 }

@@ -6,14 +6,14 @@ use App\Models\User;
 use App\Models\Wormix\Equipment;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\Race;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
 
 class WormixBotHelper
 {
     public const BOT_BASE = -1000;
 
-    public static function GenerateBots(WormData $userWorm)
+    public static function GenerateBots(CharData $userWorm)
     {
         $botBaseId = User::query()->select('id')->count();
 

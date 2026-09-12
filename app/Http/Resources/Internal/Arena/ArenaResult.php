@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Internal\Arena;
 
 use App\Helpers\Wormix\WormixBotHelper;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,7 +27,7 @@ class ArenaResult extends JsonResource
         return [
             'UserProfileStructures' => $this->returnAccounts ?
                 WormixBotHelper::GenerateBots(
-                    WormData::query()
+                    CharData::query()
                         ->where('owner_id', $this->user_id)
                         ->first()
                 ) :

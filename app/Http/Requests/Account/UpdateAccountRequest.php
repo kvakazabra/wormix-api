@@ -30,10 +30,10 @@ class UpdateAccountRequest extends FormRequest
             'user_profile.rating' => 'integer|min:0',
             'user_profile.reaction_rate' => 'integer|min:0',
 
-            'worm_data.level' => 'integer|min:1|max:30',
-            'worm_data.armor' => 'integer|min:0|max:60',
-            'worm_data.attack' => 'integer|min:0|max:60',
-            'worm_data.race' => 'integer|exists:wormix_races,race_id',
+            'char_data.level' => 'integer|min:1|max:30',
+            'char_data.armor' => 'integer|min:0|max:60',
+            'char_data.attack' => 'integer|min:0|max:60',
+            'char_data.race' => 'integer|exists:wormix_races,race_id',
 
             'battle_info.battles_count' => 'integer|min:0|max:999',
 

@@ -9,7 +9,7 @@ use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Http\Resources\Internal\Arena\ReconnectToSimpleBattleResultStructure;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property-read UserBattleInfo $battle_info
  * @property-read UserProfile $user_profile
  * @property-read UserBackpack $backpack
- * @property-read WormData $worm_data
+ * @property-read CharData $char_data
  * @property-read LoginSequence $login_sequence
  */
 class EnterAccount extends JsonResource
@@ -61,11 +61,11 @@ class EnterAccount extends JsonResource
             'LoginSequence' =>
                 $this->login_sequence->login_sequence,
             'Races' =>
-                $this->worm_data->race,
+                $this->char_data->race,
             'SelectRaceTimeLeft' =>
                 $this->user_profile->race_change_timestamp,
             'Skins' =>
-                $this->worm_data->skins,
+                $this->char_data->skins,
             'LastPaymentTime' => time(),
             'Restrictions' => [],
             'Cookies' => (object)[],

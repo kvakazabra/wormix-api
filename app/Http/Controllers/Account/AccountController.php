@@ -31,7 +31,7 @@ class AccountController extends Controller
     {
         return new UserResource($user->load([
             'user_profile',
-            'worm_data',
+            'char_data',
             'social_data',
             'battle_info',
             'user_profile.teammates.teammate'
@@ -56,23 +56,23 @@ class AccountController extends Controller
 
         if ($request->json('worm_data') !== null)
         {
-            $wormData = $request->user()->worm_data;
+            $charData = $request->user()->char_data;
 
-            $wormData->fill($request->json('worm_data'));
+            $charData->fill($request->json('worm_data'));
             $stripParams = WormixBotHelper::stripData(
-                (int)(($wormData->armor + $wormData->attack) / 2),
-                $wormData->level,
-                $wormData->armor,
-                $wormData->attack
+                (int)(($charData->armor + $charData->attack) / 2),
+                $charData->level,
+                $charData->armor,
+                $charData->attack
             );
-            $wormData->armor = $stripParams['armor'];
-            $wormData->attack = $stripParams['attack'];
-            $wormData->experience = 0;
-            $wormData->race = $request->json('worm_data.race');
-            $wormData->save();
+            $charData->armor = $stripParams['armor'];
+            $charData->attack = $stripParams['attack'];
+            $charData->experience = 0;
+            $charData->race = $request->json('worm_data.race');
+            $charData->save();
 
             return [
-                'worm_data' => $wormData,
+                'worm_data' => $charData,
             ];
         }
 

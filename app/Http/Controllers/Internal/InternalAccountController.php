@@ -9,7 +9,7 @@ use App\Http\Requests\Internal\Account\SelectStuffRequest;
 use App\Http\Resources\Internal\Account\DistributePointsResult;
 use App\Http\Resources\Internal\Account\SelectStuffResult;
 use App\Models\Wormix\UserItem;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
 
 class InternalAccountController extends Controller
@@ -31,7 +31,7 @@ class InternalAccountController extends Controller
             ];
         }
 
-        $worm = WormData::query()
+        $worm = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 
@@ -49,7 +49,7 @@ class InternalAccountController extends Controller
 
     public function distributePoints(DistributePointsRequest $request)
     {
-        $wormData = WormData::query()
+        $wormData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 

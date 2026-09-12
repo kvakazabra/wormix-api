@@ -19,7 +19,7 @@ class TeamController extends Controller
         $user = User::query()
             ->where('id', $request->json('internal_user_id'))
             ->with([
-                'worm_data.level_model',
+                'char_data.level_model',
                 'user_profile.teammates'
             ])
             ->first();
@@ -29,7 +29,7 @@ class TeamController extends Controller
                 ->where('user_id', $request->json('internal_user_id'))
                 ->where('teammate_id', $request->json('ProfileId'))
                 ->exists() ||
-            $user->worm_data->level_model->max_worms_count <= count($user->user_profile->teammates) ||
+            $user->char_data->level_model->max_worms_count <= count($user->user_profile->teammates) ||
             ($user->user_profile->money < config('wormix.game.buy.teammate.money') && $request->json('MoneyType') === 1) ||
             ($user->user_profile->real_money < config('wormix.game.buy.teammate.real_money') && $request->json('MoneyType') === 0)
         )

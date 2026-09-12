@@ -14,7 +14,7 @@ use App\Models\Wormix\Reagent;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
-use App\Models\Wormix\WormData;
+use App\Models\Wormix\CharData;
 use Illuminate\Support\Facades\Log;
 
 class ArenaController extends Controller
@@ -83,7 +83,7 @@ class ArenaController extends Controller
             }
 
             $mission = Mission::query()->where('solo_mission_id', $request->json('MissionId'))->first();
-            $wormData = WormData::query()->where('owner_id', $request->json('internal_user_id'))->first();
+            $wormData = CharData::query()->where('owner_id', $request->json('internal_user_id'))->first();
             if ($wormData->level < $mission->required_level)
             {
                 return response([
@@ -173,7 +173,7 @@ class ArenaController extends Controller
 
     private function processBattleResult(EndBattleRequest $request, int $result, UserBattleInfo $battleInfo)
     {
-        $wormData = WormData::query()->where('owner_id', $battleInfo->user_id)->first();
+        $wormData = CharData::query()->where('owner_id', $battleInfo->user_id)->first();
         $userInfo = UserProfile::query()->where('user_id', $battleInfo->user_id)->first();
 
         if ($battleInfo->battle_type === 0)
@@ -303,7 +303,7 @@ class ArenaController extends Controller
         $battleInfo->save();
     }
 
-    private function processAwards(Mission $mission, bool $isDouble, UserProfile $userProfile, WormData $wormData) : void
+    private function processAwards(Mission $mission, bool $isDouble, UserProfile $userProfile, CharData $wormData) : void
     {
         $awards = $mission->awards;
         if (count($awards) === 0)

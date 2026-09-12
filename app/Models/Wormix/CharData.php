@@ -29,9 +29,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Level level_model
  */
 #[ObservedBy(WormDataObserver::class)]
-class WormData extends Model
+class CharData extends Model
 {
-    protected $table = 'wormix_worms_data';
+    protected $table = 'wormix_characters_data';
 
     protected $primaryKey = 'owner_id';
 
