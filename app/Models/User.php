@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
+use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
+use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\WormData;
 use App\Observers\UserObserver;
@@ -72,5 +74,15 @@ class User extends Authenticatable
     public function house_actions() : HasMany
     {
         return $this->hasMany(HouseAction::class, 'to_user_id', 'id');
+    }
+
+    public function cookies() : HasOne
+    {
+        return $this->hasOne(UserCookies::class, 'user_id', 'id');
+    }
+
+    public function backpack() : HasOne
+    {
+        return $this->hasOne(UserBackpack::class, 'owner_id', 'id');
     }
 }
