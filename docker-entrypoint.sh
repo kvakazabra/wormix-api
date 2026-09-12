@@ -16,7 +16,6 @@ if ! grep -q "^APP_KEY=base64" .env; then
   php artisan key:generate
 fi
 
-php artisan config:clear
 php artisan migrate --force
 
 if [ ! -f storage/.game-initialized ]; then
