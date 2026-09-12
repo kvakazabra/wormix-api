@@ -1,10 +1,10 @@
 <?php
 return [
     'starter' => [
-        'money' => 450,
-        'real_money' => 3,
+        'money' => 670000,
+        'real_money' => 6700,
         'missions' => 10,
-        'race' => 0,
+        'race' => 2,
         'weapons' => [1, 2, 4]
     ],
     'game' => [
