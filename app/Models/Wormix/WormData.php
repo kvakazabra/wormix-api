@@ -19,7 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int experience
  *
  * @property int hat
+ * @property int artifact
  * @property int race
+ * @property int skin
+ * @property array races
+ * @property array skins
  *
  * @property User owner
  * @property Level level_model
@@ -30,6 +34,11 @@ class WormData extends Model
     protected $table = 'wormix_worms_data';
 
     protected $primaryKey = 'owner_id';
+
+    protected $casts = [
+        'races' => 'array',
+        'skins' => 'array',
+    ];
 
     protected $fillable = [
         'level',
