@@ -5,7 +5,9 @@ namespace App\Observers;
 use App\Models\User;
 use App\Models\UserSocialData;
 use App\Models\Wormix\LoginSequence;
+use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
+use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserTeam;
 use App\Models\Wormix\UserItem;
@@ -67,6 +69,18 @@ class UserObserver
             $weapon->item_type = UserItem::itemTypeForId($w->id);
             $weapon->save();
         }
+
+        // Add cookies
+        $cookies = new UserCookies();
+        $cookies->user_id = $user->id;
+        $cookies->save();
+
+        // Add backpacks
+        $backpack = new UserBackpack();
+        $backpack->owner_id = $user->id;
+        $backpack->current_configuration = 0;
+        $backpack->configurations = [[4,2,1]];
+        $backpack->save();
     }
 
     /**
