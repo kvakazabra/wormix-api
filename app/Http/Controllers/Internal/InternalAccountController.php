@@ -49,24 +49,27 @@ class InternalAccountController extends Controller
 
     public function distributePoints(DistributePointsRequest $request)
     {
-        $wormData = CharData::query()
+        $charData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 
-        $availablePoints = $wormData->level * 2 - ($wormData->armor + $wormData->attack);
-        if ($availablePoints < $request->json('Armor') + $request->json('Attack'))
+        $availablePoints = $charData->level * 2 - ($charData->armor + $charData->attack);
+        $totalPoints = $request->json('Armor') + $request->json('Attack');
+        if ($availablePoints < $totalPoints)
         {
             return [
-                'data' => new DistributePointsResult(Collection::empty(), DistributePointsResult::NotEnoughPoints)
+                'data' => new DistributePointsResult(Collection::empty(),
+                    DistributePointsResult::NotEnoughPoints)
             ];
         }
 
-        $wormData->armor += $request->json('Armor');
-        $wormData->attack += $request->json('Attack');
-        $wormData->save();
+        $charData->armor += $request->json('Armor');
+        $charData->attack += $request->json('Attack');
+        $charData->save();
 
         return [
-            'data' => new DistributePointsResult(Collection::empty(), DistributePointsResult::Success)
+            'data' => new DistributePointsResult(Collection::empty(),
+                DistributePointsResult::Success)
         ];
     }
 }
