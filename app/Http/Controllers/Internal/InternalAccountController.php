@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Internal;
 
-use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Account\DistributePointsRequest;
 use App\Http\Requests\Internal\Account\SelectRaceRequest;

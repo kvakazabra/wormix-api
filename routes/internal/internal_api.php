@@ -5,6 +5,7 @@ use App\Http\Controllers\Internal\CookiesController;
 use App\Http\Controllers\Internal\HouseController;
 use App\Http\Controllers\Internal\InfoController;
 use App\Http\Controllers\Internal\InternalAccountController;
+use App\Http\Controllers\Internal\BackpackController;
 use App\Http\Controllers\Internal\InternalLoginController;
 use App\Http\Controllers\Internal\ResetController;
 use App\Http\Controllers\Internal\ShopController;
@@ -43,6 +44,7 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('parameters', [InternalAccountController::class, 'distributePoints']);
             Route::post('race', [InternalAccountController::class, 'selectRace']);
             Route::post('race_pay', [InternalAccountController::class, 'selectRacePaid']);
+            Route::post('hotkeys', [BackpackController::class, 'setHotkeys']);
         });
 
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);
