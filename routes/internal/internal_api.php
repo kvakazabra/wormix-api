@@ -40,6 +40,8 @@ Route::middleware(['internal-auth'])->group(function () {
 
         Route::prefix('set')->group(function () {
             Route::post('parameters', [InternalAccountController::class, 'distributePoints']);
+            Route::post('race', [InternalAccountController::class, 'selectRace']);
+            Route::post('race_pay', [InternalAccountController::class, 'selectRacePaid']);
         });
 
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);

@@ -62,6 +62,10 @@ return [
             ],
             'downgrade' => 5
         ],
+        'race' => [
+            'free_change_interval' => 43200, // in seconds, 12 hours by default
+            'change_real_price' => 5,
+        ],
         'search_keys_per_day' => 10,
         'next_level_award' => [
             'money' => 150,

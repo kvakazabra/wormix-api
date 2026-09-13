@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Internal;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Account\DistributePointsRequest;
+use App\Http\Requests\Internal\Account\SelectRaceRequest;
 use App\Http\Requests\Internal\Account\SelectStuffRequest;
+use App\Http\Resources\Internal\Account\BuySelectRaceResult;
 use App\Http\Resources\Internal\Account\DistributePointsResult;
+use App\Http\Resources\Internal\Account\SelectRaceResult;
 use App\Http\Resources\Internal\Account\SelectStuffResult;
+use App\Models\User;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
@@ -70,6 +74,83 @@ class InternalAccountController extends Controller
         return [
             'data' => new DistributePointsResult(Collection::empty(),
                 DistributePointsResult::Success)
+        ];
+    }
+
+    // Returns SelectRaceResult
+    public function selectRaceCommon(SelectRaceRequest $request) : int
+    {
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->first();
+        $profile = $user->user_profile;
+        $char = $user->char_data;
+
+        $race = $request->json('RaceId');
+        $skin = $request->json('SkinId');
+
+        // Check if the race has been bought
+        if (!in_array($race, $char->races))
+        {
+            return SelectRaceResult::ERROR;
+        }
+
+        // Check if the skin has been bought
+        if ($skin != 0 && !in_array($skin, $char->skins))
+        {
+            return SelectRaceResult::ERROR;
+        }
+
+        // Check if free change is available
+        // If it's not then deduct a price from users account
+        // Also the logic must be tweaked a bit when VIP will get available
+        $freeRaceChangeInterval = config('wormix.game.race.free_change_interval');
+        $lastRaceChangeTimestamp = $profile->race_change_timestamp;
+        if ($lastRaceChangeTimestamp + $freeRaceChangeInterval > time())
+        {
+            $realPrice = config('wormix.game.race.change_real_price');
+            if ($realPrice > $profile->real_money)
+            {
+                return SelectRaceResult::ERROR;
+            }
+
+            $profile->real_money -= $realPrice;
+            $profile->save();
+        }
+
+        $profile->race_change_timestamp = time();
+        $profile->save();
+
+        $char->race = $race;
+        $char->skin = $skin;
+        $char->save();
+
+        return SelectRaceResult::SUCCESS;
+    }
+
+    public function selectRacePaid(SelectRaceRequest $request)
+    {
+        $result = $this->selectRaceCommon($request);
+
+        $char = CharData::query()
+            ->where('owner_id', $request->json('internal_user_id'))
+            ->first();
+
+        return [
+            'data' => new BuySelectRaceResult($char, $result)
+        ];
+    }
+
+    public function selectRace(SelectRaceRequest $request)
+    {
+        $result = $this->selectRaceCommon($request);
+
+        $char = CharData::query()
+            ->where('owner_id', $request->json('internal_user_id'))
+            ->first();
+
+        return [
+            'data' => new SelectRaceResult($char, $result)
         ];
     }
 }
