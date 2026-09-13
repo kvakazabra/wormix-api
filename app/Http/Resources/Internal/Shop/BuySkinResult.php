@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Internal\Shop;
 
-use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\CharData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -10,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property-read CharData $resource
  */
-class BuyRaceResult extends JsonResource
+class BuySkinResult extends JsonResource
 {
     public const SUCCESS = 0;
     public const ERROR = 1;
@@ -38,8 +37,8 @@ class BuyRaceResult extends JsonResource
             'Result' => $this->result,
             'Costs' => [],
             'SessionKey' => "",
-            'Race' => $this->resource->race,
-            'Races' => WormixTrashHelper::generateRacesBitfield($this->resource->races),
+            'Skin' => $this->resource->skin,
+            'Skins' => $this->resource->skins,
         ];
     }
 }

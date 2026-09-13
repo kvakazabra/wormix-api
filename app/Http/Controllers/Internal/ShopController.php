@@ -7,10 +7,12 @@ use App\Http\Requests\Internal\Shop\BuyBattleRequest;
 use App\Http\Requests\Internal\Shop\BuyRaceRequest;
 use App\Http\Requests\Internal\Shop\BuyReactionRateRequest;
 use App\Http\Requests\Internal\Shop\BuyShopItemsRequest;
+use App\Http\Requests\Internal\Shop\BuySkinRequest;
 use App\Http\Requests\Internal\Shop\UnlockMissionRequest;
-use App\Http\Resources\Internal\Account\BuyRaceResult;
+use App\Http\Resources\Internal\Shop\BuyRaceResult;
 use App\Http\Resources\Internal\Shop\BuyBattleResult;
 use App\Http\Resources\Internal\Shop\BuyReactionRateResult;
+use App\Http\Resources\Internal\Shop\BuySkinResult;
 use App\Http\Resources\Internal\Shop\ShopResult;
 use App\Http\Resources\Internal\Shop\UnlockMissionResult;
 use App\Models\User;
@@ -395,6 +397,76 @@ class ShopController extends Controller
 
         return [
             'data' => new BuyRaceResult($char, BuyRaceResult::SUCCESS)
+        ];
+    }
+
+    public function buySkin(BuySkinRequest $request)
+    {
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->first();
+        $char = $user->char_data;
+        $profile = $user->user_profile;
+
+        $skinId = $request->json('SkinId');
+        $raceId = intdiv($skinId, 10);
+
+        $race = Race::query()
+            ->where('race_id', $raceId)
+            ->first();
+        if ($race === null)
+        {
+            return [
+                'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+            ];
+        }
+
+        // Prevent buying skin for non-bought race
+        if (!in_array($raceId, $char->races))
+        {
+            return [
+                'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+            ];
+        }
+
+        switch ($request->json('MoneyType'))
+        {
+            case 0: // real money
+            {
+                $price = config('wormix.game.race.skin_real_price');
+                if ($price > $profile->real_money)
+                {
+                    return [
+                        'data' => new BuySkinResult($char, BuySkinResult::NOT_ENOUGH_MONEY)
+                    ];
+                }
+
+                $profile->real_money -= $price;
+                $profile->save();
+                break;
+            }
+            default:
+            case 3: // Mutagen, todo
+            {
+                return [
+                    'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+                ];
+            }
+        }
+
+        $skins = $char->skins;
+        $skins[] = $skinId;
+        $char->skins = $skins;
+        // Check if the skin's race is currently selected
+        // If it is - set the skin
+        if ($char->race == $raceId)
+        {
+            $char->skin = $skinId;
+        }
+        $char->save();
+
+        return [
+            'data' => new BuySkinResult($char, BuySkinResult::SUCCESS)
         ];
     }
 }

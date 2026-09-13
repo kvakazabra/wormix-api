@@ -101,12 +101,15 @@ class InternalAccountController extends Controller
             return SelectRaceResult::ERROR;
         }
 
+        $raceIsChanging = $race != $char->race;
+
         // Check if free change is available
         // If it's not then deduct a price from users account
         // Also the logic must be tweaked a bit when VIP will get available
         $freeRaceChangeInterval = config('wormix.game.race.free_change_interval');
         $lastRaceChangeTimestamp = $profile->race_change_timestamp;
-        if ($lastRaceChangeTimestamp + $freeRaceChangeInterval > time())
+        if ($lastRaceChangeTimestamp + $freeRaceChangeInterval > time() &&
+            $raceIsChanging)
         {
             $realPrice = config('wormix.game.race.change_real_price');
             if ($realPrice > $profile->real_money)
@@ -118,8 +121,12 @@ class InternalAccountController extends Controller
             $profile->save();
         }
 
-        $profile->race_change_timestamp = time();
-        $profile->save();
+        // Don't update the time in case only a skin was changed
+        if ($raceIsChanging)
+        {
+            $profile->race_change_timestamp = time();
+            $profile->save();
+        }
 
         $char->race = $race;
         $char->skin = $skin;

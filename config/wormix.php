@@ -65,6 +65,7 @@ return [
         'race' => [
             'free_change_interval' => 43200, // in seconds, 12 hours by default
             'change_real_price' => 5,
+            'skin_real_price' => 50,
         ],
         'search_keys_per_day' => 10,
         'next_level_award' => [

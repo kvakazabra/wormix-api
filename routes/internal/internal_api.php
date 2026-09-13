@@ -27,6 +27,7 @@ Route::middleware(['internal-auth'])->group(function () {
     Route::prefix('account')->group(function () {
         Route::prefix('buy')->group(function () {
             Route::post('race', [ShopController::class, 'buyRace']);
+            Route::post('skin', [ShopController::class, 'buySkin']);
             Route::post('items', [ShopController::class, 'buyItems']);
             Route::post('battles', [ShopController::class, 'buyBattle']);
             Route::post('mission', [ShopController::class, 'unlockMission']);
