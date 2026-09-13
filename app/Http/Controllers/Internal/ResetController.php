@@ -138,37 +138,58 @@ class ResetController extends Controller
         $userProfile = UserProfile::query()
             ->where('user_id', $request->json('internal_user_id'))
             ->first();
-        $wormData = CharData::query()
+        $charData = CharData::query()
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 
-        if (
-            ($request->json('MoneyType') === 1 && $userProfile->money < config('wormix.game.buy.reset_stats.money')) ||
-            ($request->json('MoneyType') === 0 && $userProfile->real_money < config('wormix.game.buy.reset_stats.real_money'))
-        )
+        switch ($request->json('MoneyType'))
         {
-            return [
-                'data' => new ResetParametersResult(Collection::empty(), ResetParametersResult::NotEnoughMoney)
-            ];
+            case 0:
+            {
+                $price = config('wormix.game.buy.reset_stats.money');
+                if ($price > $userProfile->money)
+                {
+                    return [
+                        'data' => new ResetParametersResult(Collection::empty(),
+                            ResetParametersResult::NotEnoughMoney)
+                    ];
+                }
+
+                $userProfile->money -= $price;
+                $userProfile->save();
+                break;
+            }
+            case 1:
+            {
+                $price = config('wormix.game.buy.reset_stats.real_money');
+                if ($price > $userProfile->real_money)
+                {
+                    return [
+                        'data' => new ResetParametersResult(Collection::empty(),
+                            ResetParametersResult::NotEnoughMoney)
+                    ];
+                }
+
+                $userProfile->real_money -= $price;
+                $userProfile->save();
+                break;
+            }
+            default:
+            {
+                return [
+                    'data' => new ResetParametersResult(Collection::empty(),
+                        ResetParametersResult::Error)
+                ];
+            }
         }
 
-        if ($request->json('MoneyType') === 1)
-        {
-            $userProfile->money -= config('wormix.game.buy.reset_stats.money');
-        }
-        else
-        {
-            $userProfile->real_money -= config('wormix.game.buy.reset_stats.real_money');
-        }
-
-        $wormData->armor = 0;
-        $wormData->attack = 0;
-        $wormData->save();
-
-        $userProfile->save();
+        $charData->armor = 0;
+        $charData->attack = 0;
+        $charData->save();
 
         return [
-            'data' => new ResetParametersResult(Collection::empty(), ResetParametersResult::Success)
+            'data' => new ResetParametersResult(Collection::empty(),
+                ResetParametersResult::Success)
         ];
     }
 }
