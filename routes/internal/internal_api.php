@@ -20,6 +20,10 @@ Route::middleware(['internal-auth'])->group(function () {
         Route::post('set', [CookiesController::class, 'setCookies']);
     });
 
+    Route::prefix('arena')->group(function () {
+        Route::post('get', [ArenaController::class, 'getArena']);
+    });
+
     Route::prefix('account')->group(function () {
         Route::prefix('buy')->group(function () {
             Route::post('items', [ShopController::class, 'buyItems']);
@@ -39,7 +43,6 @@ Route::middleware(['internal-auth'])->group(function () {
     });
 
     Route::prefix('game')->group(function (){
-        Route::post('get_arena', [ArenaController::class, 'getArena']);
         Route::post('start_battle', [ArenaController::class, 'startBattle']);
         Route::post('end_battle', [ArenaController::class, 'endBattle']);
     });

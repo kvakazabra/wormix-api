@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_users_backpacks', function (Blueprint $table) {
-            $table->foreignId('owner_id')->primary()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('owner_id')->primary()
+                ->constrained('users')->cascadeOnDelete();
 
             $table->smallInteger('current_configuration')->default(0);
             $table->json('configurations')->default('[[4,2,1]]');

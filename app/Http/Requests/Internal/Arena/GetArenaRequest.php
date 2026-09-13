@@ -23,7 +23,6 @@ class GetArenaRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|exists:users,id',
-            'ReturnUsersProfiles' => 'required|boolean',
         ];
     }
 }

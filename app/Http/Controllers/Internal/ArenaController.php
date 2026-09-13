@@ -15,6 +15,7 @@ use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\CharData;
+use App\Models\Wormix\UserArena;
 use Illuminate\Support\Facades\Log;
 
 class ArenaController extends Controller
@@ -23,34 +24,23 @@ class ArenaController extends Controller
 
     public function getArena(GetArenaRequest $request)
     {
-        $battleInfo = UserBattleInfo::query()
+        $userArena = UserArena::query()
             ->where('user_id', $request->json('internal_user_id'))
             ->first();
-
-        //Add battles (one battle per x minutes)
-        if ($battleInfo->battles_count < config('wormix.game.missions.max'))
-        {
-            $battleInfo->battles_count += min(
-                (int)((time() - $battleInfo->last_battle_time) / config('wormix.game.missions.delay')),
-                config('wormix.game.missions.max')
-            );
-            $battleInfo->battles_count = min(
-                $battleInfo->battles_count,
-                config('wormix.game.missions.max')
-            );
-            $battleInfo->save();
-        }
-
-        if ($battleInfo->battles_count === 0)
-        {
+        if (!$userArena) {
             return [
                 'type' => 'ArenaLocked',
-                'data' => new ArenaLocked($battleInfo)
+                'data' => [
+                    'Delay' => 6700,
+                    'CurrentMission' => 0,
+                    'ErrorCode' => 500
+                ],
             ];
         }
+
         return [
             'type' => 'ArenaResult',
-            'data' => new ArenaResult($battleInfo, $request->json('ReturnUsersProfiles'))
+            'data' => new ArenaResult($userArena),
         ];
     }
 

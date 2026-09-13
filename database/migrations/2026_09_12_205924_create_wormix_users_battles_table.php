@@ -22,6 +22,7 @@ return new class extends Migration
             $table->json('collected_reagents')->default('[]');
             $table->smallInteger('exp_bonus');
             $table->smallInteger('random_seed');
+            $table->json('awards');
 
             $table->smallInteger('ban_type');
             $table->string('ban_note');

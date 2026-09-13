@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_users_cookies', function (Blueprint $table) {
-            $table->foreignId('user_id')->primary()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->primary()->
+            constrained('users')->cascadeOnDelete();
 
             $table->json('cookies')->default('[]');
 

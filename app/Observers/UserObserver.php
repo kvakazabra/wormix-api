@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\User;
 use App\Models\UserSocialData;
 use App\Models\Wormix\LoginSequence;
+use App\Models\Wormix\UserArena;
 use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
@@ -70,17 +71,18 @@ class UserObserver
             $weapon->save();
         }
 
-        // Add cookies
-        $cookies = new UserCookies();
-        $cookies->user_id = $user->id;
-        $cookies->save();
-
         // Add backpacks
         $backpack = new UserBackpack();
         $backpack->owner_id = $user->id;
         $backpack->current_configuration = 0;
         $backpack->configurations = [[4,2,1]];
         $backpack->save();
+
+        // Add arena info
+        $arena = new UserArena();
+        $arena->user_id = $user->id;
+        $arena->battle_tokens = config('wormix.starter.missions');
+        $arena->save();
     }
 
     /**

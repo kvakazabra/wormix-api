@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
+use App\Models\Wormix\UserArena;
 use App\Models\Wormix\UserBackpack;
 use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
@@ -84,5 +85,10 @@ class User extends Authenticatable
     public function backpack() : HasOne
     {
         return $this->hasOne(UserBackpack::class, 'owner_id', 'id');
+    }
+
+    public function arena() : HasOne
+    {
+        return $this->hasOne(UserArena::class, 'user_id', 'id');
     }
 }
