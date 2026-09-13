@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Internal;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Shop\BuyBattleRequest;
+use App\Http\Requests\Internal\Shop\BuyRaceRequest;
 use App\Http\Requests\Internal\Shop\BuyReactionRateRequest;
 use App\Http\Requests\Internal\Shop\BuyShopItemsRequest;
 use App\Http\Requests\Internal\Shop\ChangeRaceRequest;
 use App\Http\Requests\Internal\Shop\UnlockMissionRequest;
 use App\Http\Resources\Internal\Shop\BuyBattleResult;
+use App\Http\Resources\Internal\Shop\BuyRaceResult;
 use App\Http\Resources\Internal\Shop\BuyReactionRateResult;
 use App\Http\Resources\Internal\Shop\ChangeRaceResult;
 use App\Http\Resources\Internal\Shop\ShopResult;
@@ -195,51 +197,6 @@ class ShopController extends Controller
         }
     }
 
-    public function changeRace(ChangeRaceRequest $request)
-    {
-        $userWorm = CharData::query()
-            ->where('owner_id', $request->json('internal_user_id'))
-            ->first();
-        $userProfile = UserProfile::query()
-            ->where('user_id', $request->json('internal_user_id'))
-            ->first();
-        $race = Race::query()
-            ->where('race_id', $request->json('RaceId'))
-            ->first();
-        if(!$race->playable)
-        {
-            return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
-        }
-
-        if ($userWorm->race === $request->json('RaceId'))
-        {
-            return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Error);
-        }
-
-        if (($request->json('MoneyType') === 1 && $userWorm->level < $race->required_level) ||
-            ($request->json('MoneyType') === 0 && $userProfile->real_money < $race->real_price) ||
-            ($request->json('MoneyType') === 1 && $userProfile->money < $race->price))
-        {
-            return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::MinRequirementsError);
-        }
-
-        if ($request->json('MoneyType') === 0)
-        {
-            $userProfile->real_money -= $race->real_price;
-        }
-        else
-        {
-            $userProfile->money -= $race->price;
-        }
-
-        $userProfile->save();
-
-        $userWorm->race = $request->json('RaceId');
-        $userWorm->save();
-
-        return new ChangeRaceResult(Collection::empty(), ChangeRaceResult::Success);
-    }
-
     public function buyReaction(BuyReactionRateRequest $request)
     {
         $userProfile = UserProfile::query()
@@ -356,4 +313,91 @@ class ShopController extends Controller
         ];
     }
 
+    public function buyRace(BuyRaceRequest $request)
+    {
+        $race = Race::query()
+            ->where('race_id', $request->json('RaceId'))
+            ->first();
+
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->first();
+        $char = $user->char_data;
+        $profile = $user->user_profile;
+
+        // Prevent non-playable races from being bought
+        // Those are temporary like donut, crab and etc. (excluding alien)
+        if (!$race->playable) {
+            return [
+                'data' => new BuyRaceResult($char, BuyRaceResult::NOT_FOR_SALE)
+            ];
+        }
+
+        // Race already bought
+        if (in_array($race->race_id, $char->races))
+        {
+            return [
+                'data' => new BuyRaceResult($char, BuyRaceResult::ERROR)
+            ];
+        }
+
+        // Take the money
+        switch ($request->json('MoneyType'))
+        {
+            case 0:
+            {
+                // Check the required level (only for in-game money)
+                if ($race->required_level > $char->level)
+                {
+                    return [
+                        'data' => new BuyRaceResult($char,
+                            BuyRaceResult::MIN_REQUIREMENTS_ERROR)
+                    ];
+                }
+
+                if ($race->price > $profile->money)
+                {
+                    return [
+                        'data' => new BuyRaceResult($char,
+                            BuyRaceResult::NOT_ENOUGH_MONEY)
+                    ];
+                }
+
+                $profile->money -= $race->price;
+                $profile->save();
+                break;
+            }
+            case 1:
+            {
+                if ($race->real_price > $profile->real_money)
+                {
+                    return [
+                        'data' => new BuyRaceResult($char,
+                            BuyRaceResult::NOT_ENOUGH_MONEY)
+                    ];
+                }
+
+                $profile->real_money -= $race->real_price;
+                $profile->save();
+                break;
+            }
+            default:
+            {
+                return [
+                    'data' => new BuyRaceResult($char, BuyRaceResult::ERROR)
+                ];
+            }
+        }
+
+        // Add bought race and set it
+        $races = $char->races;
+        $races[] = $race->race_id;
+        $char->races = $races;
+        $char->race = $race->race_id;
+        $char->save();
+
+        return [
+            'data' => new BuyRaceResult($char, BuyRaceResult::SUCCESS)
+        ];
+    }
 }

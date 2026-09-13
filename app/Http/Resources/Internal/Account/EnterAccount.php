@@ -63,7 +63,7 @@ class EnterAccount extends JsonResource
             'LoginSequence' =>
                 $this->login_sequence->login_sequence,
             'Races' =>
-                $this->char_data->race,
+                WormixTrashHelper::generateRacesBitfield($this->char_data->races),
             'SelectRaceTimeLeft' =>
                 $this->user_profile->race_change_timestamp,
             'Skins' =>

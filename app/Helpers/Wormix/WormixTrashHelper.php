@@ -35,6 +35,17 @@ class WormixTrashHelper
         return $raceId * 10 + $skinId;
     }
 
+    public static function generateRacesBitfield(array $races) : int
+    {
+        $bits = 0;
+        foreach ($races as $race)
+        {
+            $bits |= 1 << $race;
+        }
+
+        return $bits;
+    }
+
     /**
      * @param int $merged worm_structure.hat
      * @return int[] 0-race id, 1-hat id
