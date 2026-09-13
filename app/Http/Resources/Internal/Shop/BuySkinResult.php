@@ -20,9 +20,10 @@ class BuySkinResult extends JsonResource
     public const NOT_ENOUGH_REAGENTS = 6;
     public const NOT_FOR_SALE = 7;
 
-    public function __construct($resource, int $result)
+    public function __construct($resource, int $result, int $skinId)
     {
         $this->result = $result;
+        $this->skinId = $skinId;
         parent::__construct($resource);
     }
 
@@ -37,7 +38,7 @@ class BuySkinResult extends JsonResource
             'Result' => $this->result,
             'Costs' => [],
             'SessionKey' => "",
-            'Skin' => $this->resource->skin,
+            'Skin' => $this->skinId,
             'Skins' => $this->resource->skins,
         ];
     }

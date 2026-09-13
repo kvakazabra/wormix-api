@@ -32,8 +32,7 @@ class BuySelectRaceResult extends JsonResource
             'Costs' => [],
             'SessionKey' => "",
             'Race' => $this->resource->race,
-            'Skin' =>
-                WormixTrashHelper::mergeSkinAndRaceIds($this->resource->skin, $this->resource->race),
+            'Skin' => $this->resource->skin,
         ];
     }
 }

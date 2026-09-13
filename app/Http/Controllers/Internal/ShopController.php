@@ -417,7 +417,7 @@ class ShopController extends Controller
         if ($race === null)
         {
             return [
-                'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
             ];
         }
 
@@ -425,7 +425,15 @@ class ShopController extends Controller
         if (!in_array($raceId, $char->races))
         {
             return [
-                'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
+            ];
+        }
+
+        // Prevent from buying skin again
+        if (in_array($skinId, $char->skins))
+        {
+            return [
+                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
             ];
         }
 
@@ -437,7 +445,7 @@ class ShopController extends Controller
                 if ($price > $profile->real_money)
                 {
                     return [
-                        'data' => new BuySkinResult($char, BuySkinResult::NOT_ENOUGH_MONEY)
+                        'data' => new BuySkinResult($char, BuySkinResult::NOT_ENOUGH_MONEY, 0)
                     ];
                 }
 
@@ -449,7 +457,7 @@ class ShopController extends Controller
             case 3: // Mutagen, todo
             {
                 return [
-                    'data' => new BuySkinResult($char, BuySkinResult::ERROR)
+                    'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
                 ];
             }
         }
@@ -466,7 +474,7 @@ class ShopController extends Controller
         $char->save();
 
         return [
-            'data' => new BuySkinResult($char, BuySkinResult::SUCCESS)
+            'data' => new BuySkinResult($char, BuySkinResult::SUCCESS, $skinId)
         ];
     }
 }
