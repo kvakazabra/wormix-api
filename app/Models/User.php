@@ -27,6 +27,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @property CharData char_data
  * @property UserSocialData social_data
  * @property UserBattleInfo battle_info
+ * @property UserArena arena
+ * @property UserCookies cookies
+ * @property UserBackpack backpack
+ * @property HouseAction house_actions
  * @property LoginSequence login_sequence
  */
 #[ObservedBy(UserObserver::class)]
