@@ -50,8 +50,7 @@ class TeamMemberStructure extends JsonResource
             'Experience' => $this->teammate->experience,
             'HatId' => $this->teammate->hat,
             'RaceId' => $this->teammate->race,
-            'Skin' =>
-                WormixTrashHelper::mergeSkinAndRaceIds($this->teammate->race, $this->teammate->skin),
+            'Skin' => $this->teammate->skin,
             'ArtifactId' => $this->teammate->artifact,
             'SocialOwnerId' => (string)$this->teammate_id,
             'Name' => "Huyesos",
