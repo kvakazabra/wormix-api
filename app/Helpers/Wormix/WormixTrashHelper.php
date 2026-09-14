@@ -17,24 +17,6 @@ class WormixTrashHelper
 
     public const STUFF_START_INDEX = 1000;
 
-
-    /**
-     * @param int $hatId
-     * @param int $raceId
-     * @return int worm_structure.hat
-     */
-    public static function mergeHatRaceIds(int $hatId, int $raceId) : int
-    {
-        return $hatId === 0 ?
-            $raceId :
-            $raceId * self::RACE_BASE + $hatId;
-    }
-
-    public static function mergeSkinAndRaceIds(int $skinId, int $raceId) : int
-    {
-        return $raceId * 10 + $skinId;
-    }
-
     public static function generateRacesBitfield(array $races) : int
     {
         $bits = 0;
@@ -44,26 +26,6 @@ class WormixTrashHelper
         }
 
         return $bits;
-    }
-
-    /**
-     * @param int $merged worm_structure.hat
-     * @return int[] 0-race id, 1-hat id
-     */
-    public static function extractHatAndRaceIds(int $merged) : array
-    {
-        $hatId = 0;
-        if ($merged < self::RACE_LIMIT)
-        {
-            $raceId = $merged;
-        }
-        else
-        {
-            $hatId = self::STUFF_START_INDEX + $merged % self::RACE_BASE;
-            $raceId = (int)(($merged - self::STUFF_START_INDEX) / self::RACE_BASE);
-        }
-
-        return [$raceId, $hatId];
     }
 
     /**
