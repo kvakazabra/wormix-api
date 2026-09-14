@@ -55,7 +55,7 @@ class EnterAccount extends JsonResource
             'Invites' => [],
             'ServerTime' => time(),
             'BackpackConfs' =>
-                BackpackConfStructure::collection($this->backpack->configurations),
+                $this->backpack->configurations,
             'ActiveBackpackConf' =>
                 $this->backpack->current_configuration,
             'Hotkeys' =>

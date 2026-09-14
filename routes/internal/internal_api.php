@@ -45,6 +45,7 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('race', [InternalAccountController::class, 'selectRace']);
             Route::post('race_pay', [InternalAccountController::class, 'selectRacePaid']);
             Route::post('hotkeys', [BackpackController::class, 'setHotkeys']);
+            Route::post('backpack_conf', [BackpackController::class, 'setBackpackConf']);
         });
 
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);
