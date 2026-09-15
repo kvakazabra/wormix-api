@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property array reagents
  * @property array recipes
+ * @property array races
+ * @property array skins
  *
  * @property Collection|UserItem[] items
  * @property Collection|UserItem[] weapons
@@ -38,7 +40,9 @@ class UserProfile extends Model
 
     protected $casts = [
         'reagents' => 'array',
-        'recipes' => 'array'
+        'recipes' => 'array',
+        'races' => 'array',
+        'skins' => 'array',
     ];
 
     protected $fillable = [

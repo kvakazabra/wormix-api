@@ -23,8 +23,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int artifact
  * @property int race
  * @property int skin
- * @property array races
- * @property array skins
  *
  * @property User owner
  * @property Level level_model
@@ -35,11 +33,6 @@ class CharData extends Model
     protected $table = 'wormix_characters_data';
 
     protected $primaryKey = 'owner_id';
-
-    protected $casts = [
-        'races' => 'array',
-        'skins' => 'array',
-    ];
 
     protected $fillable = [
         'level',

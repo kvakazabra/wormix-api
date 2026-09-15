@@ -21,8 +21,6 @@ return new class extends Migration
             $table->smallInteger('level')->default(1);
             $table->smallInteger('experience')->default(0);
 
-            $table->json('races')->default('[2]'); // new
-            $table->json('skins')->default('[]');
             $table->smallInteger('race')->default(2);
             $table->smallInteger('skin')->default(0);
             $table->smallInteger('hat')->default(0);

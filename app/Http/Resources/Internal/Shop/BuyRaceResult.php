@@ -3,12 +3,12 @@
 namespace App\Http\Resources\Internal\Shop;
 
 use App\Helpers\Wormix\WormixTrashHelper;
-use App\Models\Wormix\CharData;
+use App\Models\Wormix\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property-read CharData $resource
+ * @property-read UserProfile $resource
  */
 class BuyRaceResult extends JsonResource
 {
@@ -21,9 +21,10 @@ class BuyRaceResult extends JsonResource
     public const NOT_ENOUGH_REAGENTS = 6;
     public const NOT_FOR_SALE = 7;
 
-    public function __construct($resource, int $result)
+    public function __construct($resource, int $result, int $race)
     {
         $this->result = $result;
+        $this->race = $race;
         parent::__construct($resource);
     }
 
@@ -38,7 +39,7 @@ class BuyRaceResult extends JsonResource
             'Result' => $this->result,
             'Costs' => [],
             'SessionKey' => "",
-            'Race' => $this->resource->race,
+            'Race' => $this->race,
             'Races' => WormixTrashHelper::generateRacesBitfield($this->resource->races),
         ];
     }

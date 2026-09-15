@@ -89,13 +89,13 @@ class InternalAccountController extends Controller
         $skin = $request->json('SkinId');
 
         // Check if the race has been bought
-        if (!in_array($race, $char->races))
+        if (!in_array($race, $profile->races))
         {
             return SelectRaceResult::ERROR;
         }
 
         // Check if the skin has been bought
-        if ($skin != 0 && !in_array($skin, $char->skins))
+        if ($skin != 0 && !in_array($skin, $profile->skins))
         {
             return SelectRaceResult::ERROR;
         }

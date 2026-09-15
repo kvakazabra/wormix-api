@@ -327,15 +327,15 @@ class ShopController extends Controller
         // Those are temporary like donut, crab and etc. (excluding alien)
         if (!$race->playable) {
             return [
-                'data' => new BuyRaceResult($char, BuyRaceResult::NOT_FOR_SALE)
+                'data' => new BuyRaceResult($profile, BuyRaceResult::NOT_FOR_SALE, $char->race)
             ];
         }
 
         // Race already bought
-        if (in_array($race->race_id, $char->races))
+        if (in_array($race->race_id, $profile->races))
         {
             return [
-                'data' => new BuyRaceResult($char, BuyRaceResult::ERROR)
+                'data' => new BuyRaceResult($profile, BuyRaceResult::ERROR, $char->race)
             ];
         }
 
@@ -348,16 +348,16 @@ class ShopController extends Controller
                 if ($race->required_level > $char->level)
                 {
                     return [
-                        'data' => new BuyRaceResult($char,
-                            BuyRaceResult::MIN_REQUIREMENTS_ERROR)
+                        'data' => new BuyRaceResult($profile,
+                            BuyRaceResult::MIN_REQUIREMENTS_ERROR, $char->race)
                     ];
                 }
 
                 if ($race->price > $profile->money)
                 {
                     return [
-                        'data' => new BuyRaceResult($char,
-                            BuyRaceResult::NOT_ENOUGH_MONEY)
+                        'data' => new BuyRaceResult($profile,
+                            BuyRaceResult::NOT_ENOUGH_MONEY, $char->race)
                     ];
                 }
 
@@ -370,8 +370,8 @@ class ShopController extends Controller
                 if ($race->real_price > $profile->real_money)
                 {
                     return [
-                        'data' => new BuyRaceResult($char,
-                            BuyRaceResult::NOT_ENOUGH_MONEY)
+                        'data' => new BuyRaceResult($profile,
+                            BuyRaceResult::NOT_ENOUGH_MONEY, $char->race)
                     ];
                 }
 
@@ -382,20 +382,22 @@ class ShopController extends Controller
             default:
             {
                 return [
-                    'data' => new BuyRaceResult($char, BuyRaceResult::ERROR)
+                    'data' => new BuyRaceResult($profile, BuyRaceResult::ERROR, $char->race)
                 ];
             }
         }
 
         // Add bought race and set it
-        $races = $char->races;
+        $races = $profile->races;
         $races[] = $race->race_id;
-        $char->races = $races;
+        $profile->races = $races;
+        $profile->save();
+
         $char->race = $race->race_id;
         $char->save();
 
         return [
-            'data' => new BuyRaceResult($char, BuyRaceResult::SUCCESS)
+            'data' => new BuyRaceResult($profile, BuyRaceResult::SUCCESS, $char->race)
         ];
     }
 
@@ -416,23 +418,23 @@ class ShopController extends Controller
         if ($race === null)
         {
             return [
-                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
+                'data' => new BuySkinResult($profile, BuySkinResult::ERROR, 0)
             ];
         }
 
         // Prevent buying skin for non-bought race
-        if (!in_array($raceId, $char->races))
+        if (!in_array($raceId, $profile->races))
         {
             return [
-                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
+                'data' => new BuySkinResult($profile, BuySkinResult::ERROR, 0)
             ];
         }
 
         // Prevent from buying skin again
-        if (in_array($skinId, $char->skins))
+        if (in_array($skinId, $profile->skins))
         {
             return [
-                'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
+                'data' => new BuySkinResult($profile, BuySkinResult::ERROR, 0)
             ];
         }
 
@@ -444,7 +446,7 @@ class ShopController extends Controller
                 if ($price > $profile->real_money)
                 {
                     return [
-                        'data' => new BuySkinResult($char, BuySkinResult::NOT_ENOUGH_MONEY, 0)
+                        'data' => new BuySkinResult($profile, BuySkinResult::NOT_ENOUGH_MONEY, 0)
                     ];
                 }
 
@@ -456,14 +458,17 @@ class ShopController extends Controller
             case 3: // Mutagen, todo
             {
                 return [
-                    'data' => new BuySkinResult($char, BuySkinResult::ERROR, 0)
+                    'data' => new BuySkinResult($profile, BuySkinResult::ERROR, 0)
                 ];
             }
         }
 
-        $skins = $char->skins;
+        // Add the skin
+        $skins = $profile->skins;
         $skins[] = $skinId;
-        $char->skins = $skins;
+        $profile->skins = $skins;
+        $profile->save();
+
         // Check if the skin's race is currently selected
         // If it is - set the skin
         if ($char->race == $raceId)
@@ -473,7 +478,7 @@ class ShopController extends Controller
         $char->save();
 
         return [
-            'data' => new BuySkinResult($char, BuySkinResult::SUCCESS, $skinId)
+            'data' => new BuySkinResult($profile, BuySkinResult::SUCCESS, $skinId)
         ];
     }
 }

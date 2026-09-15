@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\Internal\Shop;
 
-use App\Models\Wormix\CharData;
+use App\Models\Wormix\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property-read CharData $resource
+ * @property-read UserProfile $resource
  */
 class BuySkinResult extends JsonResource
 {
