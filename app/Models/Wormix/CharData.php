@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int owner_id
  *
+ * @property string name
  * @property int armor
  * @property int attack
  *

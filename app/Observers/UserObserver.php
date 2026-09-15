@@ -32,6 +32,7 @@ class UserObserver
         //Create user worm data
         $wormData = new CharData();
         $wormData->owner_id = $user->id;
+        $wormData->name = $user->login;
         $wormData->race = config('wormix.starter.race');
         $wormData->save();
 
@@ -61,21 +62,23 @@ class UserObserver
         $loginSequence->save();
 
         //Add starter user weapons
-        $starterWeapons = Weapon::query()->where('is_starter', 1)->get();
+        $starterWeapons = Weapon::query()
+            ->where('is_starter', 1)
+            ->get();
         foreach ($starterWeapons as $w)
         {
             $weapon = new UserItem();
             $weapon->owner_id = $user->id;
             $weapon->item_id = $w->id;
-            $weapon->item_type = UserItem::itemTypeForId($w->id);
             $weapon->save();
         }
 
-        // Add backpacks
+        // Add backpack
         $backpack = new UserBackpack();
         $backpack->owner_id = $user->id;
-        $backpack->current_configuration = 0;
-        $backpack->configurations = [[4,2,1]];
+        $backpack->configurations = [
+            0 => ['Config' => $starterWeapons->pluck('id')->toArray()],
+        ];
         $backpack->save();
 
         // Add arena info

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('wormix_characters_data', function (Blueprint $table) {
             $table->foreignId('owner_id')->primary()->constrained('users')->cascadeOnDelete();
 
+            $table->string("name")->default("");
             $table->smallInteger('armor')->default(1);
             $table->smallInteger('attack')->default(1);
 

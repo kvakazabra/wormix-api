@@ -71,7 +71,7 @@ class EnterAccount extends JsonResource
             'LastPaymentTime' => time(),
             'Restrictions' => [],
             'Cookies' =>
-                (object)$this->cookies?->cookies,
+                (object)($this->cookies?->cookies ?? []),
             'VipSubscriptionId' => 0,
             'HasReconnectResult' => false,
             'ReconnectResult' =>

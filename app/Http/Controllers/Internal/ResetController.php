@@ -119,7 +119,6 @@ class ResetController extends Controller
         {
             $newWeapon = new UserItem();
             $newWeapon->item_id = $w->id;
-            $newWeapon->item_type = UserItem::itemTypeForId($newWeapon->item_id);
             $newWeapon->count = -1;
             $newWeapon->owner_id = $request->json('internal_user_id');
             $newWeapon->save();

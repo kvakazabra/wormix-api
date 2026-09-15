@@ -15,7 +15,19 @@ class WormixTrashHelper
     private const RACE_BASE = 500;
     private const RACE_LIMIT = 50;
 
-    public const STUFF_START_INDEX = 1000;
+    public const WEAPON_MIN_INDEX = 0;
+    public const WEAPON_MAX_INDEX = 1000;
+    // There are also some weapons in that range, however they can be only obtained in battle
+    public const WEAPON_EXCEPT_INDEX = 10000;
+
+    public const STUFF_MIN_INDEX = 1000;
+    public const STUFF_MAX_INDEX = 3000;
+
+    public const HATS_MIN_INDEX = 1000;
+    public const HATS_MAX_INDEX = 2000;
+
+    public const ARTIFACTS_MIN_INDEX = 2000;
+    public const ARTIFACTS_MAX_INDEX = 3000;
 
     public static function generateRacesBitfield(array $races) : int
     {
@@ -138,7 +150,6 @@ class WormixTrashHelper
             $userItem = $oldItem ?? new UserItem();
             $userItem->owner_id = $wormData->owner_id;
             $userItem->item_id = $award[0];
-            $userItem->item_type = UserItem::itemTypeForId($userItem->item_id);
 
             if ($userItem->item_type == "hat")
             {

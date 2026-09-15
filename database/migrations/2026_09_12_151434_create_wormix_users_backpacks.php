@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->primary()
                 ->constrained('users')->cascadeOnDelete();
 
-            $table->smallInteger('current_configuration')->default(0);
+            $table->smallInteger('current_configuration')->default(1);
             $table->json('configurations')->default('[[4,2,1]]');
             $table->json('hotkeys')->default('[]');
 

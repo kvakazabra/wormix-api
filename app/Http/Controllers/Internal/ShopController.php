@@ -162,7 +162,6 @@ class ShopController extends Controller
                     $userWeapon = new UserItem();
                     $userWeapon->owner_id = $request->json('internal_user_id');
                     $userWeapon->item_id = $item['Id'];
-                    $userWeapon->item_type = UserItem::itemTypeForId($userWeapon->item_id);
                     $userWeapon->count = $item['Count'];
                     $userWeapon->save();
                     $newWeapons->add($userWeapon);

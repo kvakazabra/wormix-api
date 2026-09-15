@@ -2,10 +2,15 @@
 
 namespace App\Http\Resources\Internal\Account;
 
-use App\Helpers\Wormix\WormixTrashHelper;
+use App\Models\Wormix\CharData;
+use App\Models\Wormix\UserTeam;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property-read UserTeam $resource
+ * @property-read CharData $teammate
+ */
 class TeamMemberStructure extends JsonResource
 {
     private const TEAM_MEMBER_SELF = 0;
@@ -43,7 +48,7 @@ class TeamMemberStructure extends JsonResource
 //        }
 
         return [
-            'OwnerId' => $this->teammate_id,
+            'OwnerId' => $this->resource->teammate_id,
             'Armor' => $armor,
             'Attack' => $attack,
             'Level' => $level,
@@ -52,10 +57,10 @@ class TeamMemberStructure extends JsonResource
             'RaceId' => $this->teammate->race,
             'Skin' => $this->teammate->skin,
             'ArtifactId' => $this->teammate->artifact,
-            'SocialOwnerId' => (string)$this->teammate_id,
-            'Name' => "Huyesos",
+            'SocialOwnerId' => (string)$this->resource->teammate_id,
+            'Name' => $this->teammate->name,
             'TeamMemberType' =>
-                $this->teammate_id == $this->user_id ?
+                $this->resource->teammate_id == $this->resource->user_id ?
                     self::TEAM_MEMBER_SELF : self::TEAM_MEMBER_FRIEND,
             'IsActive' => true,
         ];
