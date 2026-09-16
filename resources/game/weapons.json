@@ -72,6 +72,7 @@
     "realprice": 4,
     "requiredLevel": 2,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -94,6 +95,7 @@
     "realprice": 7,
     "requiredLevel": 6,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -115,6 +117,7 @@
     "realprice": 6,
     "requiredLevel": 5,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -126,6 +129,7 @@
     "realprice": 6,
     "requiredLevel": 4,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -138,6 +142,7 @@
     "realprice": 2,
     "requiredLevel": 3,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -160,6 +165,7 @@
     "realprice": 2,
     "requiredLevel": 2,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -191,6 +197,7 @@
     "realprice": 12,
     "requiredLevel": 8,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -224,6 +231,7 @@
     "hint": "TELEPORT.HINT",
     "realprice": 25,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -257,6 +265,7 @@
     "realprice": 5,
     "requiredLevel": 4,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -268,6 +277,7 @@
     "realprice": 11,
     "requiredLevel": 10,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -279,6 +289,7 @@
     "realprice": 11,
     "requiredLevel": 20,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -300,6 +311,7 @@
     "realprice": 7,
     "requiredLevel": 4,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -312,6 +324,7 @@
     "realprice": 7,
     "requiredLevel": 5,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -324,6 +337,7 @@
     "realprice": 50,
     "requiredLevel": 9,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -345,6 +359,7 @@
     "realprice": 10,
     "requiredLevel": 10,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -357,6 +372,7 @@
     "realprice": 7,
     "requiredLevel": 7,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -381,6 +397,7 @@
     "realprice": 6,
     "requiredLevel": 8,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -391,6 +408,7 @@
     "hint": "SUPER_SHEEP.HINT",
     "realprice": 22,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -403,6 +421,7 @@
     "realprice": 15,
     "requiredLevel": 5,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -427,6 +446,7 @@
     "realprice": 8,
     "requiredLevel": 7,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -439,6 +459,7 @@
     "realprice": 5,
     "requiredLevel": 3,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -450,6 +471,7 @@
     "realprice": 13,
     "requiredLevel": 14,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -461,6 +483,7 @@
     "realprice": 20,
     "requiredLevel": 15,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -471,6 +494,7 @@
     "hint": "SPIDER.HINT",
     "realprice": 14,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -494,6 +518,7 @@
     "realprice": 7,
     "requiredLevel": 8,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -517,6 +542,7 @@
     "realprice": 10,
     "requiredLevel": 10,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -529,6 +555,7 @@
     "realprice": 20,
     "requiredLevel": 7,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -540,6 +567,7 @@
     "realprice": 8,
     "requiredLevel": 8,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -552,6 +580,7 @@
     "realprice": 12,
     "requiredLevel": 10,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 4
   },
   {
@@ -573,6 +602,7 @@
     "hint": "GROUNDBREAKER.HINT",
     "realprice": 40,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -609,6 +639,7 @@
     "realprice": 20,
     "requiredLevel": 16,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -707,6 +738,7 @@
     "realprice": 10,
     "requiredLevel": 8,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -747,6 +779,7 @@
     "realprice": 13,
     "requiredLevel": 11,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -758,6 +791,7 @@
     "realprice": 35,
     "requiredLevel": 10,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -823,6 +857,7 @@
     "realprice": 12,
     "requiredLevel": 13,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -834,6 +869,7 @@
     "realprice": 18,
     "requiredLevel": 14,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -845,6 +881,7 @@
     "realprice": 11,
     "requiredLevel": 12,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -966,6 +1003,7 @@
     "realprice": 21,
     "requiredLevel": 20,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -977,6 +1015,7 @@
     "realprice": 11,
     "requiredLevel": 14,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 3
   },
   {
@@ -988,6 +1027,7 @@
     "realprice": 46,
     "requiredLevel": 20,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -1122,6 +1162,7 @@
     "realprice": 14,
     "requiredLevel": 11,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -1207,6 +1248,7 @@
     "hint": "GIRDER_GUN.HINT",
     "realprice": 17,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {
@@ -1429,6 +1471,7 @@
     "realprice": 21,
     "requiredLevel": 21,
     "infinite": true,
+    "isComplex": true,
     "maxShots": 2
   },
   {

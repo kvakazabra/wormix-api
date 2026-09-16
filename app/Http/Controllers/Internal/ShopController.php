@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Internal;
 
+use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Shop\BuyBattleRequest;
 use App\Http\Requests\Internal\Shop\BuyRaceRequest;
@@ -25,173 +26,271 @@ use App\Models\Wormix\UserItem;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\Weapon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 class ShopController extends Controller
 {
+    /**
+     * @return array Real money, money
+     * @throws Exception
+     */
+    public function countWeaponsPrices(SupportCollection $items) : array
+    {
+        $totalReal = 0;
+        $total = 0;
+
+        /** @var Weapon $weapon */
+        foreach (Weapon::query()
+                     ->whereIn('id', $items->keys())
+                     ->get() as $weapon)
+        {
+            $count = $items[$weapon->id]['Count'] ?? 0;
+            $moneyType = $items[$weapon->id]['MoneyType'] ?? -1;
+
+            $isPureInfiniteWeapon = $weapon->infinite && !$weapon->is_complex;
+
+            if ($weapon->hide_in_shop)
+            {
+                throw new Exception("Weapon: Attempt to buy hidden item");
+            }
+
+            if ($count === 0)
+            {
+                throw new Exception("Weapon: tried to buy with count 0");
+            }
+
+            if (!$isPureInfiniteWeapon && $count < 0)
+            {
+                throw new Exception("Weapon: tried to buy count<0 finite or complex items");
+            }
+
+            switch ($moneyType)
+            {
+                case 0:
+                {
+                    if ($weapon->real_price === 0)
+                    {
+                        throw new Exception("Weapon: Real price is not set");
+                    }
+
+                    $totalReal += $isPureInfiniteWeapon ?
+                        $weapon->real_price :
+                        $weapon->real_price * abs($count);
+                    break;
+                }
+                case 1:
+                {
+                    if ($weapon->price === 0)
+                    {
+                        throw new Exception("Weapon: Price is not set");
+                    }
+
+                    $total += $isPureInfiniteWeapon ?
+                        $weapon->price :
+                        $weapon->price * abs($count);
+                    break;
+                }
+                default:
+                    throw new Exception("Weapon: Bad money type");
+            }
+
+            // todo: add required_* validation
+        }
+
+        return [$totalReal, $total];
+    }
+
+    /**
+     * @return array Real total, total, last hat id, error
+     * @throws Exception
+     */
+    public function countEquipmentsPrices(SupportCollection $items) : array
+    {
+        $totalReal = 0;
+        $total = 0;
+        $lastEquipmentId = 0;
+
+        /** @var Equipment $equipment */
+        foreach (Equipment::query()
+                     ->whereIn('id', $items->keys())
+                     ->get() as $equipment)
+        {
+            $count = $items[$equipment->id]['Count'] ?? 0;
+            $moneyType = $items[$equipment->id]['MoneyType'] ?? -1;
+
+            if ($count !== -1)
+            {
+                throw new Exception("Equipment: Count must be -1!");
+            }
+
+            if ($equipment->hide_in_shop || $equipment->duration > 0)
+            {
+                throw new Exception("Equipment: Attempt to buy hidden item or temporary item!");
+            }
+
+            switch ($moneyType)
+            {
+                case 0:
+                    if ($equipment->real_price === 0)
+                    {
+                        throw new Exception("Equipment: Real price is not set");
+                    }
+
+                    $totalReal += $equipment->real_price;
+                    break;
+                case 1:
+                    if ($equipment->price === 0)
+                    {
+                        throw new Exception("Equipment: Price is not set");
+                    }
+
+                    $total += $equipment->price;
+                    break;
+                default:
+                    throw new Exception("Equipment: Bad money type");
+            }
+
+            $lastEquipmentId = $equipment->id;
+
+            // todo: add required_* validation
+        }
+
+        return [$totalReal, $total, $lastEquipmentId];
+    }
+
     public function buyItems(BuyShopItemsRequest $request)
     {
         try
         {
-            $shopItems = [];
-            foreach ($request->json('ShopItems') as $item)
+            DB::beginTransaction();
+
+            $user = User::query()
+                ->where('id', $request->json('internal_user_id'))
+                ->firstOrFail();
+            $profile = $user->user_profile;
+
+            $items = collect($request->json('ShopItems'))->keyBy('Id');
+
+            // Calculate total prices
+            // Although since some version of the game
+            // Buying items is an immediate operation
+            // I would still prefer to process it as a bunch of items
+            [$weaponTotalReal, $weaponTotal] =
+                $this->countWeaponsPrices($items);
+            [$equipmentTotalReal, $equipmentTotal, $lastEquipmentId] =
+                $this->countEquipmentsPrices($items);
+
+            $totalReal = $weaponTotalReal + $equipmentTotalReal;
+            $total = $equipmentTotal + $weaponTotal;
+
+            if ($total > $profile->money || $totalReal > $profile->real_money)
             {
-                $shopItems["{$item['Id']}"] = [
-                    'Count' => $item['Count'],
-                    'MoneyType' => $item['MoneyType'],
-                ];
-            }
-            $sum = 0;
-            $realSum = 0;
-
-            foreach (Weapon::query()
-                         ->whereIn('id', array_keys($shopItems))
-                         ->get() as $weapon)
-            {
-                if ($weapon->hide_in_shop)
-                {
-                    throw new \Exception("Weapon: Attempt to buy hidden item!");
-                }
-
-                if (!$weapon->infinite && $shopItems["{$weapon->id}"]['Count'] === -1)
-                {
-                    return new ShopResult(Collection::empty(), ShopResult::Error);
-                }
-
-                if ($shopItems["{$weapon->id}"]['MoneyType'] === 0)
-                {
-                    if ($weapon->real_price === 0)
-                    {
-                        return new ShopResult(Collection::empty(), ShopResult::Error);
-                    }
-
-                    $realSum += $weapon->infinite ?
-                        $weapon->real_price :
-                        $weapon->real_price * $shopItems["{$weapon->id}"]['Count'];
-                }
-
-                if ($shopItems["{$weapon->id}"]['MoneyType'] === 1)
-                {
-                    if ($weapon->price === 0)
-                    {
-                        return new ShopResult(Collection::empty(), ShopResult::Error);
-                    }
-
-                    $sum += $weapon->infinite ?
-                        $weapon->price :
-                        $weapon->price * $shopItems["{$weapon->id}"]['Count'];
-                }
-
-                // todo: add required_* validation
+                return new ShopResult(Collection::empty(),
+                    ShopResult::NotEnoughMoney);
             }
 
-            // todo: this doesnt work properly with multiple hat purchases on 1.05.0
-            $lastEquipmentId = -1;
-            foreach (Equipment::query()
-                         ->whereIn('id', array_keys($shopItems))
-                         ->get() as $equipment)
+            $profile->money -= $total;
+            $profile->real_money -= $totalReal;
+            $profile->save();
+
+            // Set hat/artifact immediately
+            // As client does it
+            if ($lastEquipmentId > 0)
             {
-                if ($equipment->hide_in_shop || $equipment->duration > 0)
+                $char = $user->char_data;
+                match(true)
                 {
-                    throw new \Exception("Equipment: Attempt to buy hidden item or temporary item!");
-                }
-
-                if ($shopItems["{$equipment->id}"]['Count'] !== -1)
-                {
-                    throw new \Exception("Equipment: Count for hats must be -1!");
-                }
-
-                switch ($shopItems["{$equipment->id}"]['MoneyType'])
-                {
-                    case 0:
-                        if ($equipment->real_price === 0)
-                        {
-                            return new ShopResult(Collection::empty(), ShopResult::Error);
-                        }
-
-                        $realSum += $equipment->real_price;
-                        break;
-                    case 1:
-                        if ($equipment->price === 0)
-                        {
-                            return new ShopResult(Collection::empty(), ShopResult::Error);
-                        }
-
-                        $sum += $equipment->price;
-                        break;
-                    default:
-                        Log::error("Naturoi ne oplacivaetsa");
-                        return new ShopResult(Collection::empty(), ShopResult::Error);
-                }
-
-                $lastEquipmentId = $equipment->id;
-                // todo: add required_* validation
+                    WormixTrashHelper::isArtifactType($lastEquipmentId)
+                        => $char->artifact = $lastEquipmentId,
+                    WormixTrashHelper::isHatType($lastEquipmentId)
+                        => $char->hat = $lastEquipmentId,
+                    default => null
+                };
+                $char->save();
             }
 
-            $userProfile = UserProfile::query()
-                ->where('user_id', $request->json('internal_user_id'))
-                ->first();
-            if ($userProfile->money < $sum || $userProfile->real_money < $realSum)
+            foreach ($items as $itemId => $jsonItem)
             {
-                return new ShopResult(Collection::empty(), ShopResult::NotEnoughMoney);
-            }
+                $count = $jsonItem['Count'];
 
-            $userProfile->money -= $sum;
-            $userProfile->real_money -= $realSum;
-            $userProfile->save();
-
-            if ($lastEquipmentId !== -1)
-            {
-                $wormData = CharData::query()
-                    ->where('owner_id', $userProfile->user_id)
+                $oldItem = UserItem::query()
+                    ->where('owner_id', $user->id)
+                    ->where('item_id', $itemId)
                     ->first();
-                $wormData->hat = $lastEquipmentId;
-                $wormData->save();
-            }
-
-            $newWeapons = Collection::empty();
-            foreach ($request->json('ShopItems') as $item)
-            {
-                $oldWeapon = UserItem::query()
-                    ->where('owner_id', $request->json('internal_user_id'))
-                    ->where('item_id', $item['Id'])
-                    ->first();
-
-                if ($item['Count'] == -1 || $oldWeapon === null)
+                if ($oldItem?->count === -1)
                 {
-                    $userWeapon = new UserItem();
-                    $userWeapon->owner_id = $request->json('internal_user_id');
-                    $userWeapon->item_id = $item['Id'];
-                    $userWeapon->count = $item['Count'];
-                    $userWeapon->save();
-                    $newWeapons->add($userWeapon);
+                    throw new Exception("Item is already bought!");
                 }
-                else
+
+                if (WormixTrashHelper::isStuffType($itemId))
                 {
-                    if ($oldWeapon->weapon->infinite)
+                    if ($oldItem)
                     {
-                        $oldWeapon->count = $item['Count'];
+                        throw new Exception("Stuff is already bought!");
                     }
+
+                    $newItem = new UserItem();
+                    $newItem->item_id = $itemId;
+                    $newItem->owner_id = $user->id;
+                    $newItem->count = -1;
+                    $newItem->save();
+                    continue;
+                }
+
+                if (WormixTrashHelper::isWeaponType($itemId))
+                {
+                    $weapon = Weapon::query()
+                        ->where('id', $itemId)
+                        ->firstOrFail();
+
+                    // Infinite and non-complex weapons get wiped here
+                    // And recreated as a -1 entry
+                    if ($weapon->infinite && !$weapon->is_complex)
+                    {
+                        $oldItem?->delete();
+                        $oldItem = null;
+                    }
+
+                    $item = $oldItem ?? new UserItem();
+                    $item->item_id = $itemId;
+                    $item->owner_id = $user->id;
+
+                    // If finite - add count
+                    if (!$weapon->infinite)
+                    {
+                        $item->count = ($oldItem?->count ?? 0) + $count;
+                    }
+                    // Make item infinite if weapon is not complex
+                    else if (!$weapon->is_complex)
+                    {
+                        $item->count = -1;
+                    }
+                    // Set current level for complex weapons
                     else
                     {
-                        $oldWeapon->count += $item['Count'];
+                        $item->count = max(
+                            ($oldItem?->count ?? config('wormix.ids.weapons.level_base')) - $count,
+                            $weapon->maxLevel()
+                        );
                     }
 
-                    $oldWeapon->save();
-
-                    $oldWeapon->count = $item['Count'];
-                    $newWeapons->add($oldWeapon);
+                    $item->save();
                 }
             }
 
-            return new ShopResult($newWeapons, ShopResult::Success);
+            DB::commit();
+
+            return new ShopResult($items, ShopResult::Success);
         }
-        catch (\Exception $ex)
+        catch(\Throwable $t)
         {
-            Log::error("Internal exception", [
-                'exception' => $ex,
-            ]);
-            return new ShopResult(Collection::empty(), ShopResult::Error);
+            DB::rollBack();
+            Log::error($t);
+            return new ShopResult(Collection::empty(),
+                ShopResult::Error);
         }
     }
 

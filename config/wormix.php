@@ -1,11 +1,48 @@
 <?php
 return [
+    'security' => [
+        // Checks and clamps 'count' of weapons
+        // Like finite weapons should not be -1
+        // Or complex weapons cannot go beyond their maxLevel and etc.
+        'validate_users_items' => false,
+    ],
     'starter' => [
         'money' => 670000,
         'real_money' => 6700,
         'missions' => 10,
         'race' => 2,
         'weapons' => [1, 2, 4]
+    ],
+    'ids' => [
+        'solo_missions' => [
+            'min' => 0,
+            'max' => 100,
+        ],
+        'coop_missions' => [
+            'min' => 100,
+            'max' => 200,
+        ],
+        'weapons' => [
+            'min' => 0,
+            'max' => 1000,
+            // Droppable weapons can be obtained exclusively in battle
+            'droppable_min' => 10000,
+            // Base for multi-purchase weapons
+            'level_base' => -10
+        ],
+        'hats' => [
+            'min' => 1000,
+            'max' => 2000
+        ],
+        'artifacts' => [
+            'min' => 2000,
+            'max' => 3000
+        ],
+        // Merge hats, artifacts ids
+        'stuff' => [
+            'min' => 1000,
+            'max' => 3000
+        ],
     ],
     'game' => [
         'missions' => [

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('sell_price')->unsigned()->default(0);
 
             $table->boolean('infinite')->default(false);
+            $table->boolean('is_complex')->default(false);
             $table->smallInteger('max_shots')->default(-1); // new, one_day removed
 
             $table->integer('required_friends')->unsigned()->default(0);

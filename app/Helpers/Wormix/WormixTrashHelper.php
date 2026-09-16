@@ -12,22 +12,26 @@ use Illuminate\Support\Facades\Log;
 
 class WormixTrashHelper
 {
-    private const RACE_BASE = 500;
-    private const RACE_LIMIT = 50;
+    public static function isWeaponType(int $id) : bool
+    {
+        return ($id > config('wormix.ids.weapons.min') && $id < config('wormix.ids.weapons.max'))
+            || $id > config('wormix.ids.weapons.droppable_min');
+    }
 
-    public const WEAPON_MIN_INDEX = 0;
-    public const WEAPON_MAX_INDEX = 1000;
-    // There are also some weapons in that range, however they can be only obtained in battle
-    public const WEAPON_EXCEPT_INDEX = 10000;
+    public static function isStuffType(int $id) : bool
+    {
+        return $id > config('wormix.ids.stuff.min') && $id < config('wormix.ids.stuff.max');
+    }
 
-    public const STUFF_MIN_INDEX = 1000;
-    public const STUFF_MAX_INDEX = 3000;
+    public static function isHatType(int $id) : bool
+    {
+        return $id > config('wormix.ids.hats.min') && $id < config('wormix.ids.hats.max');
+    }
 
-    public const HATS_MIN_INDEX = 1000;
-    public const HATS_MAX_INDEX = 2000;
-
-    public const ARTIFACTS_MIN_INDEX = 2000;
-    public const ARTIFACTS_MAX_INDEX = 3000;
+    public static function isArtifactType(int $id) : bool
+    {
+        return $id > config('wormix.ids.artifacts.min') && $id < config('wormix.ids.artifacts.max');
+    }
 
     public static function generateRacesBitfield(array $races) : int
     {
@@ -159,7 +163,7 @@ class WormixTrashHelper
 
             $userItem->count = $award[1];
 
-            if ($award[0] >= self::STUFF_START_INDEX)
+            if (self::isStuffType($award[0]))
             {
                 // Add a day, instead of overwriting expire_at value
                 $userItem->expire_at = max($userItem->expire_at, time()) + 24 * 60 * 60;

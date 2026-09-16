@@ -25,7 +25,7 @@ class BuyShopItemsRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'ShopItems' => 'required|array',
+            'ShopItems' => 'required|array|size:1',
             'ShopItems.*.Id' => [
                 'required',
                 fn ($attribute, $value, $fail) =>

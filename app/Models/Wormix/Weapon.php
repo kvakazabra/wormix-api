@@ -2,8 +2,10 @@
 
 namespace App\Models\Wormix;
 
+use App\Helpers\Wormix\WormixTrashHelper;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+
+use Illuminate\Support\Facades\Log;
 
 /**
  * @property int id
@@ -23,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int sell_price
  *
  * @property boolean infinite
+ * @property boolean is_complex
  * @property int max_shots
  *
  * @property int required_friends
@@ -34,4 +37,22 @@ class Weapon extends Model
     protected $table = 'wormix_weapons';
 
     protected $guarded = [];
+
+    // Max level is a negative value, starts with -11 and goes below that base: {-11..-11-max_shots}
+    public function maxLevel() : int
+    {
+        if (!$this->is_complex)
+        {
+            Log::warning("Weapon: maxLevel() used on non-complex weapon");
+            return 0;
+        }
+
+        if ($this->max_shots < 0)
+        {
+            Log::error("Weapon: is_complex=true but max_shots < 0!");
+            return 0;
+        }
+
+        return config('wormix.ids.weapons.level_base') - $this->max_shots;
+    }
 }

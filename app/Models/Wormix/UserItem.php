@@ -19,6 +19,7 @@ use App\Helpers\Wormix\WormixTrashHelper;
  * @property int expire_at
  *
  * @property Weapon weapon
+ * @property Equipment equipment
  */
 #[ObservedBy(UserItemObserver::class)]
 class UserItem extends Model
@@ -31,40 +32,26 @@ class UserItem extends Model
 
     public const ARTIFACT_TYPE = "artifact";
 
-    public static function insert(array $values) : bool
-    {
-        // Due to observers, use new instead
-        throw new RuntimeException("Insert is not allowed on this type of object");
-    }
-
-    public static function upsert(array $values, $uniqueBy, $update = null) : int
-    {
-        // Due to observers, use new instead
-        throw new RuntimeException("Upsert is not allowed on this type of object");
-    }
+    private const NONE_TYPE = "none";
 
     public static function itemTypeForId(int $id) : string
     {
-        if (($id > WormixTrashHelper::WEAPON_MIN_INDEX &&
-                $id < WormixTrashHelper::WEAPON_MAX_INDEX) ||
-            $id > WormixTrashHelper::WEAPON_EXCEPT_INDEX)
+        if (WormixTrashHelper::isWeaponType($id))
         {
             return self::WEAPON_TYPE;
         }
 
-        if ($id > WormixTrashHelper::ARTIFACTS_MIN_INDEX &&
-            $id < WormixTrashHelper::ARTIFACTS_MAX_INDEX)
+        if (WormixTrashHelper::isArtifactType($id))
         {
             return self::ARTIFACT_TYPE;
         }
 
-        if ($id > WormixTrashHelper::HATS_MIN_INDEX &&
-            $id < WormixTrashHelper::HATS_MAX_INDEX)
+        if (WormixTrashHelper::isHatType($id))
         {
             return self::HAT_TYPE;
         }
 
-        return "none";
+        return self::NONE_TYPE;
     }
 
     public function equipment() : BelongsTo
