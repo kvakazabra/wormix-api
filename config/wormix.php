@@ -11,7 +11,7 @@ return [
         'real_money' => 6700,
         'missions' => 10,
         'race' => 2,
-        'weapons' => [1, 2, 4]
+        'weapons' => [1, 2, 4, 5, 9, 11, 17, 39]
     ],
     'ids' => [
         'solo_missions' => [

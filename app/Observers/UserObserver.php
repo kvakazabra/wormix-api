@@ -70,6 +70,7 @@ class UserObserver
             $weapon = new UserItem();
             $weapon->owner_id = $user->id;
             $weapon->item_id = $w->id;
+            $weapon->count = -1;
             $weapon->save();
         }
 

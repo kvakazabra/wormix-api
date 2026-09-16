@@ -14,23 +14,33 @@ class WormixTrashHelper
 {
     public static function isWeaponType(int $id) : bool
     {
-        return ($id > config('wormix.ids.weapons.min') && $id < config('wormix.ids.weapons.max'))
-            || $id > config('wormix.ids.weapons.droppable_min');
+        return ($id >= config('wormix.ids.weapons.min') && $id <= config('wormix.ids.weapons.max'))
+            || $id >= config('wormix.ids.weapons.droppable_min');
     }
 
     public static function isStuffType(int $id) : bool
     {
-        return $id > config('wormix.ids.stuff.min') && $id < config('wormix.ids.stuff.max');
+        return $id >= config('wormix.ids.stuff.min') && $id <= config('wormix.ids.stuff.max');
     }
 
     public static function isHatType(int $id) : bool
     {
-        return $id > config('wormix.ids.hats.min') && $id < config('wormix.ids.hats.max');
+        return $id >= config('wormix.ids.hats.min') && $id <= config('wormix.ids.hats.max');
     }
 
     public static function isArtifactType(int $id) : bool
     {
-        return $id > config('wormix.ids.artifacts.min') && $id < config('wormix.ids.artifacts.max');
+        return $id >= config('wormix.ids.artifacts.min') && $id <= config('wormix.ids.artifacts.max');
+    }
+
+    public static function isSoloMissionId(int $id) : bool
+    {
+        return $id >= config('wormix.ids.solo_missions.min') && $id <= config('wormix.ids.solo_missions.max');
+    }
+
+    public static function isCoopMissionId(int $id) : bool
+    {
+        return $id >= config('wormix.ids.coop_missions.min') && $id <= config('wormix.ids.coop_missions.max');
     }
 
     public static function generateRacesBitfield(array $races) : int

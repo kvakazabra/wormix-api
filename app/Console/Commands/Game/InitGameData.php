@@ -326,30 +326,19 @@ class InitGameData extends Command
 
     private function addStartItems() : void
     {
-        $this->info('Parsing weapons_start.json');
-        $startWeaponsPath = resource_path('game/weapons_start.json');
-        if (!File::exists($startWeaponsPath))
-        {
-            $this->error("Can't find weapons_start.json in resources");
-            return;
-        }
-
-        $startItems = json_decode(file_get_contents($startWeaponsPath), true);
-        if ($startItems == null)
-        {
-            $this->error("Can't parse weapons_start.json");
-        }
+        $starterWeapons = config('wormix.starter.weapons');
+        $this->info("Adding " . count($starterWeapons) . " starter weapons from wormix.php config");
 
         try
         {
             DB::beginTransaction();
             $updateCount = Weapon::query()
-                ->whereIn('id', $startItems)
+                ->whereIn('id', $starterWeapons)
                 ->update([
                     'is_starter' => 1
                 ]);
             DB::commit();
-            $this->info("Set [{$updateCount}] items ".json_encode($startItems)." as starter");
+            $this->info("Updated {$updateCount} weapons");
         }
         catch (\Exception $exception)
         {
@@ -364,7 +353,7 @@ class InitGameData extends Command
         $levelsPath = resource_path('game/level_awards.json');
         if (!File::exists($levelsPath))
         {
-            $this->error("Can't find weapons_start.json in resources");
+            $this->error("Can't find level_awards.json in resources");
             return;
         }
 
@@ -473,7 +462,7 @@ class InitGameData extends Command
         $reagentsPath = resource_path('game/reagents.json');
         if (!File::exists($reagentsPath))
         {
-            $this->error("Can't find weapons_start.json in resources");
+            $this->error("Can't find reagents.json in resources");
             return;
         }
 

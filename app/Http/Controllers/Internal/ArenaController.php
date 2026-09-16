@@ -26,17 +26,7 @@ class ArenaController extends Controller
     {
         $userArena = UserArena::query()
             ->where('user_id', $request->json('internal_user_id'))
-            ->first();
-        if (!$userArena) {
-            return [
-                'type' => 'ArenaLocked',
-                'data' => [
-                    'Delay' => 6700,
-                    'CurrentMission' => 0,
-                    'ErrorCode' => 500
-                ],
-            ];
-        }
+            ->firstOrFail();
 
         return [
             'type' => 'ArenaResult',

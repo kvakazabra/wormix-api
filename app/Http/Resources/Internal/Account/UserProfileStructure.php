@@ -30,7 +30,7 @@ class UserProfileStructure extends JsonResource
             // todo check whether it returns only weapons, cuz it seems like it returns other items as well
             'WeaponRecordList' =>
                 WeaponRecordList::collection($this->resource->items),
-            'Stuff' => [], // todo  $this->items()->where('item_id', '>', 1000)->get()->pluck('item_id')
+            'Stuff' => $this->resource->equipments->pluck('item_id')->toArray(), // todo  $this->items()->where('item_id', '>', 1000)->get()->pluck('item_id')
             'TemporalStuff' => (object)[], // todo, returns stuffId to expirationTime dictionary
             'ReactionRate' => $this->resource->reaction_rate,
             'SocialId' => (string)$this->resource->user_id,
