@@ -3,7 +3,7 @@
 namespace App\Models\Wormix;
 
 use App\Models\User;
-use App\Observers\Wormix\WormDataObserver;
+use App\Observers\Wormix\CharDataObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property User owner
  * @property Level level_model
  */
-#[ObservedBy(WormDataObserver::class)]
+#[ObservedBy(CharDataObserver::class)]
 class CharData extends Model
 {
     protected $table = 'wormix_characters_data';
