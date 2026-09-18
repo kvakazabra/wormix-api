@@ -11,7 +11,7 @@ return [
         'real_money' => 6700,
         'missions' => 10,
         'race' => 2,
-        'weapons' => [1, 2, 4, 5, 9, 11, 17, 39]
+        'weapons' => [1, 2, 4, 5, 9, 11, 17, 39, 49]
     ],
     'ids' => [
         'solo_missions' => [
@@ -24,11 +24,15 @@ return [
         ],
         'weapons' => [
             'min' => 0,
-            'max' => 1000,
+            'max' => 300,
             // Droppable weapons can be obtained exclusively in battle
             'droppable_min' => 10000,
             // Base for multi-purchase weapons
             'level_base' => -10
+        ],
+        'upgrades' => [
+            'min' => 300,
+            'max' => 1000,
         ],
         'hats' => [
             'min' => 1000,
