@@ -33,6 +33,7 @@ class UserObserver
         $wormData = new CharData();
         $wormData->owner_id = $user->id;
         $wormData->name = $user->login;
+        $wormData->is_main = true;
         $wormData->race = config('wormix.starter.race');
         $wormData->save();
 

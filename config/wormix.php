@@ -46,6 +46,7 @@ return [
     ],
     'game' => [
         'missions' => [
+            'tutorial_max_level' => 5,
             'delay' => 120,
             'max' => 5,
             'awards' => [

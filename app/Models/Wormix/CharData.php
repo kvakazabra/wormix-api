@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int owner_id
+ * @property bool is_main
  *
  * @property string name
  * @property int armor
