@@ -474,9 +474,9 @@ class InitGameData extends Command
             {
                 DB::beginTransaction();
                 Reagent::insert([
-                    'reagent_id' => $reagent['id'],
+                    'id' => $reagent['id'],
                     'name' => $this->translate($reagent['name'] ?? ""),
-                    'reagent_price' => $reagent['price'],
+                    'price' => $reagent['price'],
                 ]);
                 DB::commit();
                 $count++;

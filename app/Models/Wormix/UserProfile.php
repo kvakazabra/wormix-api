@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @property int user_id
@@ -91,5 +92,76 @@ class UserProfile extends Model
     public function teammates() : HasMany
     {
         return $this->hasMany(UserTeam::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * @return bool Returns false if there are not enough reagents/realmoney
+     */
+    public function consumeReagents(array $reagents, bool $consumeReal) : bool
+    {
+        // todo: use exceptions here instead of bool
+
+        $userReagents = $this->reagents;
+        $totalPrice = 0;
+
+        foreach ($reagents as $id => $count)
+        {
+            if ($count <= 0)
+            {
+                Log::warning("consumeReagents: count is <= 0");
+                continue;
+            }
+
+            $userCount = ($userReagents[$id] ?? 0);
+            if ($count > $userCount)
+            {
+                if (!$consumeReal)
+                {
+                    return false;
+                }
+
+                $reagent = Reagent::query()
+                    ->where('id', $id)
+                    ->firstOrFail();
+
+                $missingCount = $count - $userCount;
+                $totalPrice += $reagent->price * $missingCount;
+            }
+
+            // Either decreases by a count or sets to 0
+            $userReagents[$id] = max($userCount - $count, 0);
+        }
+
+        // Use a default currency rate, buying reagents is available only for real_money
+        $totalRealPrice = (int)ceil(
+            $totalPrice / config('wormix.game.missions.buy.money')
+        );
+        if ($totalRealPrice > $this->real_money)
+        {
+            return false;
+        }
+
+        $this->real_money -= $totalRealPrice;
+        $this->reagents = $userReagents;
+        $this->save();
+        return true;
+    }
+
+    public function grantReagents(array $reagents) : void
+    {
+        $userReagents = $this->reagents;
+        foreach ($reagents as $id => $count)
+        {
+            if ($count <= 0)
+            {
+                Log::warning("grantReagents: count is <= 0");
+                continue;
+            }
+
+            $userReagents[$id] = ($userReagents[$id] ?? 0) + $count;
+        }
+
+        $this->reagents = $userReagents;
+        $this->save();
     }
 }

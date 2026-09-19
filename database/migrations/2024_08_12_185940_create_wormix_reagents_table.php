@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_reagents', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('reagent_id')->unsigned()->unique('reagent_idx');
-            $table->string('name', 100)->nullable();
-            $table->bigInteger('reagent_price')->default(0);
+            $table->bigInteger('id')
+                ->primary()->unique('reagent_idx');
+            $table->string('name')->nullable();
+            $table->bigInteger('price')->default(100);
             $table->timestamps();
         });
     }

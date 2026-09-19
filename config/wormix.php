@@ -102,7 +102,10 @@ return [
                 'money' => 950,
                 'real_money' => 10,
             ],
-            'downgrade' => 5
+            'downgrade' => [
+                'real_money' => 5,
+                'return_rate' => 0.8,
+            ],
         ],
         'race' => [
             'free_change_interval' => 43200, // in seconds, 12 hours by default

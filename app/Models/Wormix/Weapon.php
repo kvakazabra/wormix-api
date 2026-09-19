@@ -43,7 +43,6 @@ class Weapon extends Model
     {
         if (!$this->is_complex)
         {
-            Log::warning("Weapon: maxLevel() used on non-complex weapon");
             return 0;
         }
 

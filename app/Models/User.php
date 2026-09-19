@@ -58,6 +58,7 @@ class User extends Authenticatable
 
     public function char_data() : HasOne
     {
+        // todo check is_main here
         return $this->hasOne(CharData::class, 'owner_id', 'id');
     }
 

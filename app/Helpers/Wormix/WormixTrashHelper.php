@@ -18,6 +18,11 @@ class WormixTrashHelper
             || $id >= config('wormix.ids.weapons.droppable_min');
     }
 
+    public static function isUpgradeId(int $id) : bool
+    {
+        return $id >= config('wormix.ids.upgrades.min') && $id <= config('wormix.ids.upgrades.max');
+    }
+
     public static function isStuffType(int $id) : bool
     {
         return $id >= config('wormix.ids.stuff.min') && $id <= config('wormix.ids.stuff.max');
@@ -71,6 +76,30 @@ class WormixTrashHelper
             )
         );
     }
+
+    public static function toIndexedReagentsArray(array $map) : array
+    {
+        if (empty($map))
+        {
+            return [];
+        }
+
+        $size = max(array_keys($map)) + 1;
+        $result = array_fill(0, $size, 0);
+
+        foreach ($map as $id => $count)
+        {
+            $result[$id] = $count;
+        }
+
+        return $result;
+    }
+
+    public function toAssociativeReagentsArray(array $array) : array
+    {
+        return array_filter($array, fn ($count) => $count > 0);
+    }
+
 
     /**
      * @param int $userId

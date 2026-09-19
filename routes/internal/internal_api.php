@@ -33,6 +33,7 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('battles', [ShopController::class, 'buyBattle']);
             Route::post('mission', [ShopController::class, 'unlockMission']);
             Route::post('reaction', [ShopController::class, 'buyReaction']);
+            Route::post('upgrade', [UpgradeController::class, 'upgrade']);
         });
 
         Route::prefix('reset')->group(function () {
@@ -46,6 +47,10 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('race_pay', [InternalAccountController::class, 'selectRacePaid']);
             Route::post('hotkeys', [BackpackController::class, 'setHotkeys']);
             Route::post('backpack_conf', [BackpackController::class, 'setBackpackConf']);
+        });
+
+        Route::prefix('sell')->group(function () {
+            Route::post('upgrade', [UpgradeController::class, 'downgrade']);
         });
 
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);
@@ -71,11 +76,6 @@ Route::middleware(['internal-auth'])->group(function () {
         Route::post('search', [HouseController::class, 'searchTheHouse']);
         Route::post('pump_reaction', [HouseController::class, 'pumpReaction']);
         Route::post('pump_reactions', [HouseController::class, 'pumpReactions']);
-    });
-
-    Route::prefix('craft')->group(function () {
-        Route::post('upgrade_weapon', [UpgradeController::class, 'upgradeWeapon']);
-        Route::post('downgrade_weapon', [UpgradeController::class, 'downgradeWeapon']);
     });
 
     Route::prefix('achievements')->group(base_path('routes/internal/achievements_api.php'));

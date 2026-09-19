@@ -47,7 +47,7 @@ class EnterAccount extends JsonResource
             'AvailableSearchKeys' =>
                 WormixTrashHelper::getSearchKeys($this->id),
             'Reagents' =>
-                $this->user_profile->reagents,
+                WormixTrashHelper::toIndexedReagentsArray($this->user_profile->reagents),
             'CurSoloMissionId' =>
                 $this->battle_info->solo_mission_id,
             'CurCooperativeMissionId' =>
