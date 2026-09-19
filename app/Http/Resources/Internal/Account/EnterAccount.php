@@ -3,10 +3,9 @@
 namespace App\Http\Resources\Internal\Account;
 
 use App\Helpers\Wormix\WormixTrashHelper;
-use App\Http\Resources\Internal\House\BackpackConfStructure;
+use App\Models\Wormix\UserArena;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserBackpack;
-use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Http\Resources\Internal\Arena\ReconnectToSimpleBattleResultStructure;
@@ -15,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property-read UserBattleInfo $battle_info
+ * @property-read UserArena $arena
  * @property-read UserProfile $user_profile
  * @property-read UserBackpack $backpack
  * @property-read CharData $char_data
@@ -49,9 +48,9 @@ class EnterAccount extends JsonResource
             'Reagents' =>
                 WormixTrashHelper::toIndexedReagentsArray($this->user_profile->reagents),
             'CurSoloMissionId' =>
-                $this->battle_info->solo_mission_id,
+                $this->arena->solo_mission_id,
             'CurCooperativeMissionId' =>
-                $this->battle_info->coop_mission_id,
+                $this->arena->coop_mission_id,
             'Invites' => [],
             'ServerTime' => time(),
             'BackpackConfs' =>

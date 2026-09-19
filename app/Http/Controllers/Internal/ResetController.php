@@ -8,7 +8,6 @@ use App\Http\Requests\Internal\Account\ResetParametersRequest;
 use App\Http\Resources\Internal\Account\ResetParametersResult;
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
-use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
@@ -31,9 +30,10 @@ class ResetController extends Controller
             ->where('owner_id', $request->json('internal_user_id'))
             ->first();
 
-        $battleInfo = UserBattleInfo::query()
-            ->where('user_id', $request->json('internal_user_id'))
-            ->first();
+        // todo: add UserArena reset
+//        $battleInfo = UserBattleInfo::query()
+//            ->where('user_id', $request->json('internal_user_id'))
+//            ->first();
 
         $loginSequence = LoginSequence::query()
             ->where('user_id', $request->json('internal_user_id'))
@@ -44,16 +44,16 @@ class ResetController extends Controller
             DB::beginTransaction();
 
             //Wipe battle info
-            $battleInfo->battles_count = config('wormix.starter.missions');
-            $battleInfo->last_mission_id = -1;
-            $battleInfo->awards = [];
-            $battleInfo->battle_type = 0;
-            $battleInfo->solo_mission_id = 0;
-            $battleInfo->coop_mission_id = 0;
-            $battleInfo->current_battle_id = 0;
-            $battleInfo->last_boss_fight_time = 0;
-            $battleInfo->last_battle_time = 0;
-            $battleInfo->save();
+//            $battleInfo->battles_count = config('wormix.starter.missions');
+//            $battleInfo->last_mission_id = -1;
+//            $battleInfo->awards = [];
+//            $battleInfo->battle_type = 0;
+//            $battleInfo->solo_mission_id = 0;
+//            $battleInfo->coop_mission_id = 0;
+//            $battleInfo->current_battle_id = 0;
+//            $battleInfo->last_boss_fight_time = 0;
+//            $battleInfo->last_battle_time = 0;
+//            $battleInfo->save();
 
             //Wipe worm data
             CharData::withoutEvents(function () use ($wormData)

@@ -21,7 +21,6 @@ use App\Models\Wormix\CharData;
 use App\Models\Wormix\Equipment;
 use App\Models\Wormix\Mission;
 use App\Models\Wormix\Race;
-use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\Weapon;
@@ -321,45 +320,45 @@ class ShopController extends Controller
 
     public function buyBattle(BuyBattleRequest $request)
     {
-        $battleInfo = UserBattleInfo::query()
-            ->where('user_id', $request->json('internal_user_id'))
-            ->first();
-
-        $userProfile = UserProfile::query()
-            ->where('user_id', $request->json('internal_user_id'))
-            ->first();
-
-        if ($battleInfo->battles_count >= config('wormix.game.missions.max'))
-        {
-            return [
-                'data' => new BuyBattleResult(Collection::empty(),
-                    BuyBattleResult::Error)
-            ];
-        }
-
-        if (($request->json('MoneyType') === 0 &&
-                $userProfile->real_money < config('wormix.game.missions.buy.real_money')) ||
-            ($request->json('MoneyType') === 1 &&
-                $userProfile->money < config('wormix.game.missions.buy.money')))
-        {
-            return [
-                'data' => new BuyBattleResult(Collection::empty(), BuyBattleResult::NotEnoughMoney)
-            ];
-        }
-
-        $battleInfo->battles_count += 1;
-        $battleInfo->save();
-
-        if ($request->json('MoneyType') === 0)
-        {
-            $userProfile->real_money -= config('wormix.game.missions.buy.real_money');
-        }
-        else
-        {
-            $userProfile->money -= config('wormix.game.missions.buy.money');
-        }
-
-        $userProfile->save();
+//        $battleInfo = UserBattleInfo::query()
+//            ->where('user_id', $request->json('internal_user_id'))
+//            ->first();
+//
+//        $userProfile = UserProfile::query()
+//            ->where('user_id', $request->json('internal_user_id'))
+//            ->first();
+//
+//        if ($battleInfo->battles_count >= config('wormix.game.missions.max'))
+//        {
+//            return [
+//                'data' => new BuyBattleResult(Collection::empty(),
+//                    BuyBattleResult::Error)
+//            ];
+//        }
+//
+//        if (($request->json('MoneyType') === 0 &&
+//                $userProfile->real_money < config('wormix.game.missions.buy.real_money')) ||
+//            ($request->json('MoneyType') === 1 &&
+//                $userProfile->money < config('wormix.game.missions.buy.money')))
+//        {
+//            return [
+//                'data' => new BuyBattleResult(Collection::empty(), BuyBattleResult::NotEnoughMoney)
+//            ];
+//        }
+//
+//        $battleInfo->battles_count += 1;
+//        $battleInfo->save();
+//
+//        if ($request->json('MoneyType') === 0)
+//        {
+//            $userProfile->real_money -= config('wormix.game.missions.buy.real_money');
+//        }
+//        else
+//        {
+//            $userProfile->money -= config('wormix.game.missions.buy.money');
+//        }
+//
+//        $userProfile->save();
 
         return [
             'data' => new BuyBattleResult(Collection::empty(),

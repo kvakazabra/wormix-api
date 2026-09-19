@@ -10,7 +10,7 @@ use App\Http\Controllers\Internal\InternalLoginController;
 use App\Http\Controllers\Internal\ResetController;
 use App\Http\Controllers\Internal\ShopController;
 use App\Http\Controllers\Internal\TeamController;
-use App\Http\Controllers\Internal\UpgradeController;
+use App\Http\Controllers\Internal\ArmoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [InternalLoginController::class, 'login']);
@@ -33,7 +33,7 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('battles', [ShopController::class, 'buyBattle']);
             Route::post('mission', [ShopController::class, 'unlockMission']);
             Route::post('reaction', [ShopController::class, 'buyReaction']);
-            Route::post('upgrade', [UpgradeController::class, 'upgrade']);
+            Route::post('upgrade', [ArmoryController::class, 'upgrade']);
         });
 
         Route::prefix('reset')->group(function () {
@@ -50,7 +50,7 @@ Route::middleware(['internal-auth'])->group(function () {
         });
 
         Route::prefix('sell')->group(function () {
-            Route::post('upgrade', [UpgradeController::class, 'downgrade']);
+            Route::post('upgrade', [ArmoryController::class, 'downgrade']);
         });
 
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);

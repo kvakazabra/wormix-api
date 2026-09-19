@@ -3,14 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\InternalLoginEvent;
-use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\LoginSequence;
-use App\Models\Wormix\UserBattleInfo;
+use App\Models\Wormix\UserArena;
 use App\Models\Wormix\UserItem;
 use Carbon\Carbon;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
 
 class LoginEventListener
 {
@@ -90,15 +86,16 @@ class LoginEventListener
             $user->char_data->save();
         }
 
-        $battleInfo = UserBattleInfo::query()
+        $arena = UserArena::query()
             ->where('user_id', $user->id)
-            ->first();
+            ->firstOrFail();
 
-        //Clear mission id before boss fights
-        if ($user->char_data->level > 5 && $battleInfo->last_mission_id < 0)
+        // Clear mission id before boss fights
+        if ($user->char_data->level > config('wormix.game.missions.tutorial_max_level') &&
+            $arena->solo_mission_id < 0)
         {
-            $battleInfo->last_mission_id = 0;
-            $battleInfo->save();
+            $arena->solo_mission_id = 0;
+            $arena->save();
         }
 
         //Destroy expired items

@@ -7,7 +7,6 @@ use App\Models\UserSocialData;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserArena;
 use App\Models\Wormix\UserBackpack;
-use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserTeam;
@@ -48,12 +47,6 @@ class UserObserver
         $socialData->user_id = $user->id;
         $socialData->first_name = $user->login;
         $socialData->save();
-
-        //Create user battle info
-        $battleInfo = new UserBattleInfo();
-        $battleInfo->user_id = $user->id;
-        $battleInfo->battles_count = config('wormix.starter.missions');
-        $battleInfo->save();
 
         //Create user login sequence info
         $loginSequence = new LoginSequence();

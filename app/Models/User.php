@@ -6,7 +6,6 @@ use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserArena;
 use App\Models\Wormix\UserBackpack;
-use App\Models\Wormix\UserBattleInfo;
 use App\Models\Wormix\UserCookies;
 use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\CharData;
@@ -26,7 +25,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property UserProfile user_profile
  * @property CharData char_data
  * @property UserSocialData social_data
- * @property UserBattleInfo battle_info
  * @property UserArena arena
  * @property UserCookies cookies
  * @property UserBackpack backpack
@@ -65,11 +63,6 @@ class User extends Authenticatable
     public function social_data() : HasOne
     {
         return $this->hasOne(UserSocialData::class, 'user_id', 'id');
-    }
-
-    public function battle_info() : HasOne
-    {
-        return $this->hasOne(UserBattleInfo::class, 'user_id', 'id');
     }
 
     public function login_sequence() : HasOne
