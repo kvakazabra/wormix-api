@@ -2,7 +2,10 @@
 
 namespace App\Models\Wormix;
 
+use App\Helpers\Wormix\WormixTrashHelper;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @property int id
@@ -24,4 +27,32 @@ class Level extends Model
     protected $casts = [
         'awards' => 'json'
     ];
+
+    public function award(User $user) : void
+    {
+        $profile = $user->user_profile;
+        $arena = $user->arena;
+
+        $awards = $this->awards;
+        $profile->money += $awards['money'] ?? 0;
+        $profile->real_money += $awards['real'] ?? 0;
+        $profile->save();
+
+        // Ignore exceptions here
+        $profile->grantReagents(
+            WormixTrashHelper::pairsToAssociativeArray($awards['reagents'] ?? [])
+        );
+        $profile->grantItems(
+            WormixTrashHelper::pairsToAssociativeArray($awards['weapons'] ?? []),
+            true,
+            true
+        );
+
+        $arena->battle_tokens += $awards['battleTokens'] ?? 0;
+        $arena->wager_tokens += $awards['wagerTokens'] ?? 0;
+        $arena->boss_tokens += $awards['bossTokens'] ?? 0;
+        $arena->save();
+
+        // todo add merc
+    }
 }

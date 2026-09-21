@@ -39,24 +39,19 @@ class ShopResult extends JsonResource
         $weapons = [];
         $equipments = [];
 
-        foreach ($this->resource as $item)
+        foreach ($this->resource as $id => $count)
         {
-            unset($item['MoneyType']);
-
-            $itemId = $item['Id'];
-            $count = $item['Count'];
-
-            if (WormixTrashHelper::isWeaponType($itemId))
+            if (WormixTrashHelper::isWeaponType($id))
             {
-                $new = [];
-                $new['Id'] = $itemId;
-                $new['Count'] = $count;
-                $weapons[] = $new;
+                $weapons[] = [
+                    'Id' => $id,
+                    'Count' => $count,
+                ];
             }
 
-            if (WormixTrashHelper::isStuffType($itemId))
+            if (WormixTrashHelper::isStuffType($id))
             {
-                $equipments[] = $itemId;
+                $equipments[] = $id;
             }
         }
 

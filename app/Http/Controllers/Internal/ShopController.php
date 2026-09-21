@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Internal;
 
+use App\Exceptions\Wormix\AlreadyBoughtException;
+use App\Exceptions\Wormix\NotEnoughMoneyException;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Shop\BuyBattleRequest;
@@ -29,6 +31,7 @@ use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Throwable;
 
 class ShopController extends Controller
 {
@@ -187,104 +190,31 @@ class ShopController extends Controller
 
             if ($total > $profile->money || $totalReal > $profile->real_money)
             {
-                return new ShopResult(Collection::empty(),
-                    ShopResult::NotEnoughMoney);
+                throw new NotEnoughMoneyException();
             }
 
             $profile->money -= $total;
             $profile->real_money -= $totalReal;
             $profile->save();
 
-            // Set hat/artifact immediately
-            // As client does it
-            if ($lastEquipmentId > 0)
-            {
-                $char = $user->char_data;
-                match(true)
-                {
-                    WormixTrashHelper::isArtifactType($lastEquipmentId)
-                        => $char->artifact = $lastEquipmentId,
-                    WormixTrashHelper::isHatType($lastEquipmentId)
-                        => $char->hat = $lastEquipmentId,
-                    default => null
-                };
-                $char->save();
-            }
-
-            foreach ($items as $itemId => $jsonItem)
-            {
-                $count = $jsonItem['Count'];
-
-                $oldItem = UserItem::query()
-                    ->where('owner_id', $user->id)
-                    ->where('item_id', $itemId)
-                    ->first();
-                if ($oldItem?->count === -1)
-                {
-                    throw new Exception("Item is already bought!");
-                }
-
-                if (WormixTrashHelper::isStuffType($itemId))
-                {
-                    if ($oldItem)
-                    {
-                        throw new Exception("Stuff is already bought!");
-                    }
-
-                    $newItem = new UserItem();
-                    $newItem->item_id = $itemId;
-                    $newItem->owner_id = $user->id;
-                    $newItem->count = -1;
-                    $newItem->save();
-                    continue;
-                }
-
-                if (WormixTrashHelper::isWeaponType($itemId))
-                {
-                    $weapon = Weapon::query()
-                        ->where('id', $itemId)
-                        ->firstOrFail();
-
-                    // Infinite and non-complex weapons get wiped here
-                    // And recreated as a -1 entry
-                    if ($weapon->infinite && !$weapon->is_complex)
-                    {
-                        $oldItem?->delete();
-                        $oldItem = null;
-                    }
-
-                    $item = $oldItem ?? new UserItem();
-                    $item->item_id = $itemId;
-                    $item->owner_id = $user->id;
-
-                    // If finite - add count
-                    if (!$weapon->infinite)
-                    {
-                        $item->count = ($oldItem?->count ?? 0) + $count;
-                    }
-                    // Make item infinite if weapon is not complex
-                    else if (!$weapon->is_complex)
-                    {
-                        $item->count = -1;
-                    }
-                    // Set current level for complex weapons
-                    else
-                    {
-                        $item->count = max(
-                            ($oldItem?->count ?? config('wormix.ids.weapons.level_base')) - $count,
-                            $weapon->maxLevel()
-                        );
-                    }
-
-                    $item->save();
-                }
-            }
+            // todo this is bullshit
+            // Convert it another way, to associative pairs [[id => count], ...]
+            $items = collect($request->json('ShopItems'))
+                ->pluck('Count', 'Id')
+                ->toArray();
+            $profile->grantItems($items);
 
             DB::commit();
 
             return new ShopResult($items, ShopResult::Success);
         }
-        catch(\Throwable $t)
+        catch(NotEnoughMoneyException $e)
+        {
+            DB::rollBack();
+            return new ShopResult(Collection::empty(),
+                ShopResult::NotEnoughMoney);
+        }
+        catch(Throwable $t)
         {
             DB::rollBack();
             Log::error($t);
@@ -378,7 +308,7 @@ class ShopController extends Controller
             ->first();
 
         $mission = Mission::query()
-            ->where('mission_id', $request->json('MissionId'))
+            ->where('id', $request->json('MissionId'))
             ->first();
 
         $mission_price =

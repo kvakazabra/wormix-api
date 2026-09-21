@@ -25,13 +25,19 @@ class EndBattleRequest extends FormRequest
             'internal_user_id' => 'required|exists:users,id',
             'Result' => 'required|integer',
             'Type' => 'required|integer|min:0|max:3',
-
             'ExpBonus' => 'required|integer|min:0|max:10',
-
-            'BattleId' => 'required|integer',
-
-            'Items' => 'array',
-            'CollectedReagents' => 'array',
+            'BattleId' => 'required|integer|exists:wormix_users_battles,id',
+            'MissionId' => 'required|integer',
+            'Items' => 'present|array',
+            'BanType' => 'required|integer',
+            'BanNote' => 'present|nullable|string',
+            'CollectedReagents' => 'present|array',
+            'RandomSeed' => 'required|integer',
+            'TotalTurnsCount' => 'required|integer',
+            'TotalDamageToPlayer' => 'required|integer',
+            'TotalDamageToBoss' => 'required|integer',
+            'TotalUsedItems' => 'present|array',
+            'SessionKey' => 'required|string',
         ];
     }
 }

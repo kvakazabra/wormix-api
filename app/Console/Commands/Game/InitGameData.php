@@ -365,7 +365,7 @@ class InitGameData extends Command
             {
                 DB::beginTransaction();
                 Level::insert([
-                    'id' => $level['id'],
+                    'id' => $level['level'],
                     'required_experience' => $level['required_experience'],
                     'team_size' => $level['team_size'],
                     'awards' => json_encode($level['rewards']),

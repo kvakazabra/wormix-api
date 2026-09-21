@@ -53,56 +53,81 @@ return [
         ],
     ],
     'game' => [
+        'race' => [
+            'free_change_interval' => 43200, // in seconds, 12 hours by default
+            'change_real_price' => 5,
+            'skin_real_price' => 50,
+        ],
+        'max_level' => 30,
+        'search_keys_per_day' => 10,
+        'next_level_award' => [
+            'money' => 150,
+            'real_money' => 0,
+        ],
         'missions' => [
-            'types' => [
-                'low' => 2,
-                'medium' => 0,
-                'high' => 1,
-                'pvp' => 3,
-            ],
-            'boss_opening_level' => 6,
             'delay' => 120,
             'max' => 5,
+
+            'star_money_factor' => 4,
+            'boss_opening_level' => 6,
+
+            'types' => [
+                2 => 'low',
+                0 => 'medium',
+                1 => 'high',
+                3 => 'pvp',
+            ],
+            'result_types' => [
+                1 => 'win',
+                -1 => 'loss',
+                0 => 'draw',
+                -4 => 'loss',
+            ],
             'awards' => [
-
-                'loose' => [
-                    'money' => 5,
-                    'experience' => 3
-                ],
-
-                'draw' => [
-                    'money' => [
-                        'low' => 20,
-                        'medium' => 25,
-                        'high' => 30
-                    ],
-                    'experience' => [
-                        'low' => 4,
-                        'medium' => 6,
-                        'high' => 8
-                    ]
-                ],
-
-                'win' => [
-                    'money' => [
-                        'low' => 30,
-                        'medium' => 35,
-                        'high' => 40
-                    ],
-                    'experience' => [
+                'experience' => [
+                    'win' => [
                         'low' => 8,
                         'medium' => 10,
-                        'high' => 12
+                        'high' => 12,
+                        'pvp' => 0,
+                    ],
+                    'draw' => [
+                        'low' => 4,
+                        'medium' => 5,
+                        'high' => 8,
+                        'pvp' => 0,
+                    ],
+                    'loss' => [
+                        'low' => 3,
+                        'medium' => 3,
+                        'high' => 3,
+                        'pvp' => 0,
+                    ]
+                ],
+                'money' => [
+                    'win' => [
+                        'low' => 30,
+                        'medium' => 40,
+                        'high' => 50,
+                        'pvp' => 0,
+                    ],
+                    'draw' => [
+                        'low' => 20,
+                        'medium' => 25,
+                        'high' => 30,
+                        'pvp' => 0,
+                    ],
+                    'loss' => [
+                        'low' => 5,
+                        'medium' => 5,
+                        'high' => 5,
+                        'pvp' => 0,
                     ]
                 ]
             ],
-
-            'buy' => [
-                'money' => 100,
-                'real_money' => 1,
-            ]
         ],
         'buy' => [
+            'real_rate' => 100, // Money to real rate
             'boss_mission' => 10,
             'reset_stats' => [
                 'money' => 300,
@@ -116,16 +141,6 @@ return [
                 'real_money' => 5,
                 'return_rate' => 0.8,
             ],
-        ],
-        'race' => [
-            'free_change_interval' => 43200, // in seconds, 12 hours by default
-            'change_real_price' => 5,
-            'skin_real_price' => 50,
-        ],
-        'search_keys_per_day' => 10,
-        'next_level_award' => [
-            'money' => 150,
-            'real_money' => 0,
         ]
     ],
     'vk_balance' => 10

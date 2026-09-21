@@ -33,7 +33,6 @@ class AccountController extends Controller
             'user_profile',
             'char_data',
             'social_data',
-            'battle_info',
             'user_profile.teammates.teammate'
         ]));
     }

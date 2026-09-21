@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources\Internal\Arena;
 
+use App\Models\Wormix\UserBattle;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property-read UserBattle $resource
+ */
 class StartBattleResult extends JsonResource
 {
     /**
@@ -14,6 +18,9 @@ class StartBattleResult extends JsonResource
      */
     public function toArray(Request $request) : array
     {
-        return parent::toArray($request);
+        return [
+            'BattleId' => $this->resource->id,
+            'ReagentsForBattle' => $this->resource->reagents ?? [],
+        ];
     }
 }

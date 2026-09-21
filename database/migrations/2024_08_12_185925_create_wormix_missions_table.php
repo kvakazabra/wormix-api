@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_missions', function (Blueprint $table) {
-            $table->bigInteger('mission_id')
+            $table->bigInteger('id')
                 ->primary()->unique('mission_idx');
             $table->integer('required_level')->default(1);
             $table->json('awards');

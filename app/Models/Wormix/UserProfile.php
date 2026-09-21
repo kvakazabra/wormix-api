@@ -2,13 +2,19 @@
 
 namespace App\Models\Wormix;
 
+use App\Exceptions\Wormix\AlreadyBoughtException;
+use App\Exceptions\Wormix\InternalServerException;
 use App\Exceptions\Wormix\InvalidUsedItemException;
+use App\Exceptions\Wormix\NotEnoughMoneyException;
+use App\Exceptions\Wormix\NotEnoughReagentsException;
+use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 /**
  * @property int user_id
@@ -96,12 +102,10 @@ class UserProfile extends Model
     }
 
     /**
-     * @return bool Returns false if there are not enough reagents/realmoney
+     * @throws Exception
      */
-    public function consumeReagents(array $reagents, bool $consumeReal) : bool
+    public function consumeReagents(array $reagents, bool $consumeReal) : void
     {
-        // todo: use exceptions here instead of bool
-
         $userReagents = $this->reagents;
         $totalPrice = 0;
 
@@ -109,8 +113,7 @@ class UserProfile extends Model
         {
             if ($count <= 0)
             {
-                Log::warning("consumeReagents: count is <= 0");
-                continue;
+                throw new InternalServerException('Consuming reagent with count <= 0');
             }
 
             $userCount = ($userReagents[$id] ?? 0);
@@ -118,7 +121,7 @@ class UserProfile extends Model
             {
                 if (!$consumeReal)
                 {
-                    return false;
+                    throw new NotEnoughReagentsException();
                 }
 
                 $reagent = Reagent::query()
@@ -135,28 +138,35 @@ class UserProfile extends Model
 
         // Use a default currency rate, buying reagents is available only for real_money
         $totalRealPrice = (int)ceil(
-            $totalPrice / config('wormix.game.missions.buy.money')
+            $totalPrice / config('wormix.game.buy.real_rate')
         );
         if ($totalRealPrice > $this->real_money)
         {
-            return false;
+            throw new NotEnoughMoneyException();
         }
 
         $this->real_money -= $totalRealPrice;
         $this->reagents = $userReagents;
         $this->save();
-        return true;
     }
 
-    public function grantReagents(array $reagents) : void
+    /**
+     * @param array $reagents Associative array like [52 => 5, ...]
+     * @throws Exception
+     */
+    public function grantReagents(array $reagents, bool $ignoreErrors) : void
     {
         $userReagents = $this->reagents;
         foreach ($reagents as $id => $count)
         {
             if ($count <= 0)
             {
-                Log::warning("grantReagents: count is <= 0");
-                continue;
+                if (!$ignoreErrors)
+                {
+                    continue;
+                }
+
+                throw new InternalServerException('Granting reagent with count <= 0');
             }
 
             $userReagents[$id] = ($userReagents[$id] ?? 0) + $count;
@@ -168,7 +178,7 @@ class UserProfile extends Model
 
     /**
      * @param array $items Json array of pairs of 'Id' and 'Count'
-     * @throws \Exception
+     * @throws Exception
      */
     public function consumeItems(array $items) : void
     {
@@ -194,6 +204,101 @@ class UserProfile extends Model
             $userItem->count = max($userItem->count - $count, 0);
             $userItem->save();
         }
+    }
 
+    /**
+     * @param array $items Associative array [[id => count], ...]
+     * @param bool $equipStuff If set, stuff will get automatically equipped afterward
+     * @param bool $ignoreErrors If set, exception won't get thrown and $items will get fully processed
+     * @throws Exception
+     */
+    public function grantItems(array $items, bool $equipStuff = true, bool $ignoreErrors = false) : void
+    {
+        $user = $this->user;
+
+        foreach ($items as $itemId => $count)
+        {
+            $oldItem = UserItem::query()
+                ->where('owner_id', $this->user_id)
+                ->where('item_id', $itemId)
+                ->first();
+
+            if (WormixTrashHelper::isStuffType($itemId))
+            {
+                if ($oldItem)
+                {
+                    if ($ignoreErrors)
+                    {
+                        continue;
+                    }
+
+                    throw new AlreadyBoughtException("Stuff already bought");
+                }
+
+                $newItem = new UserItem();
+                $newItem->item_id = $itemId;
+                $newItem->owner_id = $this->user_id;
+                $newItem->count = -1;
+                $newItem->save();
+
+                if ($equipStuff)
+                {
+                    $char = $user->char_data;
+                    match (true)
+                    {
+                        WormixTrashHelper::isArtifactType($itemId)
+                            => $char->artifact = $itemId,
+                        WormixTrashHelper::isHatType($itemId)
+                            => $char->hat = $itemId
+                    };
+                    $char->save();
+                }
+
+                continue;
+            }
+
+            if ($oldItem?->count === -1)
+            {
+                if ($ignoreErrors)
+                {
+                    continue;
+                }
+
+                throw new AlreadyBoughtException();
+            }
+
+            if (WormixTrashHelper::isWeaponType($itemId))
+            {
+                $weapon = Weapon::query()
+                    ->where('id', $itemId)
+                    ->firstOrFail();
+
+                $item = $oldItem ?? new UserItem();
+                $item->item_id = $itemId;
+                $item->owner_id = $this->user_id;
+
+                // If finite - add count
+                if (!$weapon->infinite)
+                {
+                    $item->count = ($oldItem?->count ?? 0) + $count;
+                }
+                // Make item infinite if weapon is not complex
+                else if (!$weapon->is_complex)
+                {
+                    $item->count = $count < 0 ?
+                        -1 : ($oldItem?->count ?? 0) + $count;
+                }
+                // Set current level for complex weapons
+                else
+                {
+                    $item->count = max(
+                        ($oldItem?->count ?? config('wormix.ids.weapons.level_base')) - abs($count),
+                        $weapon->maxLevel()
+                    );
+                }
+
+                $item->save();
+            }
+        }
     }
 }

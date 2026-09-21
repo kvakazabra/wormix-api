@@ -15,9 +15,9 @@ class ArenaLocked extends JsonResource
     public function toArray(Request $request) : array
     {
         return [
-            'Delay' => (config('wormix.game.missions.delay') - (time() - $this->last_battle_time)) * 1000,
-            'CurrentMission' => $this->mission_id,
-            'ErrorCode' => 0
+            'Delay' => $this->resource['Delay'],
+            'CurrentMission' => $this->resource['MissionId'],
+            'ErrorCode' => $this->resource['ErrorCode'],
         ];
     }
 }

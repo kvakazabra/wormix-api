@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Internal;
 
+use App\Exceptions\Wormix\AlreadyBoughtException;
+use App\Exceptions\Wormix\NotEnoughMoneyException;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Craft\DowngradeWeaponRequest;
@@ -9,7 +11,6 @@ use App\Http\Requests\Internal\Craft\UpgradeWeaponRequest;
 use App\Http\Resources\Internal\Craft\DowngradeWeaponResult;
 use App\Http\Resources\Internal\Craft\UpgradeWeaponResult;
 use App\Models\User;
-use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\UserItem;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,7 +35,7 @@ class ArmoryController extends Controller
                 ->where('id', $request->json('internal_user_id'))
                 ->firstOrFail();
 
-            if (!$this->isUpgradeAvailableFix($user, $upgrade))
+            if (!$this->isUpgradeAvailable($user, $upgrade))
             {
                 DB::rollBack();
                 return [
@@ -44,14 +45,7 @@ class ArmoryController extends Controller
             }
 
             $profile = $user->user_profile;
-            if (!$profile->consumeReagents($upgrade->reagents, true))
-            {
-                DB::rollBack();
-                return [
-                    'data' => new UpgradeWeaponResult(Collection::empty(),
-                        UpgradeWeaponResult::NotEnoughMoney, $recipeId)
-                ];
-            }
+            $profile->consumeReagents($upgrade->reagents, true);
 
             $profile->recipes = array_merge($profile->recipes, [$recipeId]);
             $profile->save();
@@ -61,6 +55,14 @@ class ArmoryController extends Controller
             return [
                 'data' => new UpgradeWeaponResult(Collection::empty(),
                     UpgradeWeaponResult::Success, $recipeId)
+            ];
+        }
+        catch(NotEnoughMoneyException)
+        {
+            DB::rollBack();
+            return [
+                'data' => new UpgradeWeaponResult(Collection::empty(),
+                    UpgradeWeaponResult::NotEnoughMoney, $recipeId)
             ];
         }
         catch(\Exception $e)
@@ -94,28 +96,21 @@ class ArmoryController extends Controller
             // Check that it has been crafted
             if (!in_array($recipeId, $recipes))
             {
-                DB::rollBack();
-                return [
-                    'data' => new DowngradeWeaponResult(Collection::empty(),
-                        DowngradeWeaponResult::Error, $recipeId)
-                ];
+                throw new AlreadyBoughtException('Already crafted');
             }
 
             $totalReal = config('wormix.game.buy.downgrade.real_money');
             if ($totalReal > $profile->real_money)
             {
-                DB::rollBack();
-                return [
-                    'data' => new DowngradeWeaponResult(Collection::empty(),
-                        DowngradeWeaponResult::NotEnoughMoney, $recipeId)
-                ];
+                throw new NotEnoughMoneyException();
             }
 
             // Downgrade
             unset($recipes[array_search($recipeId, $recipes)]);
             $recipes = array_values($recipes);
 
-            // Calculate reagents to add back, this just changes the $count of $upgrade->reagents basically
+            // Calculate reagents to return back to the user
+            // This just changes the $count of $upgrade->reagents basically
             $returnRate = config('wormix.game.buy.downgrade.return_rate');
             $upgradeReagents = array_map(
                 fn ($count) => floor($count * $returnRate),
@@ -129,6 +124,14 @@ class ArmoryController extends Controller
 
             return new DowngradeWeaponResult(Collection::empty(),
                 DowngradeWeaponResult::Success, $recipeId);
+        }
+        catch(NotEnoughMoneyException)
+        {
+            DB::rollBack();
+            return [
+                'data' => new DowngradeWeaponResult(Collection::empty(),
+                    DowngradeWeaponResult::NotEnoughMoney, $recipeId)
+            ];
         }
         catch(\Exception $e)
         {
@@ -186,7 +189,7 @@ class ArmoryController extends Controller
         return true;
     }
 
-    private function isUpgradeAvailableFix(User $user, Upgrade $upgrade) : bool
+    private function isUpgradeAvailable(User $user, Upgrade $upgrade) : bool
     {
         $recipes = $user->user_profile->recipes;
         $char = $user->char_data;

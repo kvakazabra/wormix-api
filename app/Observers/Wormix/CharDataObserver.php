@@ -3,11 +3,38 @@
 namespace App\Observers\Wormix;
 
 use App\Helpers\Wormix\WormixTrashHelper;
+use App\Models\User;
 use App\Models\Wormix\Level;
 use App\Models\Wormix\CharData;
 
 class CharDataObserver
 {
+    private function checkLevelUp(CharData $char) : void
+    {
+        $level = $char->level_model;
+        if ($char->experience < $level->required_experience)
+        {
+            return;
+        }
+
+        // Just clamp experience when max level is reached
+        if ($char->level >= config('wormix.game.max_level'))
+        {
+            $char->experience = min($char->experience, $level->required_experience);
+            return;
+        }
+
+        // Level up
+        $char->level += 1;
+        $char->experience = $char->experience - $level->required_experience;
+
+        // Award the user (->level_model is cached here, so query manually)
+        $newLevel = Level::query()
+            ->where('id', $char->level)
+            ->firstOrFail();
+        $newLevel->award($char->owner);
+    }
+
     /**
      * Handle the CharData "created" event.
      */
@@ -16,41 +43,22 @@ class CharDataObserver
 
     }
 
+    public function saving(CharData $charData) : void
+    {
+        // todo: change to type
+        if ($charData->is_main &&
+            $charData->isDirty('experience'))
+        {
+            $this->checkLevelUp($charData);
+        }
+    }
+
     /**
      * Handle the CharData "updated" event.
      */
     public function updated(CharData $charData) : void
     {
-        if ($charData->experience < $charData->level_model->required_experience)
-        {
-            return;
-        }
 
-        //Max level
-        if ($charData->level === 30)
-        {
-            $charData->experience = $charData->level_model->required_experience;
-            CharData::withoutEvents(function () use ($charData)
-            {
-                $charData->save();
-            });
-            return;
-        }
-
-        //Save new level
-        CharData::withoutEvents(function () use ($charData)
-        {
-            $charData->level += 1;
-            $charData->experience = $charData->experience - $charData->level_model->required_experience;
-            $charData->save();
-        });
-
-        $levelModel = Level::query()->where('id', $charData->level)->first();
-        WormixTrashHelper::addWeaponsAwards($levelModel->awards, $charData);
-        //Add money
-        $userProfile = $charData->owner->user_profile;
-        $userProfile->money += config('wormix.game.next_level_award.money');
-        $userProfile->save();
     }
 
     /**

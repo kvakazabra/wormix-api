@@ -8,10 +8,52 @@ use App\Models\Wormix\UserProfile;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\Weapon;
 use App\Models\Wormix\CharData;
-use Illuminate\Support\Facades\Log;
 
 class WormixTrashHelper
 {
+    public static function generateBattleReagents() : array
+    {
+        // todo: generate random ones
+        $array = array_fill(0, 4, -1);
+        $array[0] = 50;
+        $array[1] = 51;
+        $array[2] = 0;
+        $array[3] = 6;
+
+        return $array;
+    }
+
+    /**
+     * @param array $reagents Server-side generated reagents
+     * @param array $collected Client-side collected reagents
+     * @return bool Returns true if all of the client-side reagents are present in $reagents
+     */
+    public static function validateBattleReagents(array $reagents, array $collected) : bool
+    {
+        $reagentsMap = array_count_values($reagents);
+        // Converts [5, 5, 1] to [5 => 2, 1 => 1]
+
+        foreach ($collected as $id)
+        {
+            // Id is not present in generated reagents
+            if (!isset($reagentsMap[$id]))
+            {
+                return false;
+            }
+
+            // All of the reagents of this type has been already collected
+            if ($reagentsMap[$id] <= 0)
+            {
+                return false;
+            }
+
+            // Decrease the count
+            $reagentsMap[$id]--;
+        }
+
+        return true;
+    }
+
     public static function isWeaponType(int $id) : bool
     {
         return ($id >= config('wormix.ids.weapons.min') && $id <= config('wormix.ids.weapons.max'))
@@ -36,6 +78,11 @@ class WormixTrashHelper
     public static function isArtifactType(int $id) : bool
     {
         return $id >= config('wormix.ids.artifacts.min') && $id <= config('wormix.ids.artifacts.max');
+    }
+
+    public static function isTutorialMissionId(int $id) : bool
+    {
+        return $id < 0;
     }
 
     public static function isSoloMissionId(int $id) : bool
@@ -95,9 +142,15 @@ class WormixTrashHelper
         return $result;
     }
 
-    public function toAssociativeReagentsArray(array $array) : array
+    /**
+     * @param array $array Array in pairs like [[id, count], ...]
+     * @return array Associative array like [[id => count], ...]
+     */
+    public static function pairsToAssociativeArray(array $array) : array
     {
-        return array_filter($array, fn ($count) => $count > 0);
+        return array_filter(array_column($array, 1, 0),
+            fn ($count) => $count !== 0
+        );
     }
 
 
