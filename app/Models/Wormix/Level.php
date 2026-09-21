@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int id
  * @property int required_experience
- * @property int max_worms_count
+ * @property int team_size
  * @property array awards
  */
 class Level extends Model
@@ -15,8 +15,9 @@ class Level extends Model
     protected $table = 'wormix_levels';
 
     protected $fillable = [
+        'id',
         'required_experience',
-        'max_worms_count',
+        'team_size',
         'awards'
     ];
 

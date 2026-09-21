@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int solo_mission_id
  * @property int coop_mission_id
  * @property int current_battle_id
+ *
+ * @property UserBattle current_battle
  */
 class UserArena extends Model
 {
@@ -27,8 +29,8 @@ class UserArena extends Model
         return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
-//    public function current_battle() : BelongsTo
-//    {
-//        return $this->belongsTo()
-//    }
+    public function current_battle() : BelongsTo
+    {
+        return $this->belongsTo(UserBattle::class, 'id', 'current_battle_id');
+    }
 }

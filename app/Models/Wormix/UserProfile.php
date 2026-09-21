@@ -2,6 +2,7 @@
 
 namespace App\Models\Wormix;
 
+use App\Exceptions\Wormix\InvalidUsedItemException;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -163,5 +164,36 @@ class UserProfile extends Model
 
         $this->reagents = $userReagents;
         $this->save();
+    }
+
+    /**
+     * @param array $items Json array of pairs of 'Id' and 'Count'
+     * @throws \Exception
+     */
+    public function consumeItems(array $items) : void
+    {
+        foreach ($items as $item)
+        {
+            $id = $item['Id'];
+            $count = $item['Count'];
+
+            $userItem = UserItem::query()
+                ->where('owner_id', $this->user_id)
+                ->where('item_id', $id)
+                ->first();
+            if (!$userItem)
+            {
+                throw new InvalidUsedItemException('User ' . $this->user_id . ' does not own the item ' . $id);
+            }
+
+            if ($count > $userItem->count)
+            {
+                throw new InvalidUsedItemException('Item ' . $id . ' of user ' . $this->user_id . ' has less count than used');
+            }
+
+            $userItem->count = max($userItem->count - $count, 0);
+            $userItem->save();
+        }
+
     }
 }
