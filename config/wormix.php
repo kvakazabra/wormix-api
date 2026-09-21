@@ -54,6 +54,12 @@ return [
     ],
     'game' => [
         'missions' => [
+            'types' => [
+                'low' => 2,
+                'medium' => 0,
+                'high' => 1,
+                'pvp' => 3,
+            ],
             'boss_opening_level' => 6,
             'delay' => 120,
             'max' => 5,
