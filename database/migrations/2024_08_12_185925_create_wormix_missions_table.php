@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_missions', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('mission_id')->unique('mission_idx');
+            $table->bigInteger('mission_id')
+                ->primary()->unique('mission_idx');
             $table->integer('required_level')->default(1);
             $table->json('awards');
             $table->timestamps();

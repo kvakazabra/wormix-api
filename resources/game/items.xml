@@ -2770,4 +2770,51 @@
         <![CDATA[A unit attacked by this weapon, is sent flying with a very high speed. A blow also knocks a hatt of the enemy. On the first turn it works as an Reinforced Bat, the ability works from the second turn.]]>
     </message>
 
+    <message name="MERC_NAME_1" value="Черпак"/>
+    <message name="MERC_NAME_2" value="Турист"/>
+    <message name="MERC_NAME_3" value="Баламут"/>
+    <message name="MERC_NAME_4" value="Кирзач"/>
+    <message name="MERC_NAME_5" value="Шон"/>
+    <message name="MERC_NAME_6" value="Пижон"/>
+    <message name="MERC_NAME_7" value="Бродяга"/>
+    <message name="MERC_NAME_8" value="Ситх"/>
+    <message name="MERC_NAME_9" value="Проныра"/>
+    <message name="MERC_NAME_10" value="Страйкер"/>
+    <message name="MERC_NAME_11" value="Хипстер"/>
+    <message name="MERC_NAME_12" value="Чинук"/>
+    <message name="MERC_NAME_13" value="Палач"/>
+    <message name="MERC_NAME_14" value="Гастелло"/>
+    <message name="MERC_NAME_15" value="Гарфилд"/>
+    <message name="MERC_NAME_16" value="Гангстер"/>
+    <message name="MERC_NAME_17" value="Тесак"/>
+    <message name="MERC_NAME_18" value="Рекрут"/>
+    <message name="MERC_NAME_19" value="Горбаш"/>
+    <message name="MERC_NAME_20" value="Шатун"/>
+    <message name="MERC_NAME_21" value="Фидель"/>
+    <message name="MERC_NAME_22" value="Боевик"/>
+    <message name="MERC_NAME_23" value="Ржавый"/>
+    <message name="MERC_NAME_24" value="Дуэлянт"/>
+    <message name="MERC_NAME_25" value="Вандал"/>
+    <message name="MERC_NAME_26" value="Астронавт"/>
+    <message name="MERC_NAME_27" value="Химик"/>
+    <message name="MERC_NAME_28" value="Увалень"/>
+    <message name="MERC_NAME_29" value="Барон"/>
+    <message name="MERC_NAME_30" value="Зверобой"/>
+    <message name="MERC_NAME_31" value="Шаман"/>
+    <message name="MERC_NAME_32" value="Сапер"/>
+    <message name="MERC_NAME_33" value="Легат"/>
+    <message name="MERC_NAME_34" value="Призрак"/>
+    <message name="MERC_NAME_35" value="Уолтер"/>
+    <message name="MERC_NAME_36" value="Змей"/>
+    <message name="MERC_NAME_37" value="Виртуоз"/>
+    <message name="MERC_NAME_38" value="Камрад"/>
+    <message name="MERC_NAME_39" value="Терминатор"/>
+    <message name="MERC_NAME_40" value="Горелый"/>
+    <message name="MERC_NAME_41" value="Туз"/>
+    <message name="MERC_NAME_42" value="Танкист"/>
+    <message name="MERC_NAME_43" value="Псих"/>
+    <message name="MERC_NAME_44" value="Бодрящий"/>
+    <message name="MERC_NAME_45" value="Святоша"/>
+    <message name="MERC_NAME_46" value="Зубодер"/>
+
 </dictionary>

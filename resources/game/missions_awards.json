@@ -1,421 +1,2302 @@
 [
-    {
-        "id": -1,
-        "required_level": 1,
-        "awards":
-        [
-            {
-                "money": 40,
-                "experience": 12,
-                "real_money": 0,
-                "weapons": []
-            }
+  {
+    "id": -5,
+    "required_level": 1,
+    "awards": [
+      {
+        "money": 1000,
+        "experience": 120
+      }
+    ]
+  },
+  {
+    "id": -4,
+    "required_level": 1,
+    "awards": [
+      {
+        "money": 700,
+        "experience": 115
+      }
+    ]
+  },
+  {
+    "id": -3,
+    "required_level": 1,
+    "awards": [
+      {
+        "money": 450,
+        "experience": 110
+      }
+    ]
+  },
+  {
+    "id": -2,
+    "required_level": 1,
+    "awards": [
+      {
+        "money": 250,
+        "experience": 105
+      }
+    ]
+  },
+  {
+    "id": -1,
+    "required_level": 1,
+    "awards": [
+      {
+        "money": 100,
+        "experience": 100
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "required_level": 6,
+    "awards": [
+      {
+        "money": 90,
+        "experience": 50,
+        "weapons": [
+          [
+            66,
+            4
+          ],
+          [
+            56,
+            2
+          ],
+          [
+            71,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": -2,
-        "required_level": 1,
-        "awards":
-        [
-            {
-                "money": 40,
-                "experience": 12,
-                "real_money": 0,
-                "weapons": []
-            }
+      },
+      {
+        "money": 60,
+        "experience": 25,
+        "weapons": [
+          [
+            63,
+            2
+          ],
+          [
+            56,
+            1
+          ],
+          [
+            71,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": -3,
-        "required_level": 1,
-        "awards":
-        [
-            {
-                "money": 40,
-                "experience": 12,
-                "real_money": 0,
-                "weapons": []
-            }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "required_level": 6,
+    "awards": [
+      {
+        "money": 90,
+        "experience": 50,
+        "weapons": [
+          [
+            68,
+            4
+          ],
+          [
+            66,
+            2
+          ],
+          [
+            32,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 1,
-        "required_level": 6,
-        "awards":
-        [
-            {
-                "money": 90,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[10, 3], [55, 3], [40, 3], [27, 2]]
-            },
-            {
-                "money": 60,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[10, 2], [55, 2], [40, 2]]
-            }
+      },
+      {
+        "money": 60,
+        "experience": 25,
+        "weapons": [
+          [
+            68,
+            2
+          ],
+          [
+            66,
+            1
+          ],
+          [
+            32,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 2,
-        "required_level": 6,
-        "awards":
-        [
-            {
-                "money": 90,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[52, 3], [54, 3], [71, 2], [41, 2]]
-            },
-            {
-                "money": 60,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[52, 2], [54, 2], [71, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "required_level": 6,
+    "awards": [
+      {
+        "money": 90,
+        "experience": 50,
+        "weapons": [
+          [
+            107,
+            2
+          ],
+          [
+            62,
+            4
+          ],
+          [
+            105,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 3,
-        "required_level": 6,
-        "awards":
-        [
-            {
-                "money": 90,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[44, 3], [73, 3], [48, 2], [74, 2]]
-            },
-            {
-                "money": 60,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[44, 2], [73, 2], [48, 1]]
-            }
+      },
+      {
+        "money": 60,
+        "experience": 25,
+        "weapons": [
+          [
+            107,
+            1
+          ],
+          [
+            62,
+            2
+          ],
+          [
+            105,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 4,
-        "required_level": 7,
-        "awards":
-        [
-            {
-                "money": 90,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[52, 3], [44, 3], [50, 1], [35, 3]]
-            },
-            {
-                "money": 60,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[52, 2], [44, 2], [50, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "required_level": 7,
+    "awards": [
+      {
+        "money": 90,
+        "experience": 50,
+        "weapons": [
+          [
+            78,
+            2
+          ],
+          [
+            51,
+            2
+          ],
+          [
+            65,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 5,
-        "required_level": 8,
-        "awards":
-        [
-            {
-                "money": 90,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[55, 3], [37, 3], [69, 3], [51, 2]]
-            },
-            {
-                "money": 60,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[55, 2], [37, 2], [69, 2], [51, 1]]
-            }
+      },
+      {
+        "money": 60,
+        "experience": 25,
+        "weapons": [
+          [
+            78,
+            1
+          ],
+          [
+            51,
+            1
+          ],
+          [
+            65,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 6,
-        "required_level": 9,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 1,
-                "weapons": [[23, 2], [30, 2], [32, 1], [72, 1]]
-            },
-            {
-                "money": 70,
-                "experience": 25,
-                "real_money": 0,
-                "weapons": [[23, 2], [30, 2], [32, 2], [72, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "required_level": 8,
+    "awards": [
+      {
+        "money": 90,
+        "experience": 50,
+        "weapons": [
+          [
+            116,
+            2
+          ],
+          [
+            72,
+            2
+          ],
+          [
+            25,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 7,
-        "required_level": 10,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 1,
-                "weapons": [[68, 2], [37, 2], [47, 1], [28, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons": [[68, 2], [37, 2], [47, 1], [28, 1]]
-            }
+      },
+      {
+        "money": 60,
+        "experience": 25,
+        "weapons": [
+          [
+            116,
+            1
+          ],
+          [
+            72,
+            1
+          ],
+          [
+            25,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 8,
-        "required_level": 11,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 1,
-                "weapons": [[72, 2], [65, 1], [22, 1], [32, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons": [[72, 2], [65, 1], [22, 1], [32, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "required_level": 9,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            80,
+            2
+          ],
+          [
+            76,
+            4
+          ],
+          [
+            27,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 9,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 1,
-                "weapons": [[11, 5], [62, 3], [63, 3], [1037, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons":  [[11, 5], [62, 3], [63, 3], [1037, 1]]
-            }
+      },
+      {
+        "money": 70,
+        "experience": 25,
+        "weapons": [
+          [
+            80,
+            1
+          ],
+          [
+            76,
+            2
+          ],
+          [
+            27,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 10,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 1,
-                "weapons": [[11, 5], [57, 2], [64, 2], [1036, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons":  [[11, 5], [57, 2], [64, 2], [1036, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "required_level": 10,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            66,
+            2
+          ],
+          [
+            28,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 11,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 2,
-                "weapons": [[41, 2], [67, 1], [18, 2], [1038, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons":  [[41, 2], [67, 1], [18, 2], [1038, 1]]
-            }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            66,
+            1
+          ],
+          [
+            28,
+            1
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 12,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 2,
-                "weapons": [[32, 1], [15, 2], [58, 2], [1035, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons": [[32, 1], [15, 2], [58, 2], [1035, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "required_level": 11,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            56,
+            4
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            86,
+            4
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 13,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 2,
-                "weapons": [[64, 2], [28, 1], [36, 1], [1039, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons": [[64, 2], [28, 1], [36, 1], [1039, 1]]
-            }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            56,
+            2
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            86,
+            2
+          ]
+        ],
+        "equipments": [
+          1003
         ]
-    },
-    {
-        "id": 14,
-        "required_level": 12,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 60,
-                "real_money": 2,
-                "weapons": [[69, 3], [41, 2], [74, 2], [1049, 1]]
-            },
-            {
-                "money": 80,
-                "experience": 30,
-                "real_money": 0,
-                "weapons": [[69, 3], [41, 2], [74, 2], [1049, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            64,
+            4
+          ]
+        ],
+        "equipments": [
+          1037
         ]
-    },
-    {
-        "id": 15,
-        "required_level": 15,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 80,
-                "real_money": 2,
-                "weapons": [[68, 3], [57, 2], [15, 2], [1044, 1]]
-            },
-            {
-                "money": 90,
-                "experience": 40,
-                "real_money": 0,
-                "weapons": [[68, 3], [57, 2], [15, 2], [1044, 1]]
-            }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            64,
+            2
+          ]
+        ],
+        "equipments": [
+          1037
         ]
-    },
-    {
-        "id": 16,
-        "required_level": 15,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 80,
-                "real_money": 3,
-                "weapons": [[22, 3], [28, 2], [1046, 1], [1045, 1]]
-            },
-            {
-                "money": 90,
-                "experience": 40,
-                "real_money": 0,
-                "weapons": [[22, 3], [28, 2], [1046, 1], [1045, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            131,
+            2
+          ]
+        ],
+        "equipments": [
+          1036
         ]
-    },
-    {
-        "id": 17,
-        "required_level": 20,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 100,
-                "real_money": 5,
-                "weapons": [[72, 8], [64, 3], [57, 2], [1043, 1]]
-            },
-            {
-                "money": 100,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[72, 2], [64, 3], [57, 2], [1043, 1]]
-            }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            131,
+            1
+          ]
+        ],
+        "equipments": [
+          1036
         ]
-    },
-    {
-        "id": 18,
-        "required_level": 20,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 100,
-                "real_money": 5,
-                "weapons": [[72, 10], [67, 3], [36, 2], [1040, 1]]
-            },
-            {
-                "money": 100,
-                "experience": 50,
-                "real_money": 0,
-                "weapons": [[72, 3], [67, 3], [36, 2], [1040, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            24,
+            2
+          ]
+        ],
+        "equipments": [
+          1038
         ]
-    },
-    {
-        "id": 19,
-        "required_level": 20,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 120,
-                "real_money": 7,
-                "weapons": [[72, 10], [80, 10], [28, 4], [1059, 1]]
-            },
-            {
-                "money": 120,
-                "experience": 60,
-                "real_money": 0,
-                "weapons": [[72, 3], [80, 3], [28, 2], [1059, 1]]
-            }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            24,
+            1
+          ]
+        ],
+        "equipments": [
+          1038
         ]
-    },
-    {
-        "id": 20,
-        "required_level": 20,
-        "awards":
-        [
-            {
-                "money": 0,
-                "experience": 130,
-                "real_money": 8,
-                "weapons": [[72, 12], [80, 12], [36, 4], [1060, 1]]
-            },
-            {
-                "money": 130,
-                "experience": 66,
-                "real_money": 0,
-                "weapons": [[72, 4], [80, 4], [36, 2], [1060, 1]]
-            }
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            58,
+            2
+          ]
+        ],
+        "equipments": [
+          1035
         ]
-    }
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            58,
+            1
+          ]
+        ],
+        "equipments": [
+          1035
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            43,
+            2
+          ]
+        ],
+        "equipments": [
+          1039
+        ]
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            1
+          ],
+          [
+            80,
+            1
+          ],
+          [
+            43,
+            1
+          ]
+        ],
+        "equipments": [
+          1039
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            67,
+            2
+          ]
+        ],
+        "equipments": [
+          1049
+        ]
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            67,
+            1
+          ]
+        ],
+        "equipments": [
+          1049
+        ]
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 80,
+        "weapons": [
+          [
+            80,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            28,
+            4
+          ]
+        ],
+        "equipments": [
+          1044
+        ]
+      },
+      {
+        "money": 90,
+        "experience": 40,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            28,
+            2
+          ]
+        ],
+        "equipments": [
+          1044
+        ]
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 80,
+        "weapons": [
+          [
+            80,
+            6
+          ],
+          [
+            27,
+            6
+          ]
+        ],
+        "equipments": [
+          1045,
+          1046
+        ]
+      },
+      {
+        "money": 90,
+        "experience": 40,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            27,
+            3
+          ]
+        ],
+        "equipments": [
+          1045,
+          1046
+        ]
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 100,
+        "weapons": [
+          [
+            80,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            25,
+            4
+          ]
+        ],
+        "equipments": [
+          1043
+        ]
+      },
+      {
+        "money": 100,
+        "experience": 50,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            25,
+            2
+          ]
+        ],
+        "equipments": [
+          1043
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 100,
+        "weapons": [
+          [
+            80,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            129,
+            2
+          ]
+        ],
+        "equipments": [
+          1040
+        ]
+      },
+      {
+        "money": 100,
+        "experience": 50,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            129,
+            1
+          ]
+        ],
+        "equipments": [
+          1040
+        ]
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 120,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            118,
+            2
+          ]
+        ],
+        "equipments": [
+          1059
+        ]
+      },
+      {
+        "money": 120,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            118,
+            1
+          ]
+        ],
+        "equipments": [
+          1059
+        ]
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 130,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            36,
+            4
+          ]
+        ],
+        "equipments": [
+          1060
+        ]
+      },
+      {
+        "money": 130,
+        "experience": 65,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            36,
+            2
+          ]
+        ],
+        "equipments": [
+          1060
+        ]
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 7,
+        "experience": 140,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            70,
+            4
+          ]
+        ],
+        "equipments": [
+          1067
+        ]
+      },
+      {
+        "money": 130,
+        "experience": 70,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            70,
+            2
+          ]
+        ],
+        "equipments": [
+          1067
+        ]
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 7,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            67,
+            4
+          ]
+        ],
+        "equipments": [
+          1096
+        ]
+      },
+      {
+        "money": 140,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            67,
+            2
+          ]
+        ],
+        "equipments": [
+          1096
+        ]
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 7,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            131,
+            4
+          ]
+        ],
+        "equipments": [
+          1103
+        ]
+      },
+      {
+        "money": 140,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            131,
+            2
+          ]
+        ],
+        "equipments": [
+          1103
+        ]
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 7,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            114,
+            4
+          ]
+        ],
+        "equipments": [
+          2018
+        ]
+      },
+      {
+        "money": 150,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            114,
+            2
+          ]
+        ],
+        "equipments": [
+          2018
+        ]
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 8,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            129,
+            4
+          ]
+        ],
+        "equipments": [
+          1135
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            129,
+            2
+          ]
+        ],
+        "equipments": [
+          1135
+        ]
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 8,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            115,
+            2
+          ]
+        ],
+        "equipments": [
+          2026
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            115,
+            1
+          ]
+        ],
+        "equipments": [
+          2026
+        ]
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 8,
+        "experience": 170,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            113,
+            4
+          ]
+        ],
+        "equipments": [
+          2027
+        ]
+      },
+      {
+        "money": 170,
+        "experience": 85,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            113,
+            2
+          ]
+        ],
+        "equipments": [
+          2027
+        ]
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 8,
+        "experience": 170,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            118,
+            4
+          ]
+        ],
+        "equipments": [
+          1146
+        ]
+      },
+      {
+        "money": 170,
+        "experience": 85,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            118,
+            2
+          ]
+        ],
+        "equipments": [
+          1146
+        ]
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 9,
+        "experience": 180,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            84,
+            4
+          ]
+        ],
+        "equipments": [
+          2039
+        ]
+      },
+      {
+        "money": 180,
+        "experience": 90,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            84,
+            2
+          ]
+        ],
+        "equipments": [
+          2039
+        ]
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 9,
+        "experience": 180,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            77,
+            4
+          ]
+        ],
+        "equipments": [
+          1149
+        ]
+      },
+      {
+        "money": 180,
+        "experience": 90,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            77,
+            2
+          ]
+        ],
+        "equipments": [
+          1149
+        ]
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "required_level": 26,
+    "awards": [
+      {
+        "real_money": 10,
+        "experience": 190,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            130,
+            4
+          ]
+        ],
+        "equipments": [
+          1109
+        ]
+      },
+      {
+        "money": 190,
+        "experience": 95,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            130,
+            2
+          ]
+        ],
+        "equipments": [
+          1109
+        ]
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            64,
+            2
+          ],
+          [
+            51,
+            2
+          ],
+          [
+            67,
+            2
+          ]
+        ],
+        "equipments": [
+          1068
+        ]
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            64,
+            1
+          ],
+          [
+            51,
+            1
+          ],
+          [
+            67,
+            1
+          ]
+        ],
+        "equipments": [
+          1068
+        ]
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "required_level": 12,
+    "awards": [
+      {
+        "real_money": 1,
+        "experience": 60,
+        "weapons": [
+          [
+            116,
+            2
+          ],
+          [
+            107,
+            2
+          ],
+          [
+            65,
+            4
+          ]
+        ],
+        "equipments": [
+          1069
+        ]
+      },
+      {
+        "money": 80,
+        "experience": 30,
+        "weapons": [
+          [
+            116,
+            1
+          ],
+          [
+            107,
+            1
+          ],
+          [
+            65,
+            2
+          ]
+        ],
+        "equipments": [
+          1069
+        ]
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 80,
+        "weapons": [
+          [
+            66,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            24,
+            4
+          ]
+        ],
+        "equipments": [
+          1072
+        ]
+      },
+      {
+        "money": 90,
+        "experience": 40,
+        "weapons": [
+          [
+            66,
+            2
+          ],
+          [
+            72,
+            2
+          ],
+          [
+            24,
+            2
+          ]
+        ],
+        "equipments": [
+          1072
+        ]
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 80,
+        "weapons": [
+          [
+            71,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            28,
+            2
+          ]
+        ],
+        "equipments": [
+          1076
+        ]
+      },
+      {
+        "money": 90,
+        "experience": 40,
+        "weapons": [
+          [
+            71,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            28,
+            1
+          ]
+        ],
+        "equipments": [
+          1076
+        ]
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 100,
+        "weapons": [
+          [
+            78,
+            2
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            36,
+            2
+          ]
+        ],
+        "equipments": [
+          1073
+        ]
+      },
+      {
+        "money": 100,
+        "experience": 50,
+        "weapons": [
+          [
+            78,
+            1
+          ],
+          [
+            72,
+            2
+          ],
+          [
+            36,
+            1
+          ]
+        ],
+        "equipments": [
+          1073
+        ]
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "required_level": 15,
+    "awards": [
+      {
+        "real_money": 2,
+        "experience": 100,
+        "weapons": [
+          [
+            25,
+            2
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            70,
+            2
+          ]
+        ],
+        "equipments": [
+          2007
+        ]
+      },
+      {
+        "money": 100,
+        "experience": 50,
+        "weapons": [
+          [
+            25,
+            1
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            70,
+            1
+          ]
+        ],
+        "equipments": [
+          2007
+        ]
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 120,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            86,
+            4
+          ]
+        ],
+        "equipments": [
+          1117
+        ]
+      },
+      {
+        "money": 120,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            86,
+            2
+          ]
+        ],
+        "equipments": [
+          1117
+        ]
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 120,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            43,
+            4
+          ]
+        ],
+        "equipments": [
+          1116
+        ]
+      },
+      {
+        "money": 120,
+        "experience": 60,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            43,
+            2
+          ]
+        ],
+        "equipments": [
+          1116
+        ]
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            27,
+            4
+          ]
+        ],
+        "equipments": [
+          1120
+        ]
+      },
+      {
+        "money": 150,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            27,
+            2
+          ]
+        ],
+        "equipments": [
+          1120
+        ]
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "required_level": 18,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            105,
+            4
+          ]
+        ],
+        "equipments": [
+          1123
+        ]
+      },
+      {
+        "money": 150,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            105,
+            2
+          ]
+        ],
+        "equipments": [
+          1123
+        ]
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            129,
+            2
+          ]
+        ],
+        "equipments": [
+          2023
+        ]
+      },
+      {
+        "money": 150,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            129,
+            1
+          ]
+        ],
+        "equipments": [
+          2023
+        ]
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 3,
+        "experience": 150,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            114,
+            4
+          ]
+        ],
+        "equipments": [
+          1133
+        ]
+      },
+      {
+        "money": 150,
+        "experience": 75,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            114,
+            2
+          ]
+        ],
+        "equipments": [
+          1133
+        ]
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 4,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            113,
+            4
+          ]
+        ],
+        "equipments": [
+          2031
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            113,
+            2
+          ]
+        ],
+        "equipments": [
+          2031
+        ]
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "required_level": 20,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            115,
+            4
+          ]
+        ],
+        "equipments": [
+          1142
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            115,
+            2
+          ]
+        ],
+        "equipments": [
+          1142
+        ]
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            77,
+            4
+          ]
+        ],
+        "equipments": [
+          2036
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            77,
+            2
+          ]
+        ],
+        "equipments": [
+          2036
+        ]
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "required_level": 24,
+    "awards": [
+      {
+        "real_money": 5,
+        "experience": 160,
+        "weapons": [
+          [
+            72,
+            6
+          ],
+          [
+            80,
+            6
+          ],
+          [
+            130,
+            4
+          ]
+        ],
+        "equipments": [
+          2058
+        ]
+      },
+      {
+        "money": 160,
+        "experience": 80,
+        "weapons": [
+          [
+            72,
+            3
+          ],
+          [
+            80,
+            3
+          ],
+          [
+            130,
+            2
+          ]
+        ],
+        "equipments": [
+          2058
+        ]
+      }
+    ]
+  }
 ]
