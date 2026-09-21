@@ -365,9 +365,10 @@ class InitGameData extends Command
             {
                 DB::beginTransaction();
                 Level::insert([
+                    'id' => $level['id'],
                     'required_experience' => $level['required_experience'],
-                    'max_worms_count' => $level['max_worms_count'],
-                    'awards' => json_encode($level['reward_weapons']),
+                    'team_size' => $level['team_size'],
+                    'awards' => json_encode($level['rewards']),
                 ]);
                 DB::commit();
                 $count++;
@@ -400,7 +401,7 @@ class InitGameData extends Command
             foreach ($missionsArray as $mission)
             {
                 $m = new Mission();
-                $m->mission_id = $mission['id'];
+                $m->id = $mission['id'];
                 $m->awards = $mission['awards'];
                 $m->required_level = $mission['required_level'];
                 $m->save();
