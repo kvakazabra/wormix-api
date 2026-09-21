@@ -91,7 +91,7 @@ class LoginEventListener
             ->firstOrFail();
 
         // Clear mission id before boss fights
-        if ($user->char_data->level > config('wormix.game.missions.tutorial_max_level') &&
+        if ($user->char_data->level >= config('wormix.game.missions.boss_opening_level') &&
             $arena->solo_mission_id < 0)
         {
             $arena->solo_mission_id = 0;

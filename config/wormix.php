@@ -14,6 +14,10 @@ return [
         'weapons' => [1, 2, 4, 5, 9, 11, 17, 39, 49]
     ],
     'ids' => [
+        'tutorial_missions' => [
+            'min' => -1,
+            'max' => -5
+        ],
         'solo_missions' => [
             'min' => 0,
             'max' => 100,
@@ -50,7 +54,7 @@ return [
     ],
     'game' => [
         'missions' => [
-            'tutorial_max_level' => 5,
+            'boss_opening_level' => 6,
             'delay' => 120,
             'max' => 5,
             'awards' => [
