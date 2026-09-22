@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Game;
 
 use App\Models\Wormix\CraftedEquipment;
+use App\Models\Wormix\Mercenary;
 use App\Models\Wormix\Upgrade;
 use App\Models\Wormix\DailyBonus;
 use App\Models\Wormix\Level;
@@ -492,6 +493,50 @@ class InitGameData extends Command
         $this->info("{$count} reagents parsed");
     }
 
+    private function parseMercenaries() : void
+    {
+        $this->info('Parsing mercenaries.json');
+        $mercenariesPath = resource_path('game/mercenaries.json');
+        if (!File::exists($mercenariesPath))
+        {
+            $this->error("Can't find mercenaries.json in resources");
+            return;
+        }
+
+        $count = 0;
+        $mercenariesArray = json_decode(file_get_contents($mercenariesPath), true);
+        foreach ($mercenariesArray as $mercenary)
+        {
+            try
+            {
+                DB::beginTransaction();
+                Mercenary::insert([
+                    'id' => $mercenary['id'],
+                    'level' => 30,
+                    'required_level' => $mercenary['level'],
+                    'name' => $this->translate($mercenary['name'] ?? ""),
+                    'attack' => $mercenary['attack'],
+                    'armor' => $mercenary['armor'],
+                    'race' => $mercenary['race'],
+                    'skin' => $mercenary['skin'] ?? 0,
+                    'hat' => $mercenary['hatId'] ?? 0,
+                    'artifact' => $mercenary['artifactId'] ?? 0,
+                    'price' => $mercenary['price'],
+                    'real_price' => $mercenary['realPrice'],
+                ]);
+                DB::commit();
+                $count++;
+            }
+            catch (\Exception $ex)
+            {
+                DB::rollBack();
+                $this->error("Error in reagent {$mercenary['id']}: {$ex->getMessage()}");
+            }
+        }
+
+        $this->info("{$count} mercenaries parsed");
+    }
+
     /**
      * Execute the console command.
      */
@@ -520,6 +565,8 @@ class InitGameData extends Command
         $this->parseMissions();
 
         $this->parseUpgrades();
+
+        $this->parseMercenaries();
 
         $this->info('SETUP IS COMPLETED');
     }
