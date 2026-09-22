@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('solo_mission_id')->unsigned()->default(0);
             $table->integer('coop_mission_id')->unsigned()->default(0);
 
+            $table->bigInteger('first_used_token_time')->unsigned()->default(0);
+
             $table->foreignId('current_battle_id')->nullable()
                 ->constrained('wormix_users_battles')->nullOnDelete();
 

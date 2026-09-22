@@ -40,7 +40,8 @@ class Level extends Model
 
         // Ignore exceptions here
         $profile->grantReagents(
-            WormixTrashHelper::pairsToAssociativeArray($awards['reagents'] ?? [])
+            WormixTrashHelper::pairsToAssociativeArray($awards['reagents'] ?? []),
+            true
         );
         $profile->grantItems(
             WormixTrashHelper::pairsToAssociativeArray($awards['weapons'] ?? []),

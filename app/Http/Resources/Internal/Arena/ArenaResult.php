@@ -28,8 +28,8 @@ class ArenaResult extends JsonResource
             'BossAvailable' => true,
             'SuperBossAvailable' => true,
             'HeroicStructures' => [],
-            'Delay' => 0,
-            'RestoreBattlesDelay' => 0,
+            'Delay' => $this->resource->nextBattleTokenDelay() * 1000, // in milliseconds
+            'RestoreBattlesDelay' => config('wormix.game.missions.delay') * 1000, // in milliseconds
             'RestrictedWagers' => [],
             'RestrictedWagersLeftTime' => [],
             'HeroicMissionDailyProgress' => [],

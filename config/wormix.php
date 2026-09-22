@@ -60,12 +60,8 @@ return [
         ],
         'max_level' => 30,
         'search_keys_per_day' => 10,
-        'next_level_award' => [
-            'money' => 150,
-            'real_money' => 0,
-        ],
         'missions' => [
-            'delay' => 120,
+            'delay' => 3600, // In seconds, an hour currently
             'max' => 5,
 
             'star_money_factor' => 4,

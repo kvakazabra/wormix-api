@@ -30,6 +30,8 @@ class ArenaController extends Controller
             ->where('user_id', $request->json('internal_user_id'))
             ->firstOrFail();
 
+        $userArena->checkTimeGrantBattles();
+
         return [
             'type' => 'ArenaResult',
             'data' => new ArenaResult($userArena),
@@ -50,7 +52,7 @@ class ArenaController extends Controller
             $arena = $user->arena;
             $char = $user->char_data;
 
-            if ($arena->battle_tokens <= 0)
+            if ($arena->battle_tokens <= 0 && !WormixTrashHelper::isTutorialMissionId($missionId))
             {
                 return [
                     'type' => 'ArenaLocked',
@@ -97,8 +99,6 @@ class ArenaController extends Controller
                 $awards = $mission->awards;
             }
 
-            // todo: reduce battle tokens but maybe not for tutorials?
-
             $battle = new UserBattle();
             $battle->user_id = $user->id;
             $battle->mission_id = $missionId;
@@ -109,6 +109,11 @@ class ArenaController extends Controller
                 $battle->reagents = WormixTrashHelper::generateBattleReagents();
             }
             $battle->save();
+
+            if(!WormixTrashHelper::isTutorialMissionId($missionId))
+            {
+                $arena->battle_tokens -= 1;
+            }
 
             $arena->current_battle_id = $battle->id;
             $arena->save();
@@ -281,7 +286,7 @@ class ArenaController extends Controller
             $battle->collected_reagents = $request->json('CollectedReagents');
             if (WormixTrashHelper::validateBattleReagents($battle->reagents, $battle->collected_reagents))
             {
-                $profile->grantReagents(array_count_values($battle->collected_reagents));
+                $profile->grantReagents(array_count_values($battle->collected_reagents), false);
             }
 
             $battle->used_items = $request->json('Items') ?? [];

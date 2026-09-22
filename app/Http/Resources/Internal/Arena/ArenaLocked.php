@@ -17,7 +17,7 @@ class ArenaLocked extends JsonResource
         return [
             'Delay' => $this->resource['Delay'],
             'CurrentMission' => $this->resource['MissionId'],
-            'ErrorCode' => $this->resource['ErrorCode'],
+            'ErrorCode' => $this->resource['ErrorCode'] ?? 0,
         ];
     }
 }

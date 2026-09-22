@@ -119,7 +119,7 @@ class ArmoryController extends Controller
 
             $profile->recipes = $recipes;
             $profile->real_money -= $totalReal;
-            $profile->grantReagents($upgradeReagents);
+            $profile->grantReagents($upgradeReagents, false);
             $profile->save();
 
             return new DowngradeWeaponResult(Collection::empty(),
