@@ -27,16 +27,15 @@ class UserProfileStructure extends JsonResource
             'Units' =>
                 TeamMemberStructure::collection($this->resource->teammates()
                     ->orderBy('order')->get()), // todo
-            // todo check whether it returns only weapons, cuz it seems like it returns other items as well
             'WeaponRecordList' =>
                 WeaponRecordList::collection($this->resource->items),
-            'Stuff' => $this->resource->equipments->pluck('item_id')->toArray(), // todo  $this->items()->where('item_id', '>', 1000)->get()->pluck('item_id')
+            'Stuff' =>
+                $this->resource->equipments->pluck('item_id')->toArray(),
             'TemporalStuff' => (object)[], // todo, returns stuffId to expirationTime dictionary
             'ReactionRate' => $this->resource->reaction_rate,
             'SocialId' => (string)$this->resource->user_id,
             'Recipes' => $this->resource->recipes,
-            'ClanMember' =>
-                new ClanMemberStructure($this),
+            'ClanMember' => new ClanMemberStructure($this),
             'ExtraGroupSlotsCount' => $this->resource->extra_group_slots,
             'RankPoints' => $this->resource->rank_points,
             'BestRank' => $this->resource->rank,
