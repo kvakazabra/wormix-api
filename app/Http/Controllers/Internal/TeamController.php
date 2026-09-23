@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Internal;
 
 use App\Exceptions\Wormix\InternalServerException;
+use App\Exceptions\Wormix\NotEnoughMoneyException;
 use App\Exceptions\Wormix\SecurityException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Team\AddToGroupRequest;
@@ -22,7 +23,7 @@ class TeamController extends Controller
     public function add(AddToGroupRequest $request)
     {
         $profileId = $request->json('ProfileId');
-        $useRealMoney = $request->json('MoneyType') === 1;
+        $useRealMoney = $request->json('MoneyType') === 0;
         $teamMemberType = $request->json('TeamMemberType');
         $replaceableId = $request->json('ReplaceableId');
         $isActive = $request->json('Active');
@@ -70,6 +71,7 @@ class TeamController extends Controller
                 $mercenary = Mercenary::query()
                     ->where('id', $profileId)
                     ->firstOrFail();
+
                 $mercenary->assignTo($user, $isActive, $useRealMoney);
             }
             // Friend or a clan-mate
@@ -87,6 +89,14 @@ class TeamController extends Controller
             return [
                 'data' => new TeamResult(Collection::empty(),
                     TeamResult::Success)
+            ];
+        }
+        catch(NotEnoughMoneyException)
+        {
+            DB::rollBack();
+            return [
+                'data' => new TeamResult(Collection::empty(),
+                    TeamResult::NotEnoughMoney)
             ];
         }
         catch(Exception $e)

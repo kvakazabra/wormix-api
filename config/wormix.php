@@ -5,6 +5,9 @@ return [
         // Like finite weapons should not be -1
         // Or complex weapons cannot go beyond their maxLevel and etc.
         'validate_users_items' => false,
+
+        // Allows hiring aliens into a team
+        'allow_mercenary_alien' => false,
     ],
     'starter' => [
         'money' => 670000,
@@ -57,6 +60,7 @@ return [
             'free_change_interval' => 43200, // in seconds, 12 hours by default
             'change_real_price' => 5,
             'skin_real_price' => 50,
+            'alien_substitution' => 12, // Donut
         ],
         'max_level' => 30,
         'search_keys_per_day' => 10,
@@ -130,8 +134,8 @@ return [
                 'real_money' => 3,
             ],
             'teammate' => [
-                'money' => 950,
-                'real_money' => 10,
+                'base_price' => 100,
+                'price_per_level' => 40,
             ],
             'downgrade' => [
                 'real_money' => 5,

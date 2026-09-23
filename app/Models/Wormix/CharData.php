@@ -72,9 +72,69 @@ class CharData extends Model
      * @param bool $active
      * @param bool $useRealMoney
      * @return UserTeam Returns newly created UserTeam entry
+     * @throws NotEnoughMoneyException
      */
     public function assignTo(User $user, bool $active, bool $useRealMoney) : UserTeam
     {
-        return new UserTeam();
+        $profile = $user->profile;
+
+        $price = config('wormix.game.buy.teammate.base_price') +
+            $this->level * config('wormix.game.buy.teammate.price_per_level');
+        $realPrice = (int)ceil($price / config('wormix.game.buy.real_rate'));
+
+        if ($useRealMoney)
+        {
+            if($realPrice > $profile->real_money)
+            {
+                throw new NotEnoughMoneyException('Not enough real money');
+            }
+
+            $profile->real_money -= $realPrice;
+        }
+        else
+        {
+            if ($price > $profile->money)
+            {
+                throw new NotEnoughMoneyException('Not enough money');
+            }
+
+            $profile->money -= $price;
+        }
+
+        $profile->save();
+
+        // todo: code repeats itself
+
+        $newChar = new CharData();
+        $newChar->owner_id = $user->id;
+        $newChar->profile_id = $this->profile_id;
+        $newChar->type = CharData::TEAM_MEMBER_FRIEND;
+        $newChar->name = $this->name;
+        $newChar->level = $this->level;
+        $newChar->armor = $this->armor;
+        $newChar->attack = $this->attack;
+        if ($this->race == Race::query()
+                ->where('race_name', 'alien')
+                ->firstOrFail()
+                ->race_id)
+        {
+            $newChar->race = config('wormix.security.allow_mercenary_alien')
+                ? $this->race : config('wormix.game.race.alien_substitution');
+        }
+        else
+        {
+            $newChar->race = $this->race;
+        }
+        $newChar->skin = $this->skin;
+        $newChar->save();
+
+        $team = new UserTeam();
+        $team->user_id = $user->id;
+        $team->teammate_id = $newChar->id;
+        $team->order = count($profile->teammates);
+        $team->active = $active;
+        $team->save();
+
+        return $team;
     }
 }
