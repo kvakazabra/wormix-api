@@ -31,9 +31,10 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('skin', [ShopController::class, 'buySkin']);
             Route::post('items', [ShopController::class, 'buyItems']);
             Route::post('battles', [ShopController::class, 'buyBattle']);
+            Route::post('upgrade', [ArmoryController::class, 'upgrade']);
+
             Route::post('mission', [ShopController::class, 'unlockMission']);
             Route::post('reaction', [ShopController::class, 'buyReaction']);
-            Route::post('upgrade', [ArmoryController::class, 'upgrade']);
         });
 
         Route::prefix('reset')->group(function () {
@@ -53,6 +54,13 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('upgrade', [ArmoryController::class, 'downgrade']);
         });
 
+        Route::prefix('teammates')->group(function () {
+            Route::post('add', [TeamController::class, 'add']);
+            Route::post('toggle', [TeamController::class, 'toggle']);
+            Route::post('remove', [TeamController::class, 'remove']);
+            Route::post('reorder', [TeamController::class, 'reorder']);
+        });
+
         Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);
     });
 
@@ -64,12 +72,6 @@ Route::middleware(['internal-auth'])->group(function () {
     Route::prefix('info')->group(function () {
         Route::post('rating', [InfoController::class, 'getRating']);
         Route::post('pumped_reaction', [InfoController::class, 'getPumpedReaction']);
-    });
-
-    Route::prefix('team')->group(function () {
-        Route::post('add', [TeamController::class, 'addTeammate']);
-        Route::post('remove', [TeamController::class, 'deleteTeammate']);
-        Route::post('reorder', [TeamController::class, 'reorderTeam']);
     });
 
     Route::prefix('house')->group(function (){

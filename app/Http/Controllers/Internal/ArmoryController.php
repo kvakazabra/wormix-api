@@ -44,7 +44,7 @@ class ArmoryController extends Controller
                 ];
             }
 
-            $profile = $user->user_profile;
+            $profile = $user->profile;
             $profile->consumeReagents($upgrade->reagents, true);
 
             $profile->recipes = array_merge($profile->recipes, [$recipeId]);
@@ -90,7 +90,7 @@ class ArmoryController extends Controller
                 ->where('id', $request->json('internal_user_id'))
                 ->firstOrFail();
 
-            $profile = $user->user_profile;
+            $profile = $user->profile;
             $recipes = $profile->recipes;
 
             // Check that it has been crafted
@@ -146,7 +146,7 @@ class ArmoryController extends Controller
 
     private function isBaseWeaponFullyBought(User $user, Upgrade $upgrade) : bool
     {
-        $profile = $user->user_profile;
+        $profile = $user->profile;
 
         $baseWeapon = $upgrade->baseWeapon();
         if ($baseWeapon === null)
@@ -191,8 +191,8 @@ class ArmoryController extends Controller
 
     private function isUpgradeAvailable(User $user, Upgrade $upgrade) : bool
     {
-        $recipes = $user->user_profile->recipes;
-        $char = $user->char_data;
+        $recipes = $user->profile->recipes;
+        $char = $user->char();
 
         // Check the level
         if ($upgrade->required_level > $char->level)

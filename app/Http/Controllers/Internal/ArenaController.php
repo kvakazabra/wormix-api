@@ -50,7 +50,7 @@ class ArenaController extends Controller
                 ->firstOrFail();
 
             $arena = $user->arena;
-            $char = $user->char_data;
+            $char = $user->char();
 
             if ($arena->battle_tokens <= 0 && !WormixTrashHelper::isTutorialMissionId($missionId))
             {
@@ -174,9 +174,9 @@ class ArenaController extends Controller
                 ->where('id', $request->json('internal_user_id'))
                 ->firstOrFail();
 
-            $profile = $user->user_profile;
+            $profile = $user->profile;
             $arena = $user->arena;
-            $char = $user->char_data;
+            $char = $user->char();
 
             if ($battle->result !== null)
             {

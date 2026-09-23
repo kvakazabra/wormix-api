@@ -82,8 +82,8 @@ class InternalAccountController extends Controller
         $user = User::query()
             ->where('id', $request->json('internal_user_id'))
             ->first();
-        $profile = $user->user_profile;
-        $char = $user->char_data;
+        $profile = $user->profile;
+        $char = $user->char();
 
         $race = $request->json('RaceId');
         $skin = $request->json('SkinId');

@@ -172,7 +172,7 @@ class ShopController extends Controller
             $user = User::query()
                 ->where('id', $request->json('internal_user_id'))
                 ->firstOrFail();
-            $profile = $user->user_profile;
+            $profile = $user->profile;
 
             $items = collect($request->json('ShopItems'))->keyBy('Id');
 
@@ -302,8 +302,8 @@ class ShopController extends Controller
             ->where('id', $request->json('internal_user_id'))
             ->with([
                 'battle_info',
-                'char_data',
-                'user_profile'
+                'char',
+                'profile'
             ])
             ->first();
 
@@ -315,9 +315,9 @@ class ShopController extends Controller
             ($request->json('MissionId') - 1 - $user->battle_info->last_mission_id)
             * config('wormix.game.buy.boss_mission');
 
-        if ($user->char_data->level < $mission->required_level ||
+        if ($user->char()->level < $mission->required_level ||
             $user->battle_info->last_mission_id >= $mission->mission_id ||
-            $user->user_profile->real_money < $mission_price)
+            $user->profile->real_money < $mission_price)
         {
             return [
                 'data' => new UnlockMissionResult(Collection::empty(),
@@ -326,7 +326,7 @@ class ShopController extends Controller
         }
 
         $battleInfo = $user->battle_info;
-        $userProfile = $user->user_profile;
+        $userProfile = $user->profile;
 
         $battleInfo->last_mission_id = $request->json('MissionId') - 1;
         $userProfile->real_money -= $mission_price;
@@ -348,8 +348,9 @@ class ShopController extends Controller
         $user = User::query()
             ->where('id', $request->json('internal_user_id'))
             ->first();
-        $char = $user->char_data;
-        $profile = $user->user_profile;
+
+        $char = $user->char();
+        $profile = $user->profile;
 
         // Prevent non-playable races from being bought
         // Those are temporary like donut, crab and etc. (excluding alien)
@@ -434,8 +435,8 @@ class ShopController extends Controller
         $user = User::query()
             ->where('id', $request->json('internal_user_id'))
             ->first();
-        $char = $user->char_data;
-        $profile = $user->user_profile;
+        $char = $user->char();
+        $profile = $user->profile;
 
         $skinId = $request->json('SkinId');
         $raceId = intdiv($skinId, 10);

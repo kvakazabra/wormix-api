@@ -25,15 +25,15 @@ class UpdateAccountRequest extends FormRequest
             'social_data.first_name' => 'string|max:100',
             'social_data.last_name' => 'string|max:100',
 
-            'user_profile.money' => 'integer|min:0',
-            'user_profile.real_money' => 'integer|min:0',
-            'user_profile.rating' => 'integer|min:0',
-            'user_profile.reaction_rate' => 'integer|min:0',
+            'profile.money' => 'integer|min:0',
+            'profile.real_money' => 'integer|min:0',
+            'profile.rating' => 'integer|min:0',
+            'profile.reaction_rate' => 'integer|min:0',
 
-            'char_data.level' => 'integer|min:1|max:30',
-            'char_data.armor' => 'integer|min:0|max:60',
-            'char_data.attack' => 'integer|min:0|max:60',
-            'char_data.race' => 'integer|exists:wormix_races,race_id',
+            'char.level' => 'integer|min:1|max:30',
+            'char.armor' => 'integer|min:0|max:60',
+            'char.attack' => 'integer|min:0|max:60',
+            'char.race' => 'integer|exists:wormix_races,race_id',
 
             'user.login' => 'string|max:100',
             'user.password' => 'nullable|string|min:8',

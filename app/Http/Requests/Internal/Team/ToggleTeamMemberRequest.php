@@ -4,7 +4,7 @@ namespace App\Http\Requests\Internal\Team;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddTeammateRequest extends FormRequest
+class ToggleTeamMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class AddTeammateRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'ProfileId' => 'required|integer|exists:users,id',
-            'MoneyType' => 'required|integer|between:0,1'
+            'TeamMemberId' => 'required|integer',
+            'Active' => 'required|boolean',
         ];
     }
 }

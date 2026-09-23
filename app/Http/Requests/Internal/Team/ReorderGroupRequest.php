@@ -4,7 +4,7 @@ namespace App\Http\Requests\Internal\Team;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReorderTeamRequest extends FormRequest
+class ReorderGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class ReorderTeamRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'ReorderedWormGroup' => 'required|array|max:4',
-            'ReorderedWormGroup.*' => 'integer|exists:users,id',
+            'ReorderedWormGroup' => 'required|array|min:1|max:7',
+            'ReorderedWormGroup.*' => 'required|integer',
         ];
     }
 }

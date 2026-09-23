@@ -45,8 +45,7 @@ class CharDataObserver
 
     public function saving(CharData $charData) : void
     {
-        // todo: change to type
-        if ($charData->is_main &&
+        if ($charData->type === CharData::TEAM_MEMBER_SELF &&
             $charData->isDirty('experience'))
         {
             $this->checkLevelUp($charData);

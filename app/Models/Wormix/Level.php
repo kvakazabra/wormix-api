@@ -30,7 +30,7 @@ class Level extends Model
 
     public function award(User $user) : void
     {
-        $profile = $user->user_profile;
+        $profile = $user->profile;
         $arena = $user->arena;
 
         $awards = $this->awards;

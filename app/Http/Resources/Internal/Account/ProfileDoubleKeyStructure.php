@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources\Internal\Account;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property-read User $resource
+ */
 class ProfileDoubleKeyStructure extends JsonResource
 {
     /**
@@ -15,8 +19,8 @@ class ProfileDoubleKeyStructure extends JsonResource
     public function toArray(Request $request) : array
     {
         return [
-            'LongId' => $this->user_profile->user_id,
-            'StringId' => (string)$this->user_profile->user_id,
+            'LongId' => $this->resource->profile->user_id,
+            'StringId' => (string)$this->resource->profile->user_id,
         ];
     }
 }

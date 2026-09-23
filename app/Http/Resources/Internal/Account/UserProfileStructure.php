@@ -26,7 +26,7 @@ class UserProfileStructure extends JsonResource
             'Rating' => $this->resource->rating,
             'Units' =>
                 TeamMemberStructure::collection($this->resource->teammates()
-                    ->orderBy('order')->get()), // todo
+                    ->orderBy('order')->get()),
             'WeaponRecordList' =>
                 WeaponRecordList::collection($this->resource->items),
             'Stuff' =>

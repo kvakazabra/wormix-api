@@ -107,6 +107,33 @@ class WormixTrashHelper
     }
 
     /**
+     * Rebalances char parameters in the same ratio as they were before for a new $level
+     * @param int $toLevel
+     * @param int $fromLevel
+     * @param int $armor
+     * @param int $attack
+     * @return array
+     */
+    public static function rebalancePointsByLevel(
+        int $toLevel,
+        int $fromLevel,
+        int $armor,
+        int $attack) : array
+    {
+        $factor = $toLevel / $fromLevel;
+
+        $armor *= $factor;
+        $attack *= $factor;
+
+        $maxPoints = $toLevel * 2;
+
+        $armor = min($armor, $maxPoints);
+        $attack = min($maxPoints - $armor, $attack);
+
+        return [ 'Armor' => $armor, 'Attack' => $attack ];
+    }
+
+    /**
      * @param int $userId
      * @return int
      */

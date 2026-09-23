@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wormix_characters_data', function (Blueprint $table) {
-            $table->foreignId('owner_id')->primary()->constrained('users')->cascadeOnDelete();
-            $table->boolean('is_main')->default(false);
+            $table->id();
+            $table->foreignId('owner_id')
+                ->constrained('users')->cascadeOnDelete();
+            $table->bigInteger('profile_id');
+            $table->smallInteger('type')->default(0);
 
             $table->string("name")->default("");
             $table->smallInteger('armor')->default(1);

@@ -37,8 +37,9 @@ use Exception;
  * @property Collection|UserItem[] hats
  * @property Collection|UserItem[] artifacts
  * @property Collection|UserItem[] equipments
+ * @property Collection|UserTeam[] teammates
+ * @property Collection|UserTeam[] activeTeammates
  * @property User user
- * @property HasMany teammates
  */
 class UserProfile extends Model
 {
@@ -99,6 +100,34 @@ class UserProfile extends Model
     public function teammates() : HasMany
     {
         return $this->hasMany(UserTeam::class, 'user_id', 'user_id');
+    }
+
+    public function activeTeammates() : HasMany
+    {
+        return $this->hasMany(UserTeam::class, 'user_id', 'user_id')
+            ->where('active', true);
+    }
+
+    public function teammateByProfileId(int $profileId) : ?UserTeam
+    {
+        return $this->teammates()
+            ->whereHas('char', fn ($query) => $query->where('profile_id', $profileId))
+            ->first();
+    }
+
+    /**
+     * Fixes gaps in order field
+     * @return void
+     */
+    public function reorderTeammates() : void
+    {
+        $i = 0;
+        /** @var UserTeam $teammate */
+        foreach ($this->teammates()->orderBy('order')->get() as $teammate)
+        {
+            $teammate->order = $i++;
+            $teammate->save();
+        }
     }
 
     /**
@@ -243,7 +272,7 @@ class UserProfile extends Model
 
                 if ($equipStuff)
                 {
-                    $char = $user->char_data;
+                    $char = $user->char();
                     match (true)
                     {
                         WormixTrashHelper::isArtifactType($itemId)

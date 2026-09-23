@@ -33,15 +33,16 @@ class Mercenary extends Model
     /**
      * Hires mercenary to specified user and deducting price from the profile
      * @param User $user
+     * @param bool $active
      * @param bool $useRealMoney
-     * @return CharData Returns newly created mercenary's CharData entry
+     * @return UserTeam Returns newly created mercenary's UserTeam entry
      * @throws NotEnoughMoneyException
      * @throws RequirementsNotMetException
      */
-    public function assignTo(User $user, bool $useRealMoney) : CharData
+    public function assignTo(User $user, bool $active, bool $useRealMoney) : UserTeam
     {
-        $char = $user->char_data;
-        $profile = $user->user_profile;
+        $char = $user->char();
+        $profile = $user->profile;
 
         if ($this->required_level > $char->level)
         {
@@ -83,6 +84,13 @@ class Mercenary extends Model
         $newChar->artifact = $this->artifact;
         $newChar->save();
 
-        return $newChar;
+        $team = new UserTeam();
+        $team->user_id = $user->id;
+        $team->teammate_id = $newChar->id;
+        $team->order = count($profile->teammates);
+        $team->active = $active;
+        $team->save();
+
+        return $team;
     }
 }

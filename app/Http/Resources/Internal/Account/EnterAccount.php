@@ -3,23 +3,14 @@
 namespace App\Http\Resources\Internal\Account;
 
 use App\Helpers\Wormix\WormixTrashHelper;
-use App\Models\Wormix\UserArena;
-use App\Models\Wormix\LoginSequence;
-use App\Models\Wormix\UserBackpack;
-use App\Models\Wormix\UserCookies;
-use App\Models\Wormix\UserProfile;
+use App\Models\User;
 use App\Http\Resources\Internal\Arena\ReconnectToSimpleBattleResultStructure;
-use App\Models\Wormix\CharData;
+use App\Models\Wormix\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property-read UserArena $arena
- * @property-read UserProfile $user_profile
- * @property-read UserBackpack $backpack
- * @property-read CharData $char_data
- * @property-read LoginSequence $login_sequence
- * @property-read UserCookies $cookies
+ * @property-read User $resource
  */
 class EnterAccount extends JsonResource
 {
@@ -35,42 +26,47 @@ class EnterAccount extends JsonResource
     {
         return [
             'UserProfileStructure' =>
-                new UserProfileStructure($this->user_profile),
+                new UserProfileStructure($this->resource->profile),
             'UserProfileStructures' =>
-                [], //UserProfileStructure::collection(UserProfile::query()->where('user_id', '!=', $this->id)->get()),
+                UserProfileStructure::collection(UserProfile::query()
+                    ->where('user_id', '!=', $this->resource->id)
+                    ->get()
+                ),
             'LoginAwards' =>
                 [], // todo
             'OnlineFriends' => 0,
             'SessionKey' => $this->session_key,
-            'Friends' => 0, // UserProfile::query()->where('user_id', '!=', $this->id)->count(),
+            'Friends' => UserProfile::query()
+                ->where('user_id', '!=', $this->resource->id)
+                ->count(),
             'AvailableSearchKeys' =>
-                WormixTrashHelper::getSearchKeys($this->id),
+                WormixTrashHelper::getSearchKeys($this->resource->id),
             'Reagents' =>
-                WormixTrashHelper::toIndexedReagentsArray($this->user_profile->reagents),
+                WormixTrashHelper::toIndexedReagentsArray($this->resource->profile->reagents),
             'CurSoloMissionId' =>
-                $this->arena->solo_mission_id,
+                $this->resource->arena->solo_mission_id,
             'CurCooperativeMissionId' =>
-                $this->arena->coop_mission_id,
+                $this->resource->arena->coop_mission_id,
             'Invites' => [],
             'ServerTime' => time(),
             'BackpackConfs' =>
-                $this->backpack->configurations,
+                $this->resource->backpack->configurations,
             'ActiveBackpackConf' =>
-                $this->backpack->current_configuration,
+                $this->resource->backpack->current_configuration,
             'Hotkeys' =>
-                $this->backpack->hotkeys,
+                $this->resource->backpack->hotkeys,
             'LoginSequence' =>
-                $this->login_sequence->login_sequence,
+                $this->resource->login_sequence->login_sequence,
             'Races' =>
-                WormixTrashHelper::generateRacesBitfield($this->user_profile->races),
+                WormixTrashHelper::generateRacesBitfield($this->resource->profile->races),
             'SelectRaceTimeLeft' =>
-                $this->user_profile->race_change_timestamp,
+                $this->resource->profile->race_change_timestamp,
             'Skins' =>
-                $this->user_profile->skins,
+                $this->resource->profile->skins,
             'LastPaymentTime' => time(),
             'Restrictions' => [],
             'Cookies' =>
-                (object)($this->cookies?->cookies ?? []),
+                (object)($this->resource->cookies?->cookies ?? []),
             'VipSubscriptionId' => 0,
             'HasReconnectResult' => false,
             'ReconnectResult' =>

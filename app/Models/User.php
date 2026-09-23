@@ -22,8 +22,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string login
  * @property string password
  *
- * @property UserProfile user_profile
- * @property CharData char_data
+ * @property UserProfile profile
+ * @property CharData char
  * @property UserSocialData social_data
  * @property UserArena arena
  * @property UserCookies cookies
@@ -49,15 +49,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function user_profile() : HasOne
+    public function profile() : HasOne
     {
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 
-    public function char_data() : HasOne
+    public function char() : CharData
     {
-        // todo check is_main here
-        return $this->hasOne(CharData::class, 'owner_id', 'id');
+        return CharData::query()
+            ->where('owner_id', $this->id)
+            ->where('type', CharData::TEAM_MEMBER_SELF)
+            ->firstOrFail();
     }
 
     public function social_data() : HasOne

@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('wormix_users_teams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('wormix_user_profiles', 'user_id')->cascadeOnDelete();
-            $table->foreignId('teammate_id')->constrained('wormix_characters_data', 'owner_id')->cascadeOnDelete();
-            $table->tinyInteger('order')->default(0);
+            $table->foreignId('user_id')
+                ->constrained('wormix_user_profiles', 'user_id')->cascadeOnDelete();
+            $table->foreignId('teammate_id')
+                ->constrained('wormix_characters_data', 'id')->cascadeOnDelete();
+            $table->tinyInteger('order')->default(-1);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

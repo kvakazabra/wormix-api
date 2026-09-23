@@ -3,6 +3,7 @@
 namespace App\Models\Wormix;
 
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,9 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int user_id
  * @property int teammate_id
  * @property int order
+ * @property bool active
  *
- * @property CharData owner
- * @property CharData teammate
+ * @property User owner
+ * @property CharData char
  */
 class UserTeam extends Model
 {
@@ -21,12 +23,11 @@ class UserTeam extends Model
 
     public function owner() : BelongsTo
     {
-        return $this->belongsTo(CharData::class, 'user_id', 'owner_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function teammate() : BelongsTo
+    public function char() : BelongsTo
     {
-        return $this->belongsTo(CharData::class, 'teammate_id', 'owner_id');
+        return $this->belongsTo(CharData::class, 'teammate_id', 'id');
     }
-
 }

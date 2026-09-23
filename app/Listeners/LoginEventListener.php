@@ -73,17 +73,19 @@ class LoginEventListener
             $loginSequence->save();
         }
 
+        // todo: artifact
         // Check current hat & reset if it has expired
         $currentHat = UserItem::query()
             ->where('owner_id', $user->id)
-            ->where('item_id', $user->char_data->hat)
+            ->where('item_id', $user->char()->hat)
             ->first();
         if ($currentHat != null &&
             $currentHat->expire_at < time() &&
             $currentHat->expire_at !== -1)
         {
-            $user->char_data->hat = 0;
-            $user->char_data->save();
+            $char = $user->char();
+            $char->hat = 0;
+            $char->save();
         }
 
         $arena = UserArena::query()
@@ -91,7 +93,7 @@ class LoginEventListener
             ->firstOrFail();
 
         // Clear mission id before boss fights
-        if ($user->char_data->level >= config('wormix.game.missions.boss_opening_level') &&
+        if ($user->char()->level >= config('wormix.game.missions.boss_opening_level') &&
             $arena->solo_mission_id < 0)
         {
             $arena->solo_mission_id = 0;

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Internal\Team;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RemoveTeammateRequest extends FormRequest
+class AddToGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,11 @@ class RemoveTeammateRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'ProfileId' => 'required|integer|exists:users,id|different:internal_user_id',
+            'ProfileId' => 'required|integer',
+            'MoneyType' => 'required|integer|between:0,1',
+            'TeamMemberType' => 'required|integer',
+            'ReplaceableId' => 'required|integer',
+            'Active' => 'required|boolean',
         ];
     }
 }

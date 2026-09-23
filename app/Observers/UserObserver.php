@@ -31,15 +31,18 @@ class UserObserver
         //Create user worm data
         $wormData = new CharData();
         $wormData->owner_id = $user->id;
+        $wormData->profile_id = $user->id;
         $wormData->name = $user->login;
-        $wormData->is_main = true;
+        $wormData->type = CharData::TEAM_MEMBER_SELF;
         $wormData->race = config('wormix.starter.race');
         $wormData->save();
 
         //Create user default teammate
         $teammate = new UserTeam();
         $teammate->user_id = $user->id;
-        $teammate->teammate_id = $user->id;
+        $teammate->teammate_id = $wormData->id;
+        $teammate->order = 0;
+        $teammate->active = true;
         $teammate->save();
 
         //Create user social data

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Helpers\Wormix\WormixBotHelper;
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\UpdateAccountRequest;
@@ -30,10 +29,10 @@ class AccountController extends Controller
     private function getAccountResource(User $user)
     {
         return new UserResource($user->load([
-            'user_profile',
-            'char_data',
+            'profile',
+            'char',
             'social_data',
-            'user_profile.teammates.teammate'
+            'profile.teammates.teammate'
         ]));
     }
 
@@ -46,33 +45,11 @@ class AccountController extends Controller
             $socialData->save();
         }
 
-        if ($request->json('user_profile') !== null)
+        if ($request->json('profile') !== null)
         {
-            $userProfile = $request->user()->user_profile;
-            $userProfile->fill($request->json('user_profile'));
+            $userProfile = $request->user()->profile;
+            $userProfile->fill($request->json('profile'));
             $userProfile->save();
-        }
-
-        if ($request->json('worm_data') !== null)
-        {
-            $charData = $request->user()->char_data;
-
-            $charData->fill($request->json('worm_data'));
-            $stripParams = WormixBotHelper::stripData(
-                (int)(($charData->armor + $charData->attack) / 2),
-                $charData->level,
-                $charData->armor,
-                $charData->attack
-            );
-            $charData->armor = $stripParams['armor'];
-            $charData->attack = $stripParams['attack'];
-            $charData->experience = 0;
-            $charData->race = $request->json('worm_data.race');
-            $charData->save();
-
-            return [
-                'worm_data' => $charData,
-            ];
         }
 
         if ($request->json('user') !== null)

@@ -54,8 +54,8 @@ class Mission extends Model
     {
         $award = $this->awards[$this->isFirstCompletion($user->arena) ? 0 : 1];
 
-        $profile = $user->user_profile;
-        $char = $user->char_data;
+        $profile = $user->profile;
+        $char = $user->char();
 
         if (isset($award['real_money']))
         {
