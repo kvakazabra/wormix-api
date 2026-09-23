@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Account\DistributePointsRequest;
+use App\Http\Requests\Internal\Account\GetProfilesRequest;
 use App\Http\Requests\Internal\Account\SelectRaceRequest;
 use App\Http\Requests\Internal\Account\SelectStuffRequest;
 use App\Http\Resources\Internal\Account\BuySelectRaceResult;
 use App\Http\Resources\Internal\Account\DistributePointsResult;
+use App\Http\Resources\Internal\Account\ProfilesResult;
 use App\Http\Resources\Internal\Account\SelectRaceResult;
 use App\Http\Resources\Internal\Account\SelectStuffResult;
 use App\Models\User;
 use App\Models\Wormix\UserItem;
 use App\Models\Wormix\CharData;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class InternalAccountController extends Controller
 {
@@ -158,5 +161,29 @@ class InternalAccountController extends Controller
         return [
             'data' => new SelectRaceResult($char, $result)
         ];
+    }
+
+    public function getProfiles(GetProfilesRequest $request)
+    {
+        try
+        {
+            $ids = $request->json('Ids');
+
+            foreach($ids as &$id)
+            {
+                $id = (int)$id;
+            }
+
+            return [
+                'data' => new ProfilesResult($ids)
+            ];
+        }
+        catch(\Exception $e)
+        {
+            Log::error($e);
+            return [
+                'data' => new ProfilesResult(Collection::empty())
+            ];
+        }
     }
 }

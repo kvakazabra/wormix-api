@@ -17,6 +17,10 @@ Route::post('login', [InternalLoginController::class, 'login']);
 
 Route::middleware(['internal-auth'])->group(function () {
 
+    Route::prefix('profiles')->group(function () {
+        Route::post('get', [InternalAccountController::class, 'getProfiles']);
+    });
+
     Route::prefix('cookies')->group(function () {
         Route::post('set', [CookiesController::class, 'setCookies']);
     });
