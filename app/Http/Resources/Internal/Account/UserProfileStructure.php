@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Internal\Account;
 
 use App\Http\Resources\Internal\Clans\ClanMemberStructure;
+use App\Http\Resources\Internal\Team\TeamMemberStructure;
 use App\Models\Wormix\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

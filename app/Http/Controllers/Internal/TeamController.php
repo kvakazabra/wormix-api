@@ -9,12 +9,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Team\AddToGroupRequest;
 use App\Http\Requests\Internal\Team\RemoveFromGroupRequest;
 use App\Http\Requests\Internal\Team\ReorderGroupRequest;
+use App\Http\Requests\Internal\Team\SelectStuffRequest;
 use App\Http\Requests\Internal\Team\ToggleTeamMemberRequest;
+use App\Http\Resources\Internal\Team\SelectStuffResult;
 use App\Http\Resources\Internal\Team\TeamResult;
 use App\Models\User;
+use App\Models\Wormix\CharData;
 use App\Models\Wormix\Mercenary;
-use Illuminate\Database\Eloquent\Collection;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -214,6 +217,73 @@ class TeamController extends Controller
             return [
                 'data' => new TeamResult(Collection::empty(),
                     TeamResult::Error)
+            ];
+        }
+    }
+
+    public function selectStuff(SelectStuffRequest $request)
+    {
+        // todo: remove profileIds here, use array_keys or smth like this
+        $selectStuffs = collect($request->json('SelectStuffs'))->keyBy('ProfileId')->all();
+        $profileIds = collect($request->json('SelectStuffs'))->pluck('ProfileId')->toArray();
+
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->firstOrFail();
+
+        $profile = $user->profile;
+
+        try
+        {
+            $equipments = $profile->equipments;
+
+            foreach ($profileIds as $profileId)
+            {
+                $teammate = $user->profile->teammateByProfileId($profileId);
+                if (!$teammate)
+                {
+                    throw new InternalServerException('Teammate not found');
+                }
+
+                $hatId = $selectStuffs[$profileId]['HatId'];
+                $artifactId = $selectStuffs[$profileId]['ArtifactId'];
+
+                if ($hatId !== 0 && !$equipments->contains('item_id', $hatId))
+                {
+                    if ($teammate->char->type !== CharData::TEAM_MEMBER_MERCENARY ||
+                        $teammate->char->mercenary()->hat !== $hatId)
+                    {
+                        throw new SecurityException('Tried to set hat id that user does not own');
+                    }
+                }
+
+                if ($artifactId !== 0 && !$equipments->contains('item_id', $artifactId))
+                {
+                    if ($teammate->char->type !== CharData::TEAM_MEMBER_MERCENARY ||
+                        $teammate->char->mercenary()->artifact !== $artifactId)
+                    {
+                        throw new SecurityException('Tried to set artifact id that user does not own');
+                    }
+                }
+
+                // todo: also check if hat/art is already equipped
+
+                $teammate->char->hat = $hatId;
+                $teammate->char->artifact = $artifactId;
+                $teammate->char->save();
+            }
+
+            return [
+                'data' => new SelectStuffResult($profile,
+                    SelectStuffResult::Success, $profileIds)
+            ];
+        }
+        catch(Exception $e)
+        {
+            Log::error($e);
+            return [
+                'data' => new SelectStuffResult($profile,
+                    SelectStuffResult::Error, $profileIds)
             ];
         }
     }

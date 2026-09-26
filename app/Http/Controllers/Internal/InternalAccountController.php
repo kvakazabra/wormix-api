@@ -107,9 +107,11 @@ class InternalAccountController extends Controller
     {
         $result = $this->selectRaceCommon($request);
 
-        $char = CharData::query()
-            ->where('owner_id', $request->json('internal_user_id'))
-            ->first();
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->firstOrFail();
+
+        $char = $user->char();
 
         return [
             'data' => new BuySelectRaceResult($char, $result)
@@ -120,9 +122,11 @@ class InternalAccountController extends Controller
     {
         $result = $this->selectRaceCommon($request);
 
-        $char = CharData::query()
-            ->where('owner_id', $request->json('internal_user_id'))
-            ->first();
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->firstOrFail();
+
+        $char = $user->char();
 
         return [
             'data' => new SelectRaceResult($char, $result)

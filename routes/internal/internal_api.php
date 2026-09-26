@@ -63,9 +63,8 @@ Route::middleware(['internal-auth'])->group(function () {
             Route::post('toggle', [TeamController::class, 'toggle']);
             Route::post('remove', [TeamController::class, 'remove']);
             Route::post('reorder', [TeamController::class, 'reorder']);
+            Route::post('select_stuff', [TeamController::class, 'selectStuff']);
         });
-
-        Route::post('select_stuff', [InternalAccountController::class, 'selectStuff']);
     });
 
     Route::prefix('game')->group(function (){

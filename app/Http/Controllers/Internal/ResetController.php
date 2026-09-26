@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Internal\Account\ResetAccountRequest;
 use App\Http\Requests\Internal\Account\ResetParametersRequest;
 use App\Http\Resources\Internal\Account\ResetParametersResult;
+use App\Models\User;
 use App\Models\Wormix\HouseAction;
 use App\Models\Wormix\LoginSequence;
 use App\Models\Wormix\UserProfile;
@@ -134,19 +135,19 @@ class ResetController extends Controller
 
     public function resetParameters(ResetParametersRequest $request)
     {
-        $userProfile = UserProfile::query()
-            ->where('user_id', $request->json('internal_user_id'))
-            ->first();
-        $charData = CharData::query()
-            ->where('owner_id', $request->json('internal_user_id'))
-            ->first();
+        $user = User::query()
+            ->where('id', $request->json('internal_user_id'))
+            ->firstOrFail();
+
+        $profile = $user->profile;
+        $char = $user->char();
 
         switch ($request->json('MoneyType'))
         {
             case 0:
             {
                 $price = config('wormix.game.buy.reset_stats.money');
-                if ($price > $userProfile->money)
+                if ($price > $profile->money)
                 {
                     return [
                         'data' => new ResetParametersResult(Collection::empty(),
@@ -154,14 +155,14 @@ class ResetController extends Controller
                     ];
                 }
 
-                $userProfile->money -= $price;
-                $userProfile->save();
+                $profile->money -= $price;
+                $profile->save();
                 break;
             }
             case 1:
             {
                 $price = config('wormix.game.buy.reset_stats.real_money');
-                if ($price > $userProfile->real_money)
+                if ($price > $profile->real_money)
                 {
                     return [
                         'data' => new ResetParametersResult(Collection::empty(),
@@ -169,8 +170,8 @@ class ResetController extends Controller
                     ];
                 }
 
-                $userProfile->real_money -= $price;
-                $userProfile->save();
+                $profile->real_money -= $price;
+                $profile->save();
                 break;
             }
             default:
@@ -182,9 +183,9 @@ class ResetController extends Controller
             }
         }
 
-        $charData->armor = 0;
-        $charData->attack = 0;
-        $charData->save();
+        $char->armor = 0;
+        $char->attack = 0;
+        $char->save();
 
         return [
             'data' => new ResetParametersResult(Collection::empty(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Internal\Account;
+namespace App\Http\Resources\Internal\Team;
 
 use App\Helpers\Wormix\WormixTrashHelper;
 use App\Models\Wormix\CharData;

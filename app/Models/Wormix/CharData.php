@@ -2,6 +2,7 @@
 
 namespace App\Models\Wormix;
 
+use App\Exceptions\Wormix\InternalServerException;
 use App\Exceptions\Wormix\NotEnoughMoneyException;
 use App\Exceptions\Wormix\RequirementsNotMetException;
 use App\Models\User;
@@ -136,5 +137,17 @@ class CharData extends Model
         $team->save();
 
         return $team;
+    }
+
+    public function mercenary() : Mercenary
+    {
+        if ($this->type !== CharData::TEAM_MEMBER_MERCENARY)
+        {
+            throw new InternalServerException('Tried to get mercenary model on non-mercenary char');
+        }
+
+        return Mercenary::query()
+            ->where('id', $this->profile_id)
+            ->firstOrFail();
     }
 }

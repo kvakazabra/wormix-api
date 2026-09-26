@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Internal\Account;
+namespace App\Http\Requests\Internal\Team;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +23,11 @@ class SelectStuffRequest extends FormRequest
     {
         return [
             'internal_user_id' => 'required|integer|exists:users,id',
-            'StuffId' => 'required|integer|exists:wormix_equipment,id|min:1000',
+
+            'SelectStuffs' => 'required|array|between:1,7',
+            'SelectStuffs.*.ProfileId' => 'required|integer',
+            'SelectStuffs.*.HatId' => 'required|integer',
+            'SelectStuffs.*.ArtifactId' => 'required|integer',
         ];
     }
 }
